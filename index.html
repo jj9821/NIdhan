@@ -1,0 +1,1682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>For Ridhu — Happy 22nd Birthday</title>
+  
+  <!-- ==========================================================================
+       GOOGLE FONTS PRELOAD:
+       - 'Cormorant Garamond' (poetic titles, pull-quotes, grand celebration)
+       - 'Lora' (warm, intimate, highly readable body prose)
+       - 'Caveat' (opening salutation, signature, handwritten highlights)
+       ========================================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. CSS RESET & COLOR PALETTE
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --bg-espresso: #14100e;
+      --bg-espresso-card: #1c1511;
+      --parchment: #fbf7f0;
+      --parchment-shade: #f4ecdf;
+      --ink-charcoal: #2b221e;
+      --ink-muted: #4e4039;
+      --gold-antique: #d4af37;
+      --gold-light: #f5e8b7;
+      --gold-bright: #ffd700;
+      --rose-dusty: #c97b84;
+      --rose-deep: #a82024;
+      --wax-crimson: #7f1218;
+      --wax-highlight: #b0242b;
+      --blueprint-line: rgba(212, 175, 55, 0.038);
+      --blueprint-major: rgba(212, 175, 55, 0.075);
+
+      --font-title: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Lora', Georgia, serif;
+      --font-hand: 'Caveat', cursive, sans-serif;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background-color: var(--bg-espresso);
+      color: var(--ink-charcoal);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Architectural blueprint background grid (nod to her being an architect) */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(var(--blueprint-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-line) 1px, transparent 1px),
+        linear-gradient(var(--blueprint-major) 1px, transparent 1px),
+        linear-gradient(90deg, var(--blueprint-major) 1px, transparent 1px);
+      background-size: 24px 24px, 24px 24px, 96px 96px, 96px 96px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Full-screen Ambient HTML5 Canvas (Floating Golden Dust Motes) */
+    #ambientCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* Top-Right Floating Sound Toggle Button */
+    .audio-toggle-btn {
+      position: fixed;
+      top: calc(env(safe-area-inset-top, 16px) + 12px);
+      right: calc(env(safe-area-inset-right, 16px) + 12px);
+      z-index: 250;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(20, 16, 14, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: var(--gold-light);
+      font-size: 1.15rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 10px rgba(212, 175, 55, 0.15);
+      transition: all 0.3s ease;
+    }
+    .audio-toggle-btn:hover {
+      background: rgba(30, 24, 20, 0.95);
+      border-color: var(--gold-bright);
+      transform: scale(1.06);
+    }
+    .audio-toggle-btn.playing {
+      border-color: var(--gold-antique);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    }
+
+    /* ==========================================================================
+       2. OPENING ENVELOPE MODAL & 3D TACTILE EXPERIENCE
+       ========================================================================== */
+    .envelope-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at center, rgba(30, 24, 21, 0.97) 0%, rgba(14, 11, 10, 0.99) 100%);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .envelope-screen.opened {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(1.08) translateY(-24px);
+    }
+    .envelope-screen.hidden {
+      display: none !important;
+    }
+
+    .envelope-intro-tag {
+      font-family: var(--font-title);
+      font-size: 0.92rem;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--gold-antique);
+      opacity: 0.85;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .envelope-intro-tag::before, .envelope-intro-tag::after {
+      content: '';
+      width: 28px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-antique));
+    }
+    .envelope-intro-tag::after {
+      background: linear-gradient(90deg, var(--gold-antique), transparent);
+    }
+
+    /* 3D Envelope Wrapper */
+    .envelope-wrapper {
+      position: relative;
+      width: min(88vw, 360px);
+      height: 230px;
+      perspective: 1200px;
+      cursor: pointer;
+    }
+
+    .envelope {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #18120f;
+      border-radius: 8px;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      box-shadow: 
+        0 25px 55px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(212, 175, 55, 0.2);
+      overflow: visible;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .envelope:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.95),
+        0 0 20px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Corner drafting tick marks on envelope */
+    .drafting-cross {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .drafting-cross::before, .drafting-cross::after {
+      content: '';
+      position: absolute;
+      background: var(--gold-antique);
+      opacity: 0.45;
+    }
+    .drafting-cross::before { top: 5px; left: 0; width: 100%; height: 1px; }
+    .drafting-cross::after { left: 5px; top: 0; width: 1px; height: 100%; }
+    .drafting-cross.tl { top: 8px; left: 8px; }
+    .drafting-cross.tr { top: 8px; right: 8px; }
+    .drafting-cross.bl { bottom: 8px; left: 8px; }
+    .drafting-cross.br { bottom: 8px; right: 8px; }
+
+    /* Inside Parchment Sheet that slides upward on open */
+    .envelope-letter-slide {
+      position: absolute;
+      top: 10px;
+      left: 14px;
+      right: 14px;
+      bottom: 10px;
+      background: var(--parchment);
+      border-radius: 4px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      z-index: 1;
+      transition: transform 0.85s 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .envelope.open .envelope-letter-slide {
+      transform: translateY(-90px);
+    }
+
+    /* Pocket folds (Left, Right, Bottom triangles) */
+    .pocket-fold-left {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(0 0, 0 100%, 50% 50%);
+      background: linear-gradient(90deg, #17110e, #1f1814);
+      z-index: 3;
+      border-left: 1px solid rgba(212, 175, 55, 0.15);
+    }
+    .pocket-fold-right {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+      background: linear-gradient(-90deg, #17110e, #1f1814);
+      z-index: 3;
+      border-right: 1px solid rgba(212, 175, 55, 0.15);
+    }
+    .pocket-fold-bottom {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(0 100%, 100% 100%, 50% 50%);
+      background: linear-gradient(0deg, #16100d 0%, #231b16 100%);
+      z-index: 3;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    }
+
+    /* Top Flap (Folds down over center, rotates UP 180deg when opened) */
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      clip-path: polygon(0 0, 100% 0, 50% 52%);
+      background: linear-gradient(180deg, #2a201a 0%, #1c1511 100%);
+      transform-origin: top center;
+      transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 4;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.65);
+    }
+    .envelope.open .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    /* Gold Foil Addressing Script */
+    .envelope-address-text {
+      position: absolute;
+      bottom: 22px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .envelope-name {
+      font-family: var(--font-hand);
+      font-size: 1.95rem;
+      font-weight: 700;
+      color: var(--gold-antique);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 0 12px rgba(212, 175, 55, 0.4);
+      letter-spacing: 0.5px;
+    }
+    .envelope-sub {
+      font-family: var(--font-title);
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(212, 175, 55, 0.7);
+      margin-top: -2px;
+    }
+
+    /* Crimson & Gold Wax Stamp Seal */
+    .wax-seal {
+      position: absolute;
+      top: 52%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #ba2930 0%, #7d1319 65%, #46090d 100%);
+      box-shadow: 
+        0 6px 16px rgba(0, 0, 0, 0.75),
+        0 0 0 2px rgba(186, 41, 48, 0.45),
+        inset 0 2px 3px rgba(255, 255, 255, 0.4),
+        inset 0 -3px 5px rgba(0, 0, 0, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 6;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .wax-seal::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      border: 1px dashed rgba(243, 229, 171, 0.5);
+      pointer-events: none;
+    }
+    .wax-seal:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.85),
+        0 0 16px rgba(212, 175, 55, 0.4);
+    }
+    .wax-seal-num {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: 1.65rem;
+      color: #f7e8ba;
+      text-shadow: 
+        0 1px 1px rgba(255, 255, 255, 0.4),
+        0 -1px 2px rgba(0, 0, 0, 0.85);
+      letter-spacing: -0.5px;
+    }
+
+    /* Seal pulsing aura ring */
+    .seal-pulse-ring {
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      border: 1px solid var(--gold-antique);
+      opacity: 0.65;
+      animation: sealPulse 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+      pointer-events: none;
+    }
+    @keyframes sealPulse {
+      0% { transform: scale(0.9); opacity: 0.85; }
+      100% { transform: scale(1.4); opacity: 0; }
+    }
+
+    .seal-hint-text {
+      font-family: var(--font-title);
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--gold-light);
+      margin-top: 36px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.9;
+      animation: floatBreath 2.5s ease-in-out infinite;
+    }
+    @keyframes floatBreath {
+      0%, 100% { transform: translateY(0); opacity: 0.75; }
+      50% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    /* Wax seal cracked/burst animation */
+    .wax-seal.cracked {
+      animation: crackAndBurst 0.6s forwards ease-in-out;
+    }
+    @keyframes crackAndBurst {
+      0% { transform: translate(-50%, -50%) scale(1); filter: brightness(1); }
+      40% { transform: translate(-50%, -50%) scale(1.22) rotate(4deg); filter: brightness(1.7); }
+      100% { transform: translate(-50%, -50%) scale(0.3) rotate(-12deg); opacity: 0; }
+    }
+
+    /* ==========================================================================
+       3. MAIN LETTER VIEWPORT & PARCHMENT SHEET
+       ========================================================================== */
+    .letter-viewport {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 16px 140px;
+      z-index: 20;
+      opacity: 1;
+    }
+    .letter-viewport.visible {
+      display: flex;
+      animation: letterUnfold 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    @keyframes letterUnfold {
+      0% { opacity: 0; transform: translateY(24px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .parchment-sheet {
+      position: relative;
+      width: 100%;
+      max-width: 660px;
+      background-color: var(--parchment);
+      /* Subtle parchment texture & paper grain */
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, #fffefc 0%, #fbf7f0 65%, #f4ecdf 100%),
+        repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.008) 2px, rgba(0,0,0,0.008) 4px);
+      border-radius: 6px;
+      padding: 44px 26px 56px;
+      box-shadow: 
+        0 25px 60px -15px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(212, 175, 55, 0.35),
+        0 10px 24px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+    }
+
+    @media (min-width: 600px) {
+      .parchment-sheet {
+        padding: 56px 50px 72px;
+      }
+    }
+
+    /* Architectural inner drafting frame & corner ticks */
+    .parchment-inner-frame {
+      position: absolute;
+      inset: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      pointer-events: none;
+    }
+    .parchment-inner-frame::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px dashed rgba(212, 175, 55, 0.15);
+    }
+
+    .corner-tick {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+    }
+    .corner-tick::before, .corner-tick::after {
+      content: '';
+      position: absolute;
+      background: var(--gold-antique);
+      opacity: 0.5;
+    }
+    .corner-tick::before { top: 6px; left: -2px; width: 18px; height: 1px; }
+    .corner-tick::after { left: 6px; top: -2px; width: 1px; height: 18px; }
+    .corner-tick.tl { top: 10px; left: 10px; }
+    .corner-tick.tr { top: 10px; right: 10px; }
+    .corner-tick.bl { bottom: 10px; left: 10px; }
+    .corner-tick.br { bottom: 10px; right: 10px; }
+
+    /* Top Architectural Spec Stamp */
+    .architectural-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      padding-bottom: 12px;
+      margin-bottom: 34px;
+      font-family: monospace, sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(94, 80, 73, 0.7);
+    }
+    .arch-code {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--gold-antique);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       4. LINE-BY-LINE INK-WRITING SYSTEM
+       ========================================================================== */
+    .letter-content {
+      position: relative;
+      font-family: var(--font-body);
+      font-size: clamp(1.05rem, 3.8vw, 1.16rem);
+      line-height: 1.95;
+      color: var(--ink-charcoal);
+    }
+
+    /* Paragraph Container */
+    .letter-para {
+      position: relative;
+      margin-bottom: 1.85rem;
+      word-break: break-word;
+    }
+
+    /* Special Paragraph Stylings */
+    .letter-para.salutation {
+      font-family: var(--font-hand);
+      font-size: clamp(1.95rem, 6.2vw, 2.5rem);
+      font-weight: 700;
+      color: #781b22;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    .letter-para.heading-greeting {
+      font-family: var(--font-title);
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(1.4rem, 4.6vw, 1.8rem);
+      color: #8c1e28;
+      margin-bottom: 1.6rem;
+    }
+    .letter-para.pull-quote {
+      margin: 2.2rem 0;
+      padding: 18px 22px;
+      background: linear-gradient(135deg, rgba(201, 123, 132, 0.1) 0%, rgba(212, 175, 55, 0.12) 100%);
+      border-left: 3px solid var(--gold-antique);
+      border-radius: 4px;
+      font-family: var(--font-title);
+      font-style: italic;
+      font-size: clamp(1.22rem, 4.2vw, 1.48rem);
+      color: #7b1622;
+      box-shadow: 0 4px 16px rgba(212, 175, 55, 0.1);
+    }
+    .letter-para.celebration {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: clamp(1.35rem, 4.8vw, 1.85rem);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #a82024 0%, #aa7c11 50%, #7e121a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 1.8rem 0;
+      text-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+    }
+    .letter-para.signature {
+      font-family: var(--font-hand);
+      font-size: clamp(1.85rem, 5.8vw, 2.4rem);
+      font-weight: 700;
+      color: #781b22;
+      margin-top: 2.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    /* Individual Ink Line */
+    .ink-line {
+      position: relative;
+      display: block;
+      margin-bottom: 2px;
+      line-height: inherit;
+    }
+
+    .ink-line-text {
+      display: inline-block;
+      white-space: pre-wrap;
+      width: 100%;
+      /* Default state: invisible & unclipped */
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      transform: translateY(4px);
+      transition: none;
+    }
+
+    .ink-line.completed .ink-line-text {
+      opacity: 1;
+      clip-path: inset(0 0% 0 0);
+      transform: translateY(0);
+    }
+
+    /* Glowing Fountain Pen Nib / Ink-Spark Indicator */
+    .ink-spark-nib {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 120;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.95)) drop-shadow(0 0 14px rgba(212, 175, 55, 0.75));
+    }
+    .ink-spark-nib.active {
+      opacity: 1;
+    }
+
+    .nib-icon {
+      width: 18px;
+      height: 18px;
+      transform: rotate(-35deg);
+      display: block;
+    }
+    .nib-glow-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #fff6cc;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ffd700, 0 0 20px #d4af37;
+      animation: nibSparkle 0.6s infinite alternate;
+    }
+    @keyframes nibSparkle {
+      from { transform: scale(0.85); opacity: 0.85; }
+      to { transform: scale(1.35); opacity: 1; }
+    }
+
+    /* Golden flourish underneath final signature */
+    .signature-flourish {
+      width: 140px;
+      height: 24px;
+      margin-top: 6px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+    }
+    .signature-flourish.visible {
+      opacity: 0.8;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       5. READER CONTROLS & "FOLLOW INK" BUTTON
+       ========================================================================== */
+    .follow-ink-pill {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      z-index: 140;
+      background: rgba(20, 16, 14, 0.9);
+      border: 1px solid var(--gold-antique);
+      color: var(--gold-light);
+      font-family: var(--font-title);
+      font-size: 0.92rem;
+      padding: 7px 18px;
+      border-radius: 30px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65), 0 0 12px rgba(212, 175, 55, 0.35);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .follow-ink-pill.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .follow-ink-pill:hover {
+      background: rgba(30, 24, 20, 0.98);
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    .reader-controls-bar {
+      position: fixed;
+      bottom: calc(env(safe-area-inset-bottom, 16px) + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 150;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(20, 16, 14, 0.92);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 7px 16px;
+      border-radius: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.15);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .reader-controls-bar.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ctrl-btn {
+      background: transparent;
+      border: 1px solid rgba(212, 175, 55, 0.22);
+      color: var(--gold-light);
+      font-family: var(--font-title);
+      font-size: 0.88rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .ctrl-btn:hover {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: var(--gold-antique);
+      color: #fff;
+    }
+    .ctrl-progress-ring {
+      font-family: monospace;
+      font-size: 0.78rem;
+      color: rgba(212, 175, 55, 0.85);
+      padding: 0 4px;
+    }
+
+    /* ==========================================================================
+       6. GRAND FINALE MOMENT: KEEPSAKE CARD & WISH BURST
+       ========================================================================== */
+    .keepsake-card {
+      position: relative;
+      margin-top: 40px;
+      background: linear-gradient(145deg, #ffffff 0%, #fdf8f0 100%);
+      border: 1.5px solid rgba(212, 175, 55, 0.55);
+      border-radius: 8px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 
+        0 14px 35px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(212, 175, 55, 0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      overflow: hidden;
+    }
+    .keepsake-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .keepsake-badge {
+      display: inline-block;
+      font-family: monospace, sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-antique);
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .keepsake-title {
+      font-family: var(--font-title);
+      font-size: clamp(1.55rem, 5.2vw, 2rem);
+      font-weight: 700;
+      color: #7b1622;
+      margin-bottom: 12px;
+    }
+
+    .keepsake-desc {
+      font-family: var(--font-body);
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--ink-muted);
+      max-width: 480px;
+      margin: 0 auto 24px;
+      font-weight: 500;
+    }
+
+    .wish-button {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #8a1721 0%, #ba2930 50%, #d4af37 100%);
+      color: #fffdf7;
+      font-family: var(--font-title);
+      font-size: 1.18rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 14px 34px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 
+        0 8px 24px rgba(138, 23, 33, 0.45),
+        0 0 16px rgba(212, 175, 55, 0.35);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+      overflow: hidden;
+    }
+    .wish-button:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 
+        0 12px 30px rgba(138, 23, 33, 0.55),
+        0 0 22px rgba(212, 175, 55, 0.5);
+    }
+    .wish-button:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .wish-toast {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.8s ease, opacity 0.8s ease, margin-top 0.8s ease;
+      margin-top: 0;
+    }
+    .wish-toast.revealed {
+      max-height: 200px;
+      opacity: 1;
+      margin-top: 24px;
+    }
+    .wish-toast-stars {
+      color: var(--gold-antique);
+      letter-spacing: 8px;
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+    .wish-toast-msg {
+      font-family: var(--font-title);
+      font-style: italic;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: #6b141d;
+    }
+
+    /* Architectural footer metadata */
+    .architectural-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-top: 36px;
+      padding-top: 18px;
+      border-top: 1px dashed rgba(212, 175, 55, 0.25);
+      font-family: monospace, sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(94, 80, 73, 0.55);
+    }
+    .scale-bar {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--gold-antique);
+      opacity: 0.65;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       LOCAL AUDIO SOURCE
+       ==========================================================================
+       Change './bg-music.mp3' below to swap with any local audio file.
+       ========================================================================== -->
+  <audio id="bgMusic" src="./bg-music.mp3" loop preload="auto"></audio>
+
+  <!-- Full-screen Background HTML5 Canvas for Golden Dust Motes & Sparks -->
+  <canvas id="ambientCanvas"></canvas>
+
+  <!-- Top-Right Floating Sound Toggle Button -->
+  <button id="audioToggleBtn" class="audio-toggle-btn" aria-label="Toggle Background Music">
+    <span id="audioIcon">🔇</span>
+  </button>
+
+  <!-- ==========================================================================
+       OPENING 3D ENVELOPE MODAL
+       ========================================================================== -->
+  <div id="envelopeScreen" class="envelope-screen">
+    <div class="envelope-intro-tag">FOR RIDHU • 22ND CHAPTER</div>
+
+    <div class="envelope-wrapper" id="envelopeWrapper">
+      <div class="envelope" id="envelopeBox">
+        <!-- Drafting corner tick marks -->
+        <div class="drafting-cross tl"></div>
+        <div class="drafting-cross tr"></div>
+        <div class="drafting-cross bl"></div>
+        <div class="drafting-cross br"></div>
+
+        <!-- Inside Parchment Sheet -->
+        <div class="envelope-letter-slide"></div>
+
+        <!-- Pocket folds (Left, Right, Bottom triangles) -->
+        <div class="pocket-fold-left"></div>
+        <div class="pocket-fold-right"></div>
+        <div class="pocket-fold-bottom"></div>
+
+        <!-- Top Flap (folds down over center) -->
+        <div class="envelope-flap" id="envelopeFlap"></div>
+
+        <!-- Front Script Addressing -->
+        <div class="envelope-address-text">
+          <div class="envelope-name">For Ridhu</div>
+          <div class="envelope-sub">Happy 22nd Birthday</div>
+        </div>
+
+        <!-- Crimson & Gold Wax Stamp Seal -->
+        <div class="wax-seal" id="waxSeal" title="Click to break seal & open letter">
+          <div class="seal-pulse-ring"></div>
+          <span class="wax-seal-num">22</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="seal-hint-text">
+      <span>✦</span> Tap the wax seal to open <span>✦</span>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MAIN LETTER VIEWPORT (PARCHMENT & INK WRITING)
+       ========================================================================== -->
+  <main id="letterViewport" class="letter-viewport">
+    <article class="parchment-sheet" id="parchmentSheet">
+      <!-- Architectural Inner Frame & Corner Drafting Ticks -->
+      <div class="parchment-inner-frame"></div>
+      <div class="corner-tick tl"></div>
+      <div class="corner-tick tr"></div>
+      <div class="corner-tick bl"></div>
+      <div class="corner-tick br"></div>
+
+      <!-- Architectural Header Title Block -->
+      <header class="architectural-header">
+        <span class="arch-code">
+          <span>📐</span> SPEC // CHAPTER 22
+        </span>
+        <span>ELEVATION: 22 YRS</span>
+        <span>DRAWING: R-22-BDAY</span>
+      </header>
+
+      <!-- Letter Content (Populated & written sequentially) -->
+      <div class="letter-content" id="letterContent"></div>
+
+      <!-- Closing Flourish Underneath Signature -->
+      <svg id="signatureFlourish" class="signature-flourish" viewBox="0 0 140 24" fill="none">
+        <path d="M5 12C35 4 55 20 85 10C105 3 125 15 135 12" stroke="#d4af37" stroke-width="1.2" stroke-linecap="round"/>
+        <circle cx="85" cy="10" r="2.5" fill="#c97b84"/>
+      </svg>
+
+      <!-- Grand Finale Keepsake Card -->
+      <section id="keepsakeCard" class="keepsake-card">
+        <div class="corner-tick tl"></div>
+        <div class="corner-tick tr"></div>
+        <div class="corner-tick bl"></div>
+        <div class="corner-tick br"></div>
+
+        <div class="keepsake-badge">CHAPTER 22 • KEEPSAKE</div>
+        <h2 class="keepsake-title">Make a wish for 22 ✨</h2>
+        <p class="keepsake-desc">
+          Close your eyes, think of the one thing your heart desires most this year, and press the button below.
+        </p>
+        <button id="wishBtn" class="wish-button">
+          <span id="wishBtnText">Make a wish for 22 ✨</span>
+        </button>
+
+        <div id="wishToast" class="wish-toast">
+          <div class="wish-toast-stars">✦ ✦ ✦</div>
+          <p class="wish-toast-msg">
+            May every single wish you made today find its way home to you.<br>
+            <strong>Happy 22nd Birthday, Ridhu. ❤️</strong>
+          </p>
+        </div>
+      </section>
+
+      <!-- Architectural Footer Metadata -->
+      <footer class="architectural-footer">
+        <div class="scale-bar">|——|——|——|——| SCALE 1:1 (HEART TO PAPER)</div>
+        <div>ARCHITECT: RIDHU • DESIGNED WITH ENDLESS LOVE</div>
+      </footer>
+    </article>
+  </main>
+
+  <!-- Glowing Fountain Pen Nib / Ink-Spark Indicator -->
+  <div id="inkSparkNib" class="ink-spark-nib">
+    <svg class="nib-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L16 9L12 13L8 9L12 2Z" fill="url(#goldNibGrad)" stroke="#aa7c11" stroke-width="0.8"/>
+      <path d="M12 13V20" stroke="#ffd700" stroke-width="1.2"/>
+      <circle cx="12" cy="20" r="1.5" fill="#fff5cc"/>
+      <defs>
+        <linearGradient id="goldNibGrad" x1="8" y1="2" x2="16" y2="13" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#fff5cc"/>
+          <stop offset="0.5" stop-color="#d4af37"/>
+          <stop offset="1" stop-color="#8f660d"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="nib-glow-dot"></div>
+  </div>
+
+  <!-- Subtle "Follow Ink" Floating Pill Button -->
+  <button id="followInkPill" class="follow-ink-pill" aria-label="Follow ink writing">
+    <span>↓</span> Follow ink
+  </button>
+
+  <!-- Reader Floating Controls -->
+  <div id="readerControls" class="reader-controls-bar">
+    <button id="pauseBtn" class="ctrl-btn" title="Pause or Resume Writing">
+      <span id="pauseIcon">⏸</span> Pause
+    </button>
+    <button id="speedBtn" class="ctrl-btn" title="Cycle Writing Speed">
+      <span id="speedLabel">1x</span>
+    </button>
+    <button id="instantBtn" class="ctrl-btn" title="Instantly reveal the rest of the letter">
+      ⚡ Instant Read
+    </button>
+    <span id="progressIndicator" class="ctrl-progress-ring">0%</span>
+  </div>
+
+  <!-- ==========================================================================
+       JAVASCRIPT LOGIC
+       ========================================================================== -->
+  <script>
+    /* ==========================================================================
+       A. EXACT VERBATIM LETTER DATA (29 PARAGRAPHS)
+       ========================================================================== */
+    const LETTER_PARAGRAPHS = [
+      { text: "Dear Ridhu ❤️", type: "salutation" },
+      { text: "Happy 22nd birthday, my everything! ❤️", type: "heading-greeting" },
+      { text: "Maybe you don’t feel comfortable with me calling you that anymore, and I’m sorry if you don’t. But you know me, Ridhu. Whatever I say to you has always come straight from my heart….", type: "body" },
+      { text: "First of all, I hope this birthday brings you all the happiness and peace you’ve been missing for so long. I hope life gets a little easier on you, your heart feels lighter, and everything you’ve been silently wishing for slowly starts falling into place. You deserve all of it, my girl!", type: "body" },
+      { text: "It’s been days, weeks, and now months since we last spoke properly, and trust me, the silence still haunts me. I’ve been learning a lot from everything that happened, about myself, about love, and about the things I should’ve understood sooner. But somehow, when it comes to you, I still struggle to be okay with it. Maybe that’s just how it is when someone means this much to you.", type: "body" },
+      { text: "Anyway, I really hope you’re doing great, my best architect!! I’m always rooting for you, Ridhu, even if you don’t get to hear it from me anymore.", type: "body" },
+      { text: "And I’m sorry, genuinely. For all those times I hurt you, for the things I said, and for the moments I failed to understand you the way you deserved. Like I’ve told you a hundred times, none of it was ever meant to hurt you. I’m still figuring out this whole life thing, Ridhu. I’m too young to have everything right, and I’ve made mistakes I wish I could undo. But one thing I never had to figure out was how much I loved you. That part always came naturally.", type: "body" },
+      { text: "And I won’t force you to choose me anymore. I mean it. Whatever you choose for yourself, wherever life takes you, I just hope it makes you genuinely happy. You’re one of the best people I’ve ever known, and please, never settle for anything less than the love and respect you deserve.", type: "body" },
+      { text: "But there’s something I still haven’t learned, Ridhu. Maybe I’m not ready to fully understand why things had to turn out this way, or maybe I understand it somewhere deep down but I’m just not strong enough to accept it yet. I keep telling myself to be mature, to accept things as they are, and to move forward. But it’s so much easier to say than to actually do. Because when it comes to you, my heart still refuses to believe that this could be the end of our story. You were my first love, Ridhu, and somewhere in my heart, I still believe you’ll be my last. Not because I want to hold you back or make you feel responsible for my feelings, but because I genuinely can’t imagine loving someone the way I’ve loved you.", type: "body" },
+      { text: "And you know what keeps me going sometimes? That tiny little hope of hearing your voice again, just like the old days. I miss that more than I can explain. I miss the way we used to talk about literally everything and nothing, how even the most random conversations could make my entire day. Sometimes I just wish I could hear you call me the way you used to, even if it’s only for a moment. I don’t know if that day will ever come, but the thought of it still makes me smile. And maybe that’s what keeps me moving forward, the hope that someday, somehow, I’ll get to hear that familiar voice again. Until then, I’ll keep growing, learning, and trying to become a better version of myself.", type: "body" },
+      { text: "I fell in love with you before I ever hugged you, before I kissed you, before I even got to hold your hand. Think about that, Ridhu. I loved you before any of those beautiful little moments happened. And even on my darkest days, when everything around me felt like it was falling apart, that love never really left. I guess a part of me will always carry it, no matter how life turns out.", type: "body" },
+      { text: "You know what? Whenever I pray for my family, I pray for you and your family too. I always have. I want every single dream of yours to come true, and I want your parents to see you become everything they’ve ever wished for. I hope all their sacrifices turn into something beautiful, and one day, you look around and realise you’ve achieved everything you once dreamed of. I know you will!!", type: "body" },
+      { text: "I’ll always be proud of you, Ridhu. Your little wins, your big achievements, your struggles, your growth, literally everything. Even if I’m not there to celebrate them with you, just know that somewhere, someone is genuinely happy seeing you win.", type: "body" },
+      { text: "And yeah, call me mad, call me cringe, laugh at how dramatic I sound. I don’t even care anymore . But trust me, nobody, and I mean NOBODY, has ever seen this version of me. You brought out a side of me I didn’t even know existed. A version of myself that could love someone so deeply, care about the smallest things, and find happiness in another person’s smile. And honestly, I don’t think anyone else could ever bring out that exact same version of me.", type: "body" },
+      { text: "I know we’ve hurt each other a lot. I know things weren’t always beautiful between us. There were nights when I couldn’t sleep, nights when I kept thinking about what went wrong and how differently things could’ve turned out. And honestly, even now, some nights are still like that.", type: "body" },
+      { text: "But here’s the thing, Ridhu. Even after everything, when I think about you, I still find myself remembering the good things first. Your smile, our little moments, the way you made me feel, and how happy I was just knowing you were a part of my life. I don’t want the pain to be the only thing left of something that once meant the whole world to me.", type: "body" },
+      { text: "And if I had seven lives, I swear I’d probably end up falling for you in all seven of them. 💗", type: "pull-quote" },
+      { text: "It’s not my ego, Ridhu. I’m not holding a grudge, and I’m not saying all this to make you feel guilty or change your mind. It’s just that what I felt for you was never something ordinary. I once made you a promise with all my heart, and those words still mean something to me. But I’ve also realised that loving someone doesn’t mean holding them back. So wherever life takes you, whatever you decide, I’ll respect it. I just hope life is always gentle with you.", type: "body" },
+      { text: "And finally,", type: "body" },
+      { text: "HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!! ♥️", type: "celebration" },
+      { text: "Brooo, you’re actually 22 now!! Look at you growing up and all . But I don’t care how old you get, you’ll always be my little Ridhu in my eyes. The girl I always wanted to protect, cherish, and see smiling through every season of life. The one whose smile could literally make my whole day better.", type: "body" },
+      { text: "I hope this year is so, so good to you. I hope you laugh more, cry less, achieve things you once thought were impossible, and become the happiest version of yourself. I hope this new chapter gives you a thousand reasons to smile and not a single reason to doubt how precious you are. And please take care of that little heart of yours, okay?", type: "body" },
+      { text: "I don’t know what life has planned for us, Ridhu. Maybe our paths will cross again, maybe they won’t. Maybe one day we’ll talk like we used to, or maybe life has written something completely different for us. I don’t have those answers. But whatever happens, I’m genuinely grateful that I got to love you the way I did.", type: "body" },
+      { text: "And if there’s one thing I want you to remember from all these words, it’s this:", type: "body" },
+      { text: "You were never just someone I fell in love with, Ridhu. You were the person who made me realise how deeply my heart could love someone. You were my first, and in my heart, you’ll always be the love I never imagined having to let go of.", type: "body" },
+      { text: "And that’s something I’ll never forget.", type: "body" },
+      { text: "Happy birthday once again, my favourite girl, my best architect, my lil one. ❤️", type: "body" },
+      { text: "I love you, Ridhu. More than these words could ever explain. And no matter what, a part of me always will.", type: "body" },
+      { text: "Always with love, never with expectations. ❤️", type: "signature" }
+    ];
+
+    /* ==========================================================================
+       B. CANVAS AMBIENT GOLDEN DUST & BURST PARTICLE SYSTEM
+       ========================================================================== */
+    const canvas = document.getElementById('ambientCanvas');
+    const ctx = canvas.getContext('2d');
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const ambientParticles = [];
+    const burstParticles = [];
+    const PARTICLE_COUNT = Math.min(85, Math.floor(window.innerWidth / 7));
+
+    class AmbientDust {
+      constructor() {
+        this.reset(true);
+      }
+      reset(initial = false) {
+        this.x = Math.random() * width;
+        this.y = initial ? Math.random() * height : height + 10;
+        this.size = Math.random() * 2.2 + 0.6;
+        this.speedY = -(Math.random() * 0.45 + 0.15);
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.wobble = Math.random() * Math.PI * 2;
+        this.wobbleSpeed = Math.random() * 0.02 + 0.01;
+        this.baseAlpha = Math.random() * 0.55 + 0.25;
+        this.alpha = this.baseAlpha;
+        this.isGold = Math.random() > 0.35;
+      }
+      update() {
+        this.wobble += this.wobbleSpeed;
+        this.x += this.speedX + Math.sin(this.wobble) * 0.35;
+        this.y += this.speedY;
+        this.alpha = this.baseAlpha + Math.sin(this.wobble * 2) * 0.15;
+        if (this.y < -10 || this.x < -10 || this.x > width + 10) {
+          this.reset(false);
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.isGold 
+          ? `rgba(212, 175, 55, ${Math.max(0, this.alpha)})` 
+          : `rgba(201, 123, 132, ${Math.max(0, this.alpha * 0.85)})`;
+        ctx.shadowBlur = this.size * 3;
+        ctx.shadowColor = this.isGold ? 'rgba(255, 215, 0, 0.6)' : 'rgba(201, 123, 132, 0.4)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    class BurstParticle {
+      constructor(x, y, type = 'gold') {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = type === 'wish' ? Math.random() * 9 + 3 : Math.random() * 6 + 2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed - (type === 'wish' ? 2 : 0);
+        this.gravity = type === 'wish' ? 0.08 : 0.12;
+        this.drag = 0.96;
+        this.size = Math.random() * 3.5 + 1.2;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.016 + 0.012;
+        this.type = type;
+        this.sparkle = Math.random() > 0.4;
+      }
+      update() {
+        this.vx *= this.drag;
+        this.vy = this.vy * this.drag + this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+      draw() {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.beginPath();
+        if (this.sparkle) {
+          ctx.translate(this.x, this.y);
+          ctx.fillStyle = '#fff7d6';
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#ffd700';
+          const r = this.size * 1.5;
+          ctx.moveTo(0, -r);
+          ctx.lineTo(r * 0.25, -r * 0.25);
+          ctx.lineTo(r, 0);
+          ctx.lineTo(-r * 0.25, r * 0.25);
+          ctx.lineTo(0, r);
+          ctx.lineTo(-r * 0.25, r * 0.25);
+          ctx.lineTo(-r, 0);
+          ctx.lineTo(-r * 0.25, -r * 0.25);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.type === 'crimson' 
+            ? 'rgba(186, 41, 48, 0.95)' 
+            : 'rgba(245, 215, 110, 0.95)';
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#d4af37';
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      ambientParticles.push(new AmbientDust());
+    }
+
+    function spawnParticleBurst(x, y, count = 35, type = 'gold') {
+      for (let i = 0; i < count; i++) {
+        burstParticles.push(new BurstParticle(x, y, Math.random() > 0.75 && type === 'seal' ? 'crimson' : type));
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (let p of ambientParticles) {
+        p.update();
+        p.draw();
+      }
+
+      for (let i = burstParticles.length - 1; i >= 0; i--) {
+        const bp = burstParticles[i];
+        bp.update();
+        bp.draw();
+        if (bp.alpha <= 0) {
+          burstParticles.splice(i, 1);
+        }
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+    requestAnimationFrame(animateParticles);
+
+    /* ==========================================================================
+       C. AUDIO AUTOPLAY & SMOOTH VOLUME RAMPING (0 to 0.65 over 2.5s)
+       ========================================================================== */
+    const bgMusic = document.getElementById('bgMusic');
+    const audioToggleBtn = document.getElementById('audioToggleBtn');
+    const audioIcon = document.getElementById('audioIcon');
+    let isAudioPlaying = false;
+    let fadeInterval = null;
+
+    function fadeAudio(targetVolume, duration = 2500) {
+      if (!bgMusic) return;
+      if (fadeInterval) clearInterval(fadeInterval);
+      const stepTime = 50;
+      const steps = duration / stepTime;
+      const volumeStep = (targetVolume - bgMusic.volume) / steps;
+
+      fadeInterval = setInterval(() => {
+        let newVol = bgMusic.volume + volumeStep;
+        if ((volumeStep > 0 && newVol >= targetVolume) || (volumeStep < 0 && newVol <= targetVolume)) {
+          bgMusic.volume = Math.max(0, Math.min(1, targetVolume));
+          clearInterval(fadeInterval);
+          if (targetVolume === 0) {
+            bgMusic.pause();
+          }
+        } else {
+          bgMusic.volume = Math.max(0, Math.min(1, newVol));
+        }
+      }, stepTime);
+    }
+
+    function playMusicSmoothly() {
+      if (!bgMusic) return;
+      bgMusic.volume = 0;
+      const playPromise = bgMusic.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          isAudioPlaying = true;
+          updateAudioUI(true);
+          fadeAudio(0.65, 2500);
+        }).catch(err => {
+          console.warn('Autoplay restricted by browser policy:', err);
+          isAudioPlaying = false;
+          updateAudioUI(false);
+        });
+      }
+    }
+
+    function updateAudioUI(playing) {
+      if (playing) {
+        audioToggleBtn.classList.add('playing');
+        audioIcon.textContent = '🔊';
+      } else {
+        audioToggleBtn.classList.remove('playing');
+        audioIcon.textContent = '🔇';
+      }
+    }
+
+    audioToggleBtn.addEventListener('click', () => {
+      if (isAudioPlaying) {
+        fadeAudio(0, 800);
+        isAudioPlaying = false;
+        updateAudioUI(false);
+      } else {
+        bgMusic.play().then(() => {
+          fadeAudio(0.65, 1200);
+          isAudioPlaying = true;
+          updateAudioUI(true);
+        }).catch(err => console.warn(err));
+      }
+    });
+
+    /* ==========================================================================
+       D. ENVELOPE OPENING INTERACTION
+       ========================================================================== */
+    const waxSeal = document.getElementById('waxSeal');
+    const envelopeBox = document.getElementById('envelopeBox');
+    const envelopeScreen = document.getElementById('envelopeScreen');
+    const letterViewport = document.getElementById('letterViewport');
+    const readerControls = document.getElementById('readerControls');
+    let isEnvelopeOpened = false;
+
+    function openEnvelope(e) {
+      if (isEnvelopeOpened) return;
+      isEnvelopeOpened = true;
+
+      const rect = waxSeal.getBoundingClientRect();
+      const burstX = rect.left + rect.width / 2;
+      const burstY = rect.top + rect.height / 2;
+
+      // 1. Golden particle burst
+      spawnParticleBurst(burstX, burstY, 50, 'seal');
+
+      // 2. Crack seal & 3D open flap
+      waxSeal.classList.add('cracked');
+      envelopeBox.classList.add('open');
+
+      // 3. Start local background music fade-in directly inside click handler
+      playMusicSmoothly();
+
+      // 4. Transition from Envelope to Parchment Letter
+      setTimeout(() => {
+        envelopeScreen.classList.add('opened');
+        letterViewport.classList.add('visible');
+        readerControls.classList.add('visible');
+
+        setTimeout(() => {
+          envelopeScreen.classList.add('hidden');
+          // 5. Begin ink calligraphy writing
+          startInkWritingEngine();
+        }, 700);
+      }, 650);
+    }
+
+    waxSeal.addEventListener('click', openEnvelope);
+    document.getElementById('envelopeWrapper').addEventListener('click', (e) => {
+      if (!isEnvelopeOpened) openEnvelope(e);
+    });
+
+    /* ==========================================================================
+       E. DYNAMIC VISUAL LINE SEGMENTATION & INK-WRITING ENGINE
+       ========================================================================== */
+    const letterContent = document.getElementById('letterContent');
+    const inkSparkNib = document.getElementById('inkSparkNib');
+    const followInkPill = document.getElementById('followInkPill');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const pauseIcon = document.getElementById('pauseIcon');
+    const speedBtn = document.getElementById('speedBtn');
+    const speedLabel = document.getElementById('speedLabel');
+    const instantBtn = document.getElementById('instantBtn');
+    const progressIndicator = document.getElementById('progressIndicator');
+    const keepsakeCard = document.getElementById('keepsakeCard');
+    const signatureFlourish = document.getElementById('signatureFlourish');
+
+    // Engine State
+    let currentSpeed = 1.0;
+    const SPEED_OPTIONS = [1.0, 1.5, 2.0];
+    let isPaused = false;
+    let isInstantRead = false;
+    let autoScrollEnabled = true;
+    let activeLineElement = null;
+
+    let allRenderedLines = [];
+    let currentLineIndex = 0;
+
+    function prepareLetterDOM() {
+      letterContent.innerHTML = '';
+      allRenderedLines = [];
+
+      LETTER_PARAGRAPHS.forEach((pData, pIdx) => {
+        const pEl = document.createElement('div');
+        pEl.className = `letter-para ${pData.type}`;
+        pEl.dataset.paraIndex = pIdx;
+        letterContent.appendChild(pEl);
+
+        const isSpecialSingle = ['salutation', 'heading-greeting', 'celebration', 'signature'].includes(pData.type);
+
+        if (isSpecialSingle || pData.text.length < 50) {
+          const lineEl = createInkLineElement(pData.text);
+          pEl.appendChild(lineEl);
+          allRenderedLines.push({
+            element: lineEl,
+            textSpan: lineEl.querySelector('.ink-line-text'),
+            text: pData.text,
+            isSentenceEnd: true,
+            isParaEnd: true,
+            paraType: pData.type
+          });
+        } else {
+          // Detect visual line breaks dynamically by measuring word positions
+          const words = pData.text.split(' ').filter(w => w.length > 0);
+          pEl.innerHTML = words.map((w, i) => `<span class="tmp-w" id="tw_${pIdx}_${i}">${w} </span>`).join('');
+
+          const spans = pEl.querySelectorAll('.tmp-w');
+          const lineWordGroups = [];
+          let currentGroup = [];
+          let lastTop = null;
+
+          spans.forEach((span) => {
+            const top = Math.round(span.offsetTop);
+            if (lastTop === null || Math.abs(top - lastTop) < 6) {
+              currentGroup.push(span.textContent);
+              lastTop = top;
+            } else {
+              lineWordGroups.push(currentGroup.join(''));
+              currentGroup = [span.textContent];
+              lastTop = top;
+            }
+          });
+          if (currentGroup.length > 0) {
+            lineWordGroups.push(currentGroup.join(''));
+          }
+
+          pEl.innerHTML = '';
+          lineWordGroups.forEach((lText, lIdx) => {
+            const trimmed = lText.trim();
+            const isSentenceEnd = /[.!?…❤️💗♥️]$/.test(trimmed);
+            const isParaEnd = lIdx === lineWordGroups.length - 1;
+            const lineEl = createInkLineElement(lText);
+            pEl.appendChild(lineEl);
+
+            allRenderedLines.push({
+              element: lineEl,
+              textSpan: lineEl.querySelector('.ink-line-text'),
+              text: lText,
+              isSentenceEnd: isSentenceEnd,
+              isParaEnd: isParaEnd,
+              paraType: pData.type
+            });
+          });
+        }
+      });
+    }
+
+    function createInkLineElement(text) {
+      const lineDiv = document.createElement('div');
+      lineDiv.className = isInstantRead ? 'ink-line completed' : 'ink-line';
+      const textSpan = document.createElement('span');
+      textSpan.className = 'ink-line-text';
+      textSpan.textContent = text;
+      if (isInstantRead) {
+        textSpan.style.clipPath = 'inset(0 0% 0 0)';
+        textSpan.style.opacity = '1';
+        textSpan.style.transform = 'translateY(0)';
+      }
+      lineDiv.appendChild(textSpan);
+      return lineDiv;
+    }
+
+    // Initialize layout immediately and on font ready
+    prepareLetterDOM();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        if (!isEnvelopeOpened && !isInstantRead) {
+          prepareLetterDOM();
+        }
+      });
+    }
+
+    /* ==========================================================================
+       F. INK ANIMATION SCHEDULER & REALISTIC EMOTIONAL PACING
+       ========================================================================== */
+    function startInkWritingEngine() {
+      if (isInstantRead) return;
+      if (allRenderedLines.length === 0) {
+        prepareLetterDOM();
+      }
+      currentLineIndex = 0;
+      writeNextLine();
+    }
+
+    function writeNextLine() {
+      if (isInstantRead) return;
+
+      if (currentLineIndex >= allRenderedLines.length) {
+        finishLetterWriting();
+        return;
+      }
+
+      if (isPaused) return;
+
+      const lineData = allRenderedLines[currentLineIndex];
+      activeLineElement = lineData.element;
+
+      // Update progress display
+      const percent = Math.round((currentLineIndex / allRenderedLines.length) * 100);
+      progressIndicator.textContent = `${percent}%`;
+
+      // Smart auto-scroll anchor to lower-middle third of screen
+      if (autoScrollEnabled) {
+        smoothScrollToActiveLine();
+      }
+
+      // Proportional reveal duration: ~35ms per character at 1x
+      const charCount = Math.max(12, lineData.text.length);
+      const baseDuration = Math.max(750, Math.min(2800, charCount * 36));
+      const duration = baseDuration / currentSpeed;
+
+      const textSpan = lineData.textSpan;
+      inkSparkNib.classList.add('active');
+
+      const startTime = performance.now();
+      let lastParticleTime = 0;
+
+      function renderFrame(now) {
+        if (isInstantRead) return;
+
+        if (isPaused) {
+          requestAnimationFrame(renderFrame);
+          return;
+        }
+
+        const elapsed = now - startTime;
+        let progress = Math.min(1, elapsed / duration);
+
+        // Smooth cubic ease-out
+        const easedProgress = 1 - Math.pow(1 - progress, 1.8);
+
+        // Clip-path wipe: left-to-right
+        const clipPercent = (1 - easedProgress) * 100;
+        textSpan.style.clipPath = `inset(0 ${clipPercent}% 0 0)`;
+        textSpan.style.opacity = Math.min(1, easedProgress * 3.5);
+        textSpan.style.transform = `translateY(${(1 - easedProgress) * 4}px)`;
+
+        // Update glowing fountain pen nib position
+        const lineRect = lineData.element.getBoundingClientRect();
+        const nibX = lineRect.left + (lineRect.width * easedProgress);
+        const nibY = lineRect.top + lineRect.height * 0.55;
+        inkSparkNib.style.transform = `translate(${nibX}px, ${nibY}px)`;
+
+        // Spawn tiny micro-sparkles along writing path
+        if (now - lastParticleTime > 120 && Math.random() > 0.4) {
+          lastParticleTime = now;
+          spawnParticleBurst(nibX, nibY, 1, 'gold');
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(renderFrame);
+        } else {
+          // Complete line
+          lineData.element.classList.add('completed');
+          textSpan.style.clipPath = 'inset(0 0% 0 0)';
+          textSpan.style.opacity = '1';
+          textSpan.style.transform = 'translateY(0)';
+
+          inkSparkNib.classList.remove('active');
+
+          currentLineIndex++;
+
+          // Natural emotional pacing:
+          // 400ms natural breath after sentence
+          // 950ms deeper reflective pause after paragraph
+          // 80ms tiny hand repositioning between wrapped lines
+          let pauseDuration = 80;
+          if (lineData.isParaEnd) {
+            pauseDuration = 950;
+          } else if (lineData.isSentenceEnd) {
+            pauseDuration = 400;
+          }
+
+          setTimeout(writeNextLine, pauseDuration / currentSpeed);
+        }
+      }
+
+      requestAnimationFrame(renderFrame);
+    }
+
+    function smoothScrollToActiveLine() {
+      if (!activeLineElement) return;
+      const rect = activeLineElement.getBoundingClientRect();
+      const currentScrollY = window.scrollY || window.pageYOffset;
+      // Keep active line at ~60% down the screen (lower-middle third)
+      const targetY = currentScrollY + rect.top - (window.innerHeight * 0.60);
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        behavior: 'smooth'
+      });
+    }
+
+    /* ==========================================================================
+       G. SMART SCROLL LISTENER & "FOLLOW INK" DETECTION
+       ========================================================================== */
+    function handleUserScrollIntent() {
+      if (!activeLineElement || isInstantRead) return;
+
+      const rect = activeLineElement.getBoundingClientRect();
+      const currentScrollY = window.scrollY || window.pageYOffset;
+      const expectedScrollY = currentScrollY + rect.top - (window.innerHeight * 0.60);
+
+      // If user scrolled away to re-read earlier text (> 80px difference)
+      if (Math.abs(currentScrollY - expectedScrollY) > 80) {
+        autoScrollEnabled = false;
+        followInkPill.classList.add('visible');
+      } else {
+        autoScrollEnabled = true;
+        followInkPill.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('wheel', handleUserScrollIntent, { passive: true });
+    window.addEventListener('touchmove', handleUserScrollIntent, { passive: true });
+
+    followInkPill.addEventListener('click', () => {
+      autoScrollEnabled = true;
+      followInkPill.classList.remove('visible');
+      smoothScrollToActiveLine();
+    });
+
+    /* ==========================================================================
+       H. READER CONTROLS (SPEED, PAUSE, INSTANT READ)
+       ========================================================================== */
+    speedBtn.addEventListener('click', () => {
+      const idx = SPEED_OPTIONS.indexOf(currentSpeed);
+      currentSpeed = SPEED_OPTIONS[(idx + 1) % SPEED_OPTIONS.length];
+      speedLabel.textContent = `${currentSpeed}x`;
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      isPaused = !isPaused;
+      if (isPaused) {
+        pauseBtn.innerHTML = '<span id="pauseIcon">▶</span> Resume';
+        inkSparkNib.classList.remove('active');
+      } else {
+        pauseBtn.innerHTML = '<span id="pauseIcon">⏸</span> Pause';
+        inkSparkNib.classList.add('active');
+        writeNextLine();
+      }
+    });
+
+    instantBtn.addEventListener('click', () => {
+      triggerInstantRead();
+    });
+
+    function triggerInstantRead() {
+      isInstantRead = true;
+      inkSparkNib.classList.remove('active');
+      followInkPill.classList.remove('visible');
+
+      if (allRenderedLines.length === 0) {
+        prepareLetterDOM();
+      }
+
+      allRenderedLines.forEach(l => {
+        l.element.classList.add('completed');
+        l.textSpan.style.clipPath = 'inset(0 0% 0 0)';
+        l.textSpan.style.opacity = '1';
+        l.textSpan.style.transform = 'translateY(0)';
+      });
+
+      progressIndicator.textContent = '100%';
+      pauseBtn.style.display = 'none';
+      speedBtn.style.display = 'none';
+      instantBtn.style.display = 'none';
+
+      keepsakeCard.classList.add('visible');
+      finishLetterWriting();
+    }
+
+    function finishLetterWriting() {
+      inkSparkNib.classList.remove('active');
+      progressIndicator.textContent = '100%';
+      signatureFlourish.classList.add('visible');
+
+      setTimeout(() => {
+        keepsakeCard.classList.add('visible');
+        if (autoScrollEnabled || isInstantRead) {
+          keepsakeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 700);
+    }
+
+    /* ==========================================================================
+       I. GRAND FINALE MOMENT: MAKE A WISH FOR 22 & STARLIGHT BURST
+       ========================================================================== */
+    const wishBtn = document.getElementById('wishBtn');
+    const wishBtnText = document.getElementById('wishBtnText');
+    const wishToast = document.getElementById('wishToast');
+    let hasWished = false;
+
+    wishBtn.addEventListener('click', () => {
+      const rect = wishBtn.getBoundingClientRect();
+      const burstX = rect.left + rect.width / 2;
+      const burstY = rect.top + rect.height / 2;
+
+      spawnParticleBurst(burstX, burstY, 80, 'wish');
+      setTimeout(() => spawnParticleBurst(width * 0.25, height * 0.35, 50, 'wish'), 200);
+      setTimeout(() => spawnParticleBurst(width * 0.75, height * 0.35, 50, 'wish'), 400);
+
+      if (!hasWished) {
+        hasWished = true;
+        wishBtnText.textContent = "Your wish is released into the universe ✨";
+        wishToast.classList.add('revealed');
+      }
+    });
+  </script>
+</body>
+</html>
