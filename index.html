@@ -13,7 +13,7 @@
        ========================================================================== -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Dancing+Script:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
@@ -44,9 +44,12 @@
       --blueprint-line: rgba(212, 175, 55, 0.038);
       --blueprint-major: rgba(212, 175, 55, 0.075);
 
-      --font-title: 'Cormorant Garamond', Georgia, serif;
-      --font-body: 'Lora', Georgia, serif;
+      --font-body: 'Dancing Script', 'Caveat', cursive, sans-serif;
+      --font-salutation: 'Alex Brush', 'Parisienne', cursive, sans-serif;
+      --font-heading: 'Parisienne', 'Alex Brush', cursive, sans-serif;
+      --font-signature: 'Alex Brush', 'Parisienne', cursive, sans-serif;
       --font-hand: 'Caveat', cursive, sans-serif;
+      --font-drafting: 'Cormorant Garamond', Georgia, serif;
     }
 
     html, body {
@@ -306,6 +309,7 @@
       pointer-events: none;
     }
     .postage-stamp {
+      font-family: var(--font-drafting);
       width: 52px;
       height: 64px;
       background: #fbf7f0;
@@ -469,7 +473,7 @@
         0 0 16px rgba(212, 175, 55, 0.4);
     }
     .wax-seal-num {
-      font-family: var(--font-title);
+      font-family: var(--font-drafting);
       font-weight: 700;
       font-size: 1.65rem;
       color: #f7e8ba;
@@ -495,7 +499,7 @@
     }
 
     .seal-hint-text {
-      font-family: var(--font-title);
+      font-family: var(--font-drafting);
       font-size: 0.95rem;
       font-style: italic;
       color: var(--gold-light);
@@ -675,66 +679,77 @@
     .letter-content {
       position: relative;
       font-family: var(--font-body);
-      font-size: clamp(1.05rem, 3.8vw, 1.16rem);
-      line-height: 1.95;
+      font-size: clamp(1.22rem, 3.8vw, 1.36rem);
+      font-weight: 500;
+      line-height: 1.85;
+      letter-spacing: 0.025em;
       color: var(--ink-charcoal);
     }
 
     /* Paragraph Container */
     .letter-para {
       position: relative;
-      margin-bottom: 1.85rem;
+      margin-bottom: 1.6rem;
       word-break: break-word;
+      font-family: var(--font-body);
+      font-size: clamp(1.22rem, 3.8vw, 1.36rem);
+      font-weight: 500;
+      line-height: 1.85;
+      letter-spacing: 0.025em;
     }
 
     /* Special Paragraph Stylings */
     .letter-para.salutation {
-      font-family: var(--font-hand);
-      font-size: clamp(1.95rem, 6.2vw, 2.5rem);
-      font-weight: 700;
-      color: #781b22;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-    .letter-para.heading-greeting {
-      font-family: var(--font-title);
-      font-style: italic;
-      font-weight: 600;
-      font-size: clamp(1.4rem, 4.6vw, 1.8rem);
+      font-family: var(--font-salutation);
+      font-size: clamp(2.4rem, 7.5vw, 3.2rem);
+      font-weight: 400;
       color: #8c1e28;
       margin-bottom: 1.6rem;
+      letter-spacing: 0.03em;
+      line-height: 1.35;
+    }
+    .letter-para.heading-greeting {
+      font-family: var(--font-heading);
+      font-size: clamp(1.85rem, 5.5vw, 2.35rem);
+      font-weight: 400;
+      color: #9e2a36;
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.02em;
+      line-height: 1.4;
     }
     .letter-para.pull-quote {
-      margin: 2.2rem 0;
-      padding: 18px 22px;
-      background: linear-gradient(135deg, rgba(201, 123, 132, 0.1) 0%, rgba(212, 175, 55, 0.12) 100%);
-      border-left: 3px solid var(--gold-antique);
+      margin: 2.4rem 0;
+      padding: 20px 24px;
+      background: linear-gradient(135deg, rgba(201, 123, 132, 0.12) 0%, rgba(212, 175, 55, 0.14) 100%);
+      border-left: 3px solid var(--rose-dusty);
       border-radius: 4px;
-      font-family: var(--font-title);
-      font-style: italic;
-      font-size: clamp(1.22rem, 4.2vw, 1.48rem);
-      color: #7b1622;
+      font-family: var(--font-salutation);
+      font-size: clamp(1.9rem, 5.8vw, 2.5rem);
+      font-weight: 400;
+      color: #8c1e28;
+      line-height: 1.6;
+      letter-spacing: 0.025em;
       box-shadow: 0 4px 16px rgba(212, 175, 55, 0.1);
     }
     .letter-para.celebration {
-      font-family: var(--font-title);
+      font-family: var(--font-heading);
+      font-size: clamp(1.85rem, 5.5vw, 2.4rem);
       font-weight: 700;
-      font-size: clamp(1.35rem, 4.8vw, 1.85rem);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #a82024 0%, #aa7c11 50%, #7e121a 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin: 1.8rem 0;
-      text-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+      letter-spacing: 0.035em;
+      color: var(--gold-antique);
+      text-shadow: 0 2px 10px rgba(212, 175, 55, 0.28);
+      margin: 2.2rem 0;
+      line-height: 1.45;
     }
     .letter-para.signature {
-      font-family: var(--font-hand);
-      font-size: clamp(1.85rem, 5.8vw, 2.4rem);
-      font-weight: 700;
-      color: #781b22;
-      margin-top: 2.4rem;
-      margin-bottom: 0.8rem;
+      font-family: var(--font-signature);
+      font-size: clamp(2.35rem, 7.2vw, 3.1rem);
+      font-weight: 400;
+      color: #8c1e28;
+      margin-top: 2.8rem;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.03em;
+      line-height: 1.4;
     }
 
     /* Individual Ink Line */
@@ -1120,7 +1135,7 @@
       margin-bottom: 8px;
     }
     .fallback-title {
-      font-family: var(--font-title);
+      font-family: var(--font-drafting);
       font-size: 1.15rem;
       font-weight: 600;
       color: #ffd700;
@@ -1281,56 +1296,7 @@
       transform: translateX(-50%) translateY(-2px);
     }
 
-    .reader-controls-bar {
-      position: fixed;
-      bottom: calc(env(safe-area-inset-bottom, 16px) + 12px);
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 150;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(20, 16, 14, 0.92);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 7px 16px;
-      border-radius: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(212, 175, 55, 0.15);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
-    .reader-controls-bar.visible {
-      opacity: 1;
-      pointer-events: auto;
-    }
 
-    .ctrl-btn {
-      background: transparent;
-      border: 1px solid rgba(212, 175, 55, 0.22);
-      color: var(--gold-light);
-      font-family: var(--font-title);
-      font-size: 0.88rem;
-      padding: 6px 12px;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .ctrl-btn:hover {
-      background: rgba(212, 175, 55, 0.18);
-      border-color: var(--gold-antique);
-      color: #fff;
-    }
-    .ctrl-progress-ring {
-      font-family: monospace;
-      font-size: 0.78rem;
-      color: rgba(212, 175, 55, 0.85);
-      padding: 0 4px;
-    }
 
     /* ==========================================================================
        9. GRAND FINALE MOMENT: KEEPSAKE CARD & WISH BURST
@@ -1371,17 +1337,17 @@
     }
 
     .keepsake-title {
-      font-family: var(--font-title);
-      font-size: clamp(1.55rem, 5.2vw, 2rem);
-      font-weight: 700;
-      color: #7b1622;
+      font-family: var(--font-salutation);
+      font-size: clamp(2.2rem, 6vw, 2.8rem);
+      font-weight: 400;
+      color: #8c1e28;
       margin-bottom: 12px;
     }
 
     .keepsake-desc {
       font-family: var(--font-body);
-      font-size: 1.02rem;
-      line-height: 1.7;
+      font-size: 1.22rem;
+      line-height: 1.8;
       color: var(--ink-muted);
       max-width: 480px;
       margin: 0 auto 24px;
@@ -1723,19 +1689,7 @@
     <span>↓</span> Follow ink
   </button>
 
-  <!-- Reader Floating Controls -->
-  <div id="readerControls" class="reader-controls-bar">
-    <button id="pauseBtn" class="ctrl-btn" title="Pause or Resume Writing">
-      <span id="pauseIcon">⏸</span> Pause
-    </button>
-    <button id="speedBtn" class="ctrl-btn" title="Cycle Writing Speed">
-      <span id="speedLabel">1x</span>
-    </button>
-    <button id="instantBtn" class="ctrl-btn" title="Instantly reveal the rest of the letter">
-      ⚡ Instant Read
-    </button>
-    <span id="progressIndicator" class="ctrl-progress-ring">0%</span>
-  </div>
+
 
   <!-- Secret Postscript Modal Card -->
   <div id="secretPostscriptModal" class="secret-postscript-overlay">
@@ -2147,7 +2101,6 @@
     const envelopeBox = document.getElementById('envelopeBox');
     const envelopeScreen = document.getElementById('envelopeScreen');
     const letterViewport = document.getElementById('letterViewport');
-    const readerControls = document.getElementById('readerControls');
     const parchmentSheet = document.getElementById('parchmentSheet');
     let isEnvelopeOpened = false;
 
@@ -2181,7 +2134,6 @@
         playPaperRustle(0.8);
         envelopeScreen.classList.add('opened');
         letterViewport.classList.add('visible');
-        readerControls.classList.add('visible');
 
         setTimeout(() => {
           envelopeScreen.classList.add('hidden');
@@ -2202,21 +2154,11 @@
     const letterContent = document.getElementById('letterContent');
     const inkSparkNib = document.getElementById('inkSparkNib');
     const followInkPill = document.getElementById('followInkPill');
-    const pauseBtn = document.getElementById('pauseBtn');
-    const pauseIcon = document.getElementById('pauseIcon');
-    const speedBtn = document.getElementById('speedBtn');
-    const speedLabel = document.getElementById('speedLabel');
-    const instantBtn = document.getElementById('instantBtn');
-    const progressIndicator = document.getElementById('progressIndicator');
     const keepsakeCard = document.getElementById('keepsakeCard');
     const signatureFlourish = document.getElementById('signatureFlourish');
     const pressedFlower = document.getElementById('pressedFlower');
 
-    // Engine State
-    let currentSpeed = 1.0;
-    const SPEED_OPTIONS = [1.0, 1.5, 2.0];
-    let isPaused = false;
-    let isInstantRead = false;
+    // Engine State (Slower, unhurried, uninterrupted intimate reading experience)
     let autoScrollEnabled = true;
     let activeLineElement = null;
 
@@ -2296,15 +2238,10 @@
 
     function createInkLineElement(text) {
       const lineDiv = document.createElement('div');
-      lineDiv.className = isInstantRead ? 'ink-line completed' : 'ink-line';
+      lineDiv.className = 'ink-line';
       const textSpan = document.createElement('span');
       textSpan.className = 'ink-line-text';
       textSpan.textContent = text;
-      if (isInstantRead) {
-        textSpan.style.clipPath = 'inset(0 0% 0 0)';
-        textSpan.style.opacity = '1';
-        textSpan.style.transform = 'translateY(0)';
-      }
       lineDiv.appendChild(textSpan);
       return lineDiv;
     }
@@ -2313,7 +2250,7 @@
     prepareLetterDOM();
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
-        if (!isEnvelopeOpened && !isInstantRead) {
+        if (!isEnvelopeOpened) {
           prepareLetterDOM();
         }
       });
@@ -2323,7 +2260,6 @@
        G. ENHANCED HANDWRITING PACING & EMOTIONAL TRIGGERS
        ========================================================================== */
     function startInkWritingEngine() {
-      if (isInstantRead) return;
       if (allRenderedLines.length === 0) {
         prepareLetterDOM();
       }
@@ -2332,31 +2268,22 @@
     }
 
     function writeNextLine() {
-      if (isInstantRead) return;
-
       if (currentLineIndex >= allRenderedLines.length) {
         finishLetterWriting();
         return;
       }
 
-      if (isPaused) return;
-
       const lineData = allRenderedLines[currentLineIndex];
       activeLineElement = lineData.element;
-
-      // Update progress display
-      const percent = Math.round((currentLineIndex / allRenderedLines.length) * 100);
-      progressIndicator.textContent = `${percent}%`;
 
       // Smart auto-scroll anchor to lower-middle third of screen
       if (autoScrollEnabled) {
         smoothScrollToActiveLine();
       }
 
-      // Proportional reveal duration: ~35ms per character at 1x
+      // Slower, intimate deliberate reveal duration: ~58-62ms per character equivalent
       const charCount = Math.max(12, lineData.text.length);
-      const baseDuration = Math.max(750, Math.min(2800, charCount * 36));
-      const duration = baseDuration / currentSpeed;
+      const duration = Math.max(1100, Math.min(4200, charCount * 60));
 
       const textSpan = lineData.textSpan;
       inkSparkNib.classList.add('active');
@@ -2365,17 +2292,10 @@
       let lastParticleTime = 0;
 
       function renderFrame(now) {
-        if (isInstantRead) return;
-
-        if (isPaused) {
-          requestAnimationFrame(renderFrame);
-          return;
-        }
-
         const elapsed = now - startTime;
         let progress = Math.min(1, elapsed / duration);
 
-        // Smooth cubic ease-out
+        // Smooth natural calligraphic ease-out
         const easedProgress = 1 - Math.pow(1 - progress, 1.8);
 
         // Clip-path wipe: left-to-right
@@ -2391,7 +2311,7 @@
         inkSparkNib.style.transform = `translate(${nibX}px, ${nibY}px)`;
 
         // Spawn tiny micro-sparkles along writing path
-        if (now - lastParticleTime > 120 && Math.random() > 0.4) {
+        if (now - lastParticleTime > 140 && Math.random() > 0.45) {
           lastParticleTime = now;
           spawnParticleBurst(nibX, nibY, 1, 'gold');
         }
@@ -2409,51 +2329,51 @@
 
           currentLineIndex++;
 
-          // Natural human handwriting rhythm & emotional pauses:
-          // - Normal line wrap within sentence: 80ms
-          // - Comma / semicolon pause: 240ms
-          // - Sentence endings (. ! ? …): 580ms
-          // - Paragraph breaks: 950ms
-          // - Reflective emotional pauses: 1550ms on anchor lines
-          // - Stillness pause before final signature: 2400ms + music dip
+          // Natural human handwriting rhythm & deep emotional pauses:
+          // - Normal line wrap within sentence: 120ms
+          // - Comma / semicolon breath: 450ms
+          // - Sentence endings (. ! ? … ❤️ 💗 ♥️): 900ms
+          // - Paragraph breaks: 1500ms
+          // - Reflective emotional pauses: 2200ms on anchor lines
+          // - Sacred stillness pause before final signature: 3000ms + audio dip
           const lineTrimmed = lineData.text.trim();
-          let pauseDuration = 80;
+          let pauseDuration = 120;
 
           if (/[,;]$/.test(lineTrimmed)) {
-            pauseDuration = 240;
+            pauseDuration = 450;
           }
 
           if (lineData.isSentenceEnd) {
-            pauseDuration = 580;
+            pauseDuration = 900;
           }
 
           if (lineData.isParaEnd) {
-            pauseDuration = 950;
+            pauseDuration = 1500;
           }
 
-          // Deep emotional pauses on key reflective lines
+          // Deep emotional pauses on key reflective lines (2200ms)
           const isEmotionalAnchor = 
             lineTrimmed.includes("You were my first love, Ridhu") ||
             lineTrimmed.includes("And if I had seven lives") ||
             lineTrimmed.includes("HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!!");
 
           if (isEmotionalAnchor) {
-            pauseDuration = 1550;
+            pauseDuration = 2200;
           }
 
-          // Stillness Pause before final signature (between P28 and P29)
+          // Stillness Pause before final signature (between P28 and P29): 3000ms
           const isBeforeSignature = lineData.paraIdx === 27 && lineData.isParaEnd;
           if (isBeforeSignature) {
-            pauseDuration = 2400;
+            pauseDuration = 3000;
             // Softly lower music volume for intimate stillness
-            fadeAudio(0.32, 1800);
+            fadeAudio(0.24, 2000);
             setTimeout(() => {
               // Swell back up as signature begins
-              fadeAudio(0.65, 2000);
-            }, pauseDuration / currentSpeed - 400);
+              fadeAudio(0.65, 2400);
+            }, pauseDuration - 300);
           }
 
-          setTimeout(writeNextLine, pauseDuration / currentSpeed);
+          setTimeout(writeNextLine, pauseDuration);
         }
       }
 
@@ -2476,7 +2396,7 @@
        H. SMART SCROLL LISTENER & "FOLLOW INK" DETECTION
        ========================================================================== */
     function handleUserScrollIntent() {
-      if (!activeLineElement || isInstantRead) return;
+      if (!activeLineElement) return;
 
       const rect = activeLineElement.getBoundingClientRect();
       const currentScrollY = window.scrollY || window.pageYOffset;
@@ -2501,65 +2421,14 @@
       smoothScrollToActiveLine();
     });
 
-    /* ==========================================================================
-       I. READER CONTROLS (SPEED, PAUSE, INSTANT READ)
-       ========================================================================== */
-    speedBtn.addEventListener('click', () => {
-      const idx = SPEED_OPTIONS.indexOf(currentSpeed);
-      currentSpeed = SPEED_OPTIONS[(idx + 1) % SPEED_OPTIONS.length];
-      speedLabel.textContent = `${currentSpeed}x`;
-    });
-
-    pauseBtn.addEventListener('click', () => {
-      isPaused = !isPaused;
-      if (isPaused) {
-        pauseBtn.innerHTML = '<span id="pauseIcon">▶</span> Resume';
-        inkSparkNib.classList.remove('active');
-      } else {
-        pauseBtn.innerHTML = '<span id="pauseIcon">⏸</span> Pause';
-        inkSparkNib.classList.add('active');
-        writeNextLine();
-      }
-    });
-
-    instantBtn.addEventListener('click', () => {
-      triggerInstantRead();
-    });
-
-    function triggerInstantRead() {
-      isInstantRead = true;
-      inkSparkNib.classList.remove('active');
-      followInkPill.classList.remove('visible');
-
-      if (allRenderedLines.length === 0) {
-        prepareLetterDOM();
-      }
-
-      allRenderedLines.forEach(l => {
-        l.element.classList.add('completed');
-        l.textSpan.style.clipPath = 'inset(0 0% 0 0)';
-        l.textSpan.style.opacity = '1';
-        l.textSpan.style.transform = 'translateY(0)';
-      });
-
-      progressIndicator.textContent = '100%';
-      pauseBtn.style.display = 'none';
-      speedBtn.style.display = 'none';
-      instantBtn.style.display = 'none';
-
-      keepsakeCard.classList.add('visible');
-      finishLetterWriting();
-    }
-
     function finishLetterWriting() {
       inkSparkNib.classList.remove('active');
-      progressIndicator.textContent = '100%';
       signatureFlourish.classList.add('visible');
       pressedFlower.classList.add('visible');
 
       setTimeout(() => {
         keepsakeCard.classList.add('visible');
-        if (autoScrollEnabled || isInstantRead) {
+        if (autoScrollEnabled) {
           keepsakeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 700);
@@ -2695,8 +2564,7 @@
       // 1. Play paper rustling sound
       playPaperRustle(1.2);
 
-      // 2. Hide reader controls & follow ink
-      readerControls.classList.remove('visible');
+      // 2. Hide follow ink & nib
       followInkPill.classList.remove('visible');
       inkSparkNib.classList.remove('active');
 
@@ -2719,16 +2587,10 @@
 
         // Reset reading state
         isEnvelopeOpened = false;
-        isInstantRead = false;
-        isPaused = false;
+        autoScrollEnabled = true;
         currentLineIndex = 0;
         prepareLetterDOM();
 
-        pauseBtn.style.display = 'inline-flex';
-        speedBtn.style.display = 'inline-flex';
-        instantBtn.style.display = 'inline-flex';
-        pauseBtn.innerHTML = '<span id="pauseIcon">⏸</span> Pause';
-        progressIndicator.textContent = '0%';
         keepsakeCard.classList.remove('visible');
         pressedFlower.classList.remove('visible');
         signatureFlourish.classList.remove('visible');
