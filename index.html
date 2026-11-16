@@ -696,12 +696,12 @@
     }
 
     /* ==========================================================================
-       4. LINE-BY-LINE INK-WRITING SYSTEM
+       4. STRICT LINE-BY-LINE CALLIGRAPHY & STANZA SYSTEM
        ========================================================================== */
     .letter-content {
       position: relative;
       font-family: var(--font-body);
-      font-size: clamp(1.28rem, 3.8vw, 1.65rem);
+      font-size: clamp(1.3rem, 3.8vw, 1.68rem);
       font-weight: 500;
       line-height: 1.85;
       letter-spacing: 0.025em;
@@ -710,44 +710,56 @@
       overflow-wrap: break-word;
     }
 
-    /* Paragraph Container */
-    .letter-para {
+    /* Stanza Container (Original Paragraphs Break with 2.6rem Gap) */
+    .letter-stanza {
       position: relative;
-      margin-bottom: 1.6rem;
+      margin-bottom: 2.6rem;
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+    .letter-stanza:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Individual Sentence Line (1.15rem Vertical Breathing Room) */
+    .sentence-line {
+      position: relative;
+      margin-bottom: 1.15rem;
       word-break: break-word;
       overflow-wrap: break-word;
       font-family: var(--font-body);
-      font-size: clamp(1.28rem, 3.8vw, 1.65rem);
+      font-size: clamp(1.3rem, 3.8vw, 1.68rem);
       font-weight: 500;
       line-height: 1.85;
       letter-spacing: 0.025em;
     }
+    .sentence-line:last-child {
+      margin-bottom: 0;
+    }
 
-    /* Special Paragraph Stylings */
-    .letter-para.salutation {
+    /* Special Stanza Stylings */
+    .letter-stanza.stanza-salutation .sentence-line {
       font-family: var(--font-salutation);
       font-size: clamp(2.2rem, 6vw, 3.3rem);
       font-weight: 400;
       color: #8c1e28;
-      margin-bottom: 1.6rem;
       letter-spacing: 0.03em;
       line-height: 1.35;
       word-break: break-word;
       overflow-wrap: break-word;
     }
-    .letter-para.heading-greeting {
+    .letter-stanza.stanza-heading-greeting .sentence-line {
       font-family: var(--font-heading);
       font-size: clamp(1.75rem, 5vw, 2.45rem);
       font-weight: 400;
       color: #9e2a36;
-      margin-bottom: 1.8rem;
       letter-spacing: 0.02em;
       line-height: 1.4;
       word-break: break-word;
       overflow-wrap: break-word;
     }
-    .letter-para.pull-quote {
-      margin: 2.4rem 0;
+    .letter-stanza.stanza-pull-quote .sentence-line {
+      margin: 1.4rem 0;
       padding: clamp(16px, 4vw, 24px) clamp(16px, 4.5vw, 28px);
       background: linear-gradient(135deg, rgba(201, 123, 132, 0.12) 0%, rgba(212, 175, 55, 0.14) 100%);
       border-left: 3px solid var(--rose-dusty);
@@ -762,25 +774,24 @@
       word-break: break-word;
       overflow-wrap: break-word;
     }
-    .letter-para.celebration {
+    .letter-stanza.stanza-celebration .sentence-line {
       font-family: var(--font-heading);
       font-size: clamp(1.85rem, 5.2vw, 2.5rem);
       font-weight: 700;
       letter-spacing: 0.035em;
       color: var(--gold-antique);
       text-shadow: 0 2px 10px rgba(212, 175, 55, 0.28);
-      margin: 2.2rem 0;
+      margin: 1.4rem 0;
       line-height: 1.45;
       word-break: break-word;
       overflow-wrap: break-word;
     }
-    .letter-para.signature {
+    .letter-stanza.stanza-signature .sentence-line {
       font-family: var(--font-signature);
       font-size: clamp(2.2rem, 6vw, 3.2rem);
       font-weight: 400;
       color: #8c1e28;
-      margin-top: 2.8rem;
-      margin-bottom: 1.2rem;
+      margin-top: 1.8rem;
       letter-spacing: 0.03em;
       line-height: 1.4;
       word-break: break-word;
@@ -1796,37 +1807,255 @@
     /* ==========================================================================
        A. EXACT VERBATIM LETTER DATA (29 PARAGRAPHS)
        ========================================================================== */
-    const LETTER_PARAGRAPHS = [
-      { text: "Dear Ridhu ❤️", type: "salutation" },
-      { text: "Happy 22nd birthday, my everything! ❤️", type: "heading-greeting" },
-      { text: "Maybe you don’t feel comfortable with me calling you that anymore, and I’m sorry if you don’t. But you know me, Ridhu. Whatever I say to you has always come straight from my heart….", type: "body" },
-      { text: "First of all, I hope this birthday brings you all the happiness and peace you’ve been missing for so long. I hope life gets a little easier on you, your heart feels lighter, and everything you’ve been silently wishing for slowly starts falling into place. You deserve all of it, my girl!", type: "body" },
-      { text: "It’s been days, weeks, and now months since we last spoke properly, and trust me, the silence still haunts me. I’ve been learning a lot from everything that happened, about myself, about love, and about the things I should’ve understood sooner. But somehow, when it comes to you, I still struggle to be okay with it. Maybe that’s just how it is when someone means this much to you.", type: "body" },
-      { text: "Anyway, I really hope you’re doing great, my best architect!! I’m always rooting for you, Ridhu, even if you don’t get to hear it from me anymore.", type: "body" },
-      { text: "And I’m sorry, genuinely. For all those times I hurt you, for the things I said, and for the moments I failed to understand you the way you deserved. Like I’ve told you a hundred times, none of it was ever meant to hurt you. I’m still figuring out this whole life thing, Ridhu. I’m too young to have everything right, and I’ve made mistakes I wish I could undo. But one thing I never had to figure out was how much I loved you. That part always came naturally.", type: "body" },
-      { text: "And I won’t force you to choose me anymore. I mean it. Whatever you choose for yourself, wherever life takes you, I just hope it makes you genuinely happy. You’re one of the best people I’ve ever known, and please, never settle for anything less than the love and respect you deserve.", type: "body" },
-      { text: "But there’s something I still haven’t learned, Ridhu. Maybe I’m not ready to fully understand why things had to turn out this way, or maybe I understand it somewhere deep down but I’m just not strong enough to accept it yet. I keep telling myself to be mature, to accept things as they are, and to move forward. But it’s so much easier to say than to actually do. Because when it comes to you, my heart still refuses to believe that this could be the end of our story. You were my first love, Ridhu, and somewhere in my heart, I still believe you’ll be my last. Not because I want to hold you back or make you feel responsible for my feelings, but because I genuinely can’t imagine loving someone the way I’ve loved you.", type: "body" },
-      { text: "And you know what keeps me going sometimes? That tiny little hope of hearing your voice again, just like the old days. I miss that more than I can explain. I miss the way we used to talk about literally everything and nothing, how even the most random conversations could make my entire day. Sometimes I just wish I could hear you call me the way you used to, even if it’s only for a moment. I don’t know if that day will ever come, but the thought of it still makes me smile. And maybe that’s what keeps me moving forward, the hope that someday, somehow, I’ll get to hear that familiar voice again. Until then, I’ll keep growing, learning, and trying to become a better version of myself.", type: "body" },
-      { text: "I fell in love with you before I ever hugged you, before I kissed you, before I even got to hold your hand. Think about that, Ridhu. I loved you before any of those beautiful little moments happened. And even on my darkest days, when everything around me felt like it was falling apart, that love never really left. I guess a part of me will always carry it, no matter how life turns out.", type: "body" },
-      { text: "You know what? Whenever I pray for my family, I pray for you and your family too. I always have. I want every single dream of yours to come true, and I want your parents to see you become everything they’ve ever wished for. I hope all their sacrifices turn into something beautiful, and one day, you look around and realise you’ve achieved everything you once dreamed of. I know you will!!", type: "body" },
-      { text: "I’ll always be proud of you, Ridhu. Your little wins, your big achievements, your struggles, your growth, literally everything. Even if I’m not there to celebrate them with you, just know that somewhere, someone is genuinely happy seeing you win.", type: "body" },
-      { text: "And yeah, call me mad, call me cringe, laugh at how dramatic I sound. I don’t even care anymore . But trust me, nobody, and I mean NOBODY, has ever seen this version of me. You brought out a side of me I didn’t even know existed. A version of myself that could love someone so deeply, care about the smallest things, and find happiness in another person’s smile. And honestly, I don’t think anyone else could ever bring out that exact same version of me.", type: "body" },
-      { text: "I know we’ve hurt each other a lot. I know things weren’t always beautiful between us. There were nights when I couldn’t sleep, nights when I kept thinking about what went wrong and how differently things could’ve turned out. And honestly, even now, some nights are still like that.", type: "body" },
-      { text: "But here’s the thing, Ridhu. Even after everything, when I think about you, I still find myself remembering the good things first. Your smile, our little moments, the way you made me feel, and how happy I was just knowing you were a part of my life. I don’t want the pain to be the only thing left of something that once meant the whole world to me.", type: "body" },
-      { text: "And if I had seven lives, I swear I’d probably end up falling for you in all seven of them. 💗", type: "pull-quote" },
-      { text: "It’s not my ego, Ridhu. I’m not holding a grudge, and I’m not saying all this to make you feel guilty or change your mind. It’s just that what I felt for you was never something ordinary. I once made you a promise with all my heart, and those words still mean something to me. But I’ve also realised that loving someone doesn’t mean holding them back. So wherever life takes you, whatever you decide, I’ll respect it. I just hope life is always gentle with you.", type: "body" },
-      { text: "And finally,", type: "body" },
-      { text: "HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!! ♥️", type: "celebration" },
-      { text: "Brooo, you’re actually 22 now!! Look at you growing up and all . But I don’t care how old you get, you’ll always be my little Ridhu in my eyes. The girl I always wanted to protect, cherish, and see smiling through every season of life. The one whose smile could literally make my whole day better.", type: "body" },
-      { text: "I hope this year is so, so good to you. I hope you laugh more, cry less, achieve things you once thought were impossible, and become the happiest version of yourself. I hope this new chapter gives you a thousand reasons to smile and not a single reason to doubt how precious you are. And please take care of that little heart of yours, okay?", type: "body" },
-      { text: "I don’t know what life has planned for us, Ridhu. Maybe our paths will cross again, maybe they won’t. Maybe one day we’ll talk like we used to, or maybe life has written something completely different for us. I don’t have those answers. But whatever happens, I’m genuinely grateful that I got to love you the way I did.", type: "body" },
-      { text: "And if there’s one thing I want you to remember from all these words, it’s this:", type: "body" },
-      { text: "You were never just someone I fell in love with, Ridhu. You were the person who made me realise how deeply my heart could love someone. You were my first, and in my heart, you’ll always be the love I never imagined having to let go of.", type: "body" },
-      { text: "And that’s something I’ll never forget.", type: "body" },
-      { text: "Happy birthday once again, my favourite girl, my best architect, my lil one. ❤️", type: "body" },
-      { text: "I love you, Ridhu. More than these words could ever explain. And no matter what, a part of me always will.", type: "body" },
-      { text: "Always with love, never with expectations. ❤️", type: "signature" }
-    ];
+    const LETTER_STANZAS = [
+      {
+            "type": "salutation",
+            "sentences": [
+                  "Dear Ridhu ❤️"
+            ]
+      },
+      {
+            "type": "heading-greeting",
+            "sentences": [
+                  "Happy 22nd birthday, my everything! ❤️"
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "Maybe you don’t feel comfortable with me calling you that anymore, and I’m sorry if you don’t.",
+                  "But you know me, Ridhu.",
+                  "Whatever I say to you has always come straight from my heart…."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "First of all, I hope this birthday brings you all the happiness and peace you’ve been missing for so long.",
+                  "I hope life gets a little easier on you, your heart feels lighter, and everything you’ve been silently wishing for slowly starts falling into place.",
+                  "You deserve all of it, my girl!"
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "It’s been days, weeks, and now months since we last spoke properly, and trust me, the silence still haunts me.",
+                  "I’ve been learning a lot from everything that happened, about myself, about love, and about the things I should’ve understood sooner.",
+                  "But somehow, when it comes to you, I still struggle to be okay with it.",
+                  "Maybe that’s just how it is when someone means this much to you."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "Anyway, I really hope you’re doing great, my best architect!!",
+                  "I’m always rooting for you, Ridhu, even if you don’t get to hear it from me anymore."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "And I’m sorry, genuinely.",
+                  "For all those times I hurt you, for the things I said, and for the moments I failed to understand you the way you deserved.",
+                  "Like I’ve told you a hundred times, none of it was ever meant to hurt you.",
+                  "I’m still figuring out this whole life thing, Ridhu.",
+                  "I’m too young to have everything right, and I’ve made mistakes I wish I could undo.",
+                  "But one thing I never had to figure out was how much I loved you.",
+                  "That part always came naturally."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "And I won’t force you to choose me anymore.",
+                  "I mean it.",
+                  "Whatever you choose for yourself, wherever life takes you, I just hope it makes you genuinely happy.",
+                  "You’re one of the best people I’ve ever known, and please, never settle for anything less than the love and respect you deserve."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "But there’s something I still haven’t learned, Ridhu.",
+                  "Maybe I’m not ready to fully understand why things had to turn out this way, or maybe I understand it somewhere deep down but I’m just not strong enough to accept it yet.",
+                  "I keep telling myself to be mature, to accept things as they are, and to move forward.",
+                  "But it’s so much easier to say than to actually do.",
+                  "Because when it comes to you, my heart still refuses to believe that this could be the end of our story.",
+                  "You were my first love, Ridhu, and somewhere in my heart, I still believe you’ll be my last.",
+                  "Not because I want to hold you back or make you feel responsible for my feelings, but because I genuinely can’t imagine loving someone the way I’ve loved you."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "And you know what keeps me going sometimes?",
+                  "That tiny little hope of hearing your voice again, just like the old days.",
+                  "I miss that more than I can explain.",
+                  "I miss the way we used to talk about literally everything and nothing, how even the most random conversations could make my entire day.",
+                  "Sometimes I just wish I could hear you call me the way you used to, even if it’s only for a moment.",
+                  "I don’t know if that day will ever come, but the thought of it still makes me smile.",
+                  "And maybe that’s what keeps me moving forward, the hope that someday, somehow, I’ll get to hear that familiar voice again.",
+                  "Until then, I’ll keep growing, learning, and trying to become a better version of myself."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "I fell in love with you before I ever hugged you, before I kissed you, before I even got to hold your hand.",
+                  "Think about that, Ridhu.",
+                  "I loved you before any of those beautiful little moments happened.",
+                  "And even on my darkest days, when everything around me felt like it was falling apart, that love never really left.",
+                  "I guess a part of me will always carry it, no matter how life turns out."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "You know what?",
+                  "Whenever I pray for my family, I pray for you and your family too.",
+                  "I always have.",
+                  "I want every single dream of yours to come true, and I want your parents to see you become everything they’ve ever wished for.",
+                  "I hope all their sacrifices turn into something beautiful, and one day, you look around and realise you’ve achieved everything you once dreamed of.",
+                  "I know you will!!"
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "I’ll always be proud of you, Ridhu.",
+                  "Your little wins, your big achievements, your struggles, your growth, literally everything.",
+                  "Even if I’m not there to celebrate them with you, just know that somewhere, someone is genuinely happy seeing you win."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "And yeah, call me mad, call me cringe, laugh at how dramatic I sound.",
+                  "I don’t even care anymore .",
+                  "But trust me, nobody, and I mean NOBODY, has ever seen this version of me.",
+                  "You brought out a side of me I didn’t even know existed.",
+                  "A version of myself that could love someone so deeply, care about the smallest things, and find happiness in another person’s smile.",
+                  "And honestly, I don’t think anyone else could ever bring out that exact same version of me."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "I know we’ve hurt each other a lot.",
+                  "I know things weren’t always beautiful between us.",
+                  "There were nights when I couldn’t sleep, nights when I kept thinking about what went wrong and how differently things could’ve turned out.",
+                  "And honestly, even now, some nights are still like that."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "But here’s the thing, Ridhu.",
+                  "Even after everything, when I think about you, I still find myself remembering the good things first.",
+                  "Your smile, our little moments, the way you made me feel, and how happy I was just knowing you were a part of my life.",
+                  "I don’t want the pain to be the only thing left of something that once meant the whole world to me."
+            ]
+      },
+      {
+            "type": "pull-quote",
+            "sentences": [
+                  "And if I had seven lives, I swear I’d probably end up falling for you in all seven of them. 💗"
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "It’s not my ego, Ridhu.",
+                  "I’m not holding a grudge, and I’m not saying all this to make you feel guilty or change your mind.",
+                  "It’s just that what I felt for you was never something ordinary.",
+                  "I once made you a promise with all my heart, and those words still mean something to me.",
+                  "But I’ve also realised that loving someone doesn’t mean holding them back.",
+                  "So wherever life takes you, whatever you decide, I’ll respect it.",
+                  "I just hope life is always gentle with you."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "And finally,"
+            ]
+      },
+      {
+            "type": "celebration",
+            "sentences": [
+                  "HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!! ♥️"
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "Brooo, you’re actually 22 now!!",
+                  "Look at you growing up and all .",
+                  "But I don’t care how old you get, you’ll always be my little Ridhu in my eyes.",
+                  "The girl I always wanted to protect, cherish, and see smiling through every season of life.",
+                  "The one whose smile could literally make my whole day better."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "I hope this year is so, so good to you.",
+                  "I hope you laugh more, cry less, achieve things you once thought were impossible, and become the happiest version of yourself.",
+                  "I hope this new chapter gives you a thousand reasons to smile and not a single reason to doubt how precious you are.",
+                  "And please take care of that little heart of yours, okay?"
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "I don’t know what life has planned for us, Ridhu.",
+                  "Maybe our paths will cross again, maybe they won’t.",
+                  "Maybe one day we’ll talk like we used to, or maybe life has written something completely different for us.",
+                  "I don’t have those answers.",
+                  "But whatever happens, I’m genuinely grateful that I got to love you the way I did."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "And if there’s one thing I want you to remember from all these words, it’s this:"
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "You were never just someone I fell in love with, Ridhu.",
+                  "You were the person who made me realise how deeply my heart could love someone.",
+                  "You were my first, and in my heart, you’ll always be the love I never imagined having to let go of."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "And that’s something I’ll never forget."
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "Happy birthday once again, my favourite girl, my best architect, my lil one. ❤️"
+            ]
+      },
+      {
+            "type": "body",
+            "sentences": [
+                  "I love you, Ridhu.",
+                  "More than these words could ever explain.",
+                  "And no matter what, a part of me always will."
+            ]
+      },
+      {
+            "type": "signature",
+            "sentences": [
+                  "Always with love, never with expectations. ❤️"
+            ]
+      }
+];
 
     /* ==========================================================================
        B. PROCEDURAL WEB AUDIO API PAPER RUSTLE SYNTHESIZER
@@ -2697,8 +2926,8 @@
       if (!isEnvelopeOpened) openEnvelope(e);
     });
 
-    /* ==========================================================================
-       F. DYNAMIC VISUAL LINE SEGMENTATION & INK-WRITING ENGINE
+        /* ==========================================================================
+       F. STRICT SENTENCE-BY-SENTENCE INK-WRITING ENGINE
        ========================================================================== */
     const letterContent = document.getElementById('letterContent');
     const inkSparkNib = document.getElementById('inkSparkNib');
@@ -2707,7 +2936,7 @@
     const signatureFlourish = document.getElementById('signatureFlourish');
     const pressedFlower = document.getElementById('pressedFlower');
 
-    // Engine State (Slower, unhurried, uninterrupted intimate reading experience)
+    // Engine State (Ultra-slow, meditative, uninterrupted reading experience)
     let autoScrollEnabled = true;
     let activeLineElement = null;
 
@@ -2718,70 +2947,81 @@
       letterContent.innerHTML = '';
       allRenderedLines = [];
 
-      LETTER_PARAGRAPHS.forEach((pData, pIdx) => {
-        const pEl = document.createElement('div');
-        pEl.className = `letter-para ${pData.type}`;
-        pEl.dataset.paraIndex = pIdx;
-        letterContent.appendChild(pEl);
+      LETTER_STANZAS.forEach((stanzaData, stanzaIdx) => {
+        const stanzaEl = document.createElement('div');
+        stanzaEl.className = `letter-stanza stanza-${stanzaData.type}`;
+        stanzaEl.dataset.stanzaIndex = stanzaIdx;
+        letterContent.appendChild(stanzaEl);
 
-        const isSpecialSingle = ['salutation', 'heading-greeting', 'celebration', 'signature'].includes(pData.type);
+        stanzaData.sentences.forEach((sentenceText, sIdx) => {
+          const sentenceEl = document.createElement('div');
+          sentenceEl.className = 'sentence-line';
+          sentenceEl.dataset.sentenceIndex = sIdx;
+          stanzaEl.appendChild(sentenceEl);
 
-        if (isSpecialSingle || pData.text.length < 50) {
-          const lineEl = createInkLineElement(pData.text);
-          pEl.appendChild(lineEl);
-          allRenderedLines.push({
-            element: lineEl,
-            textSpan: lineEl.querySelector('.ink-line-text'),
-            text: pData.text,
-            isSentenceEnd: true,
-            isParaEnd: true,
-            paraType: pData.type,
-            paraIdx: pIdx
-          });
-        } else {
-          // Detect visual line breaks dynamically by measuring word positions
-          const words = pData.text.split(' ').filter(w => w.length > 0);
-          pEl.innerHTML = words.map((w, i) => `<span class="tmp-w" id="tw_${pIdx}_${i}">${w} </span>`).join('');
+          const isStanzaEnd = (sIdx === stanzaData.sentences.length - 1);
+          const isSpecialSingle = ['salutation', 'heading-greeting', 'pull-quote', 'celebration', 'signature'].includes(stanzaData.type);
 
-          const spans = pEl.querySelectorAll('.tmp-w');
-          const lineWordGroups = [];
-          let currentGroup = [];
-          let lastTop = null;
-
-          spans.forEach((span) => {
-            const top = Math.round(span.offsetTop);
-            if (lastTop === null || Math.abs(top - lastTop) < 6) {
-              currentGroup.push(span.textContent);
-              lastTop = top;
-            } else {
-              lineWordGroups.push(currentGroup.join(''));
-              currentGroup = [span.textContent];
-              lastTop = top;
-            }
-          });
-          if (currentGroup.length > 0) {
-            lineWordGroups.push(currentGroup.join(''));
-          }
-
-          pEl.innerHTML = '';
-          lineWordGroups.forEach((lText, lIdx) => {
-            const trimmed = lText.trim();
-            const isSentenceEnd = /[.!?…❤️💗♥️]$/.test(trimmed);
-            const isParaEnd = lIdx === lineWordGroups.length - 1;
-            const lineEl = createInkLineElement(lText);
-            pEl.appendChild(lineEl);
-
+          if (isSpecialSingle || sentenceText.length < 52) {
+            const lineEl = createInkLineElement(sentenceText);
+            sentenceEl.appendChild(lineEl);
             allRenderedLines.push({
               element: lineEl,
               textSpan: lineEl.querySelector('.ink-line-text'),
-              text: lText,
-              isSentenceEnd: isSentenceEnd,
-              isParaEnd: isParaEnd,
-              paraType: pData.type,
-              paraIdx: pIdx
+              text: sentenceText,
+              sentenceText: sentenceText,
+              isSentenceEnd: true,
+              isStanzaEnd: isStanzaEnd,
+              stanzaType: stanzaData.type,
+              stanzaIdx: stanzaIdx,
+              sIdx: sIdx
             });
-          });
-        }
+          } else {
+            // Measure visual word rows to ensure smooth clip-path wipe on narrow screens
+            const words = sentenceText.split(' ').filter(w => w.length > 0);
+            sentenceEl.innerHTML = words.map((w, i) => `<span class="tmp-w" id="tw_${stanzaIdx}_${sIdx}_${i}">${w} </span>`).join('');
+
+            const spans = sentenceEl.querySelectorAll('.tmp-w');
+            const rowWordGroups = [];
+            let currentGroup = [];
+            let lastTop = null;
+
+            spans.forEach((span) => {
+              const top = Math.round(span.offsetTop);
+              if (lastTop === null || Math.abs(top - lastTop) < 6) {
+                currentGroup.push(span.textContent);
+                lastTop = top;
+              } else {
+                rowWordGroups.push(currentGroup.join(''));
+                currentGroup = [span.textContent];
+                lastTop = top;
+              }
+            });
+            if (currentGroup.length > 0) {
+              rowWordGroups.push(currentGroup.join(''));
+            }
+
+            sentenceEl.innerHTML = '';
+            rowWordGroups.forEach((rowText, rIdx) => {
+              const isRowSentenceEnd = (rIdx === rowWordGroups.length - 1);
+              const isRowStanzaEnd = isRowSentenceEnd && isStanzaEnd;
+              const lineEl = createInkLineElement(rowText);
+              sentenceEl.appendChild(lineEl);
+
+              allRenderedLines.push({
+                element: lineEl,
+                textSpan: lineEl.querySelector('.ink-line-text'),
+                text: rowText,
+                sentenceText: sentenceText,
+                isSentenceEnd: isRowSentenceEnd,
+                isStanzaEnd: isRowStanzaEnd,
+                stanzaType: stanzaData.type,
+                stanzaIdx: stanzaIdx,
+                sIdx: sIdx
+              });
+            });
+          }
+        });
       });
     }
 
@@ -2795,7 +3035,7 @@
       return lineDiv;
     }
 
-    // Initialize layout immediately and update when fonts settle
+    // Initialize layout immediately and update when fonts settle or resize
     prepareLetterDOM();
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
@@ -2806,7 +3046,7 @@
     }
 
     /* ==========================================================================
-       G. ENHANCED HANDWRITING PACING & EMOTIONAL TRIGGERS
+       G. ULTRA-SLOW, DELIBERATE EMOTIONAL PACING ENGINE
        ========================================================================== */
     function startInkWritingEngine() {
       if (allRenderedLines.length === 0) {
@@ -2825,14 +3065,14 @@
       const lineData = allRenderedLines[currentLineIndex];
       activeLineElement = lineData.element;
 
-      // Smart auto-scroll anchor to lower-middle third of screen
+      // Smart auto-scroll anchor comfortably centered in reading zone (~58%)
       if (autoScrollEnabled) {
         smoothScrollToActiveLine();
       }
 
-      // Slower, intimate deliberate reveal duration: ~58-62ms per character equivalent
+      // Ultra-slow, meditative fountain-pen reveal pace: ~75ms per character equivalent
       const charCount = Math.max(12, lineData.text.length);
-      const duration = Math.max(1100, Math.min(4200, charCount * 60));
+      const duration = Math.max(1200, Math.min(6500, charCount * 75));
 
       const textSpan = lineData.textSpan;
       inkSparkNib.classList.add('active');
@@ -2844,7 +3084,7 @@
         const elapsed = now - startTime;
         let progress = Math.min(1, elapsed / duration);
 
-        // Smooth natural calligraphic ease-out
+        // Smooth cubic ease-out
         const easedProgress = 1 - Math.pow(1 - progress, 1.8);
 
         // Clip-path wipe: left-to-right
@@ -2860,7 +3100,7 @@
         inkSparkNib.style.transform = `translate(${nibX}px, ${nibY}px)`;
 
         // Spawn tiny micro-sparkles along writing path
-        if (now - lastParticleTime > 140 && Math.random() > 0.45) {
+        if (now - lastParticleTime > 160 && Math.random() > 0.45) {
           lastParticleTime = now;
           spawnParticleBurst(nibX, nibY, 1, 'gold');
         }
@@ -2879,47 +3119,48 @@
           currentLineIndex++;
 
           // Natural human handwriting rhythm & deep emotional pauses:
-          // - Normal line wrap within sentence: 120ms
-          // - Comma / semicolon breath: 450ms
-          // - Sentence endings (. ! ? … ❤️ 💗 ♥️): 900ms
-          // - Paragraph breaks: 1500ms
-          // - Reflective emotional pauses: 2200ms on anchor lines
-          // - Sacred stillness pause before final signature: 3000ms + audio dip
+          // - 600ms micro-breath on commas and mid-sentence pauses
+          // - 1400ms reading pause after every single line finishes inking
+          // - 2400ms reflective silence between original paragraph stanzas
+          // - 3200ms lingering stillness after deeply poignant lines
+          // - 3800ms stillness pause before final signature with music dip
           const lineTrimmed = lineData.text.trim();
-          let pauseDuration = 120;
+          let pauseDuration = 1400; // 1400ms reading pause after every line finishes inking
 
-          if (/[,;]$/.test(lineTrimmed)) {
-            pauseDuration = 450;
+          // Micro-breath on commas/semicolons if line wraps midway
+          if (/[,;]$/.test(lineTrimmed) && !lineData.isSentenceEnd) {
+            pauseDuration = 600;
           }
 
-          if (lineData.isSentenceEnd) {
-            pauseDuration = 900;
+          // Reflective silence between original paragraph stanzas (2400ms)
+          if (lineData.isStanzaEnd) {
+            pauseDuration = 2400;
           }
 
-          if (lineData.isParaEnd) {
-            pauseDuration = 1500;
+          // Deep emotional pauses on key reflective lines (3200ms)
+          const sentenceFull = lineData.sentenceText.trim();
+          const isPoignant = 
+            sentenceFull.includes("You were my first love, Ridhu") ||
+            sentenceFull.includes("And if I had seven lives") ||
+            sentenceFull.includes("HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!!") ||
+            sentenceFull.includes("I love you, Ridhu. More than these words could ever explain") ||
+            sentenceFull.includes("I love you, Ridhu") ||
+            sentenceFull.includes("More than these words could ever explain");
+
+          if (isPoignant && lineData.isSentenceEnd) {
+            pauseDuration = 3200;
           }
 
-          // Deep emotional pauses on key reflective lines (2200ms)
-          const isEmotionalAnchor = 
-            lineTrimmed.includes("You were my first love, Ridhu") ||
-            lineTrimmed.includes("And if I had seven lives") ||
-            lineTrimmed.includes("HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!!");
-
-          if (isEmotionalAnchor) {
-            pauseDuration = 2200;
-          }
-
-          // Stillness Pause before final signature (between P28 and P29): 3000ms
-          const isBeforeSignature = lineData.paraIdx === 27 && lineData.isParaEnd;
+          // Stillness Pause before final signature (between P28 and P29): 3800ms + music dip
+          const isBeforeSignature = lineData.stanzaIdx === 27 && lineData.isStanzaEnd;
           if (isBeforeSignature) {
-            pauseDuration = 3000;
-            // Softly lower music volume for intimate stillness
-            fadeAudio(0.24, 2000);
+            pauseDuration = 3800;
+            // Softly lower background music volume down to 0.22 for deep reverent stillness
+            fadeAudio(0.22, 2200);
             setTimeout(() => {
-              // Swell back up as signature begins
-              fadeAudio(0.65, 2400);
-            }, pauseDuration - 300);
+              // Swell back up as final signature begins writing
+              fadeAudio(0.65, 2500);
+            }, pauseDuration - 400);
           }
 
           setTimeout(writeNextLine, pauseDuration);
@@ -2928,6 +3169,7 @@
 
       requestAnimationFrame(renderFrame);
     }
+
 
     function smoothScrollToActiveLine() {
       if (!activeLineElement) return;
