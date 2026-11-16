@@ -699,7 +699,7 @@
     }
 
     /* ==========================================================================
-       4. STRICT LINE-BY-LINE CALLIGRAPHY & STANZA SYSTEM
+       4. STRICT WORD-BY-WORD CALLIGRAPHY & STANZA SYSTEM
        ========================================================================== */
     .letter-content {
       position: relative;
@@ -708,7 +708,7 @@
       font-weight: 500;
       line-height: 1.85;
       letter-spacing: 0.025em;
-      color: var(--ink-charcoal);
+      color: #2b221e;
       word-break: break-word;
       overflow-wrap: break-word;
     }
@@ -735,6 +735,7 @@
       font-weight: 500;
       line-height: 1.85;
       letter-spacing: 0.025em;
+      color: #2b221e;
     }
     .sentence-line:last-child {
       margin-bottom: 0;
@@ -801,31 +802,26 @@
       overflow-wrap: break-word;
     }
 
-    /* Individual Ink Line */
-    .ink-line {
-      position: relative;
-      display: block;
-      margin-bottom: 2px;
-      line-height: inherit;
-    }
-
-    .ink-line-text {
+    /* Individual Ink Word Token */
+    .ink-word {
       display: inline-block;
-      white-space: pre-wrap;
-      width: 100%;
       opacity: 0;
-      clip-path: inset(0 100% 0 0);
       transform: translateY(4px);
-      transition: none;
+      filter: blur(1.5px);
+      transition: opacity 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                  transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                  filter 0.42s ease-out;
+      color: inherit;
+      will-change: opacity, transform, filter;
     }
 
-    .ink-line.completed .ink-line-text {
+    .ink-word.revealed {
       opacity: 1 !important;
-      clip-path: inset(0 0 0 0) !important;
       transform: translateY(0) !important;
+      filter: blur(0) !important;
     }
 
-    /* Glowing Fountain Pen Nib / Ink-Spark Indicator */
+    /* Glowing Golden Fountain-Pen Nib Spark Indicator */
     .ink-spark-nib {
       position: fixed;
       top: 0;
@@ -833,7 +829,7 @@
       pointer-events: none;
       z-index: 120;
       opacity: 0;
-      transition: opacity 0.15s ease;
+      transition: opacity 0.2s ease, transform 0.1s cubic-bezier(0.2, 0.8, 0.2, 1);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -843,24 +839,28 @@
       opacity: 1;
     }
 
-    .nib-icon {
-      width: 18px;
-      height: 18px;
-      transform: rotate(-35deg);
-      display: block;
+    .nib-spark-char {
+      font-size: 1.15rem;
+      color: #ffd700;
+      line-height: 1;
+      text-shadow: 0 0 8px #ffd700, 0 0 16px #d4af37;
+      animation: nibSparkle 0.5s infinite alternate;
+      display: inline-block;
+      transform: translateY(-2px);
     }
+
     .nib-glow-dot {
       position: absolute;
-      width: 6px;
-      height: 6px;
-      background: #fff6cc;
+      width: 5px;
+      height: 5px;
+      background: #fff8db;
       border-radius: 50%;
-      box-shadow: 0 0 10px #ffd700, 0 0 20px #d4af37;
+      box-shadow: 0 0 8px #ffd700, 0 0 16px #d4af37;
       animation: nibSparkle 0.6s infinite alternate;
     }
     @keyframes nibSparkle {
-      from { transform: scale(0.85); opacity: 0.85; }
-      to { transform: scale(1.35); opacity: 1; }
+      from { transform: scale(0.8); opacity: 0.8; }
+      to { transform: scale(1.3); opacity: 1; }
     }
 
     /* Golden flourish underneath final signature */
@@ -1496,11 +1496,8 @@
   </main>
 
   <!-- Glowing Fountain Pen Nib / Ink-Spark Indicator -->
-  <div class="ink-spark-nib" id="inkSparkNib">
-    <svg class="nib-icon" viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L16 14L12 18L8 14L12 2Z" fill="#ffd700" stroke="#aa7c11" stroke-width="0.8"/>
-      <circle cx="12" cy="14" r="1.5" fill="#4a370e"/>
-    </svg>
+  <div class="ink-spark-nib" id="inkSparkNib" aria-hidden="true">
+    <span class="nib-spark-char">✦</span>
     <div class="nib-glow-dot"></div>
   </div>
 
@@ -2674,7 +2671,7 @@
       if (candlelightLayer) candlelightLayer.classList.add('dimmed');
 
       // 6. Ensure letter DOM is populated
-      if (allRenderedLines.length === 0) {
+      if (allRenderedWords.length === 0) {
         prepareLetterDOM();
       }
 
@@ -2719,7 +2716,7 @@
     }
 
     /* ==========================================================================
-       F. STRICT SENTENCE-BY-SENTENCE INK-WRITING ENGINE
+       F. WORD-BY-WORD FOUNTAIN-PEN INKING ENGINE
        ========================================================================== */
     const letterContent = document.getElementById('letterContent');
     const inkSparkNib = document.getElementById('inkSparkNib');
@@ -2728,27 +2725,18 @@
     const signatureFlourish = document.getElementById('signatureFlourish');
     const pressedFlower = document.getElementById('pressedFlower');
 
-    // Engine State (Ultra-slow, meditative, uninterrupted reading experience)
+    // Engine State (Slow, intimate word-by-word fountain-pen writing)
     let autoScrollEnabled = true;
-    let activeLineElement = null;
+    let activeWordElement = null;
+    let writingTimer = null;
 
-    let allRenderedLines = [];
-    let currentLineIndex = 0;
-
-    function createInkLineElement(text) {
-      const lineDiv = document.createElement('div');
-      lineDiv.className = 'ink-line';
-      const textSpan = document.createElement('span');
-      textSpan.className = 'ink-line-text';
-      textSpan.textContent = text;
-      lineDiv.appendChild(textSpan);
-      return lineDiv;
-    }
+    let allRenderedWords = [];
+    let currentWordIndex = 0;
 
     function prepareLetterDOM() {
       if (!letterContent) return;
       letterContent.innerHTML = '';
-      allRenderedLines = [];
+      allRenderedWords = [];
 
       LETTER_STANZAS.forEach((stanzaData, stanzaIdx) => {
         const stanzaEl = document.createElement('div');
@@ -2763,19 +2751,33 @@
           stanzaEl.appendChild(sentenceEl);
 
           const isStanzaEnd = (sIdx === stanzaData.sentences.length - 1);
-          const lineEl = createInkLineElement(sentenceText);
-          sentenceEl.appendChild(lineEl);
+          const rawWords = sentenceText.trim().split(/\s+/).filter(Boolean);
 
-          allRenderedLines.push({
-            element: lineEl,
-            textSpan: lineEl.querySelector('.ink-line-text'),
-            text: sentenceText,
-            sentenceText: sentenceText,
-            isSentenceEnd: true,
-            isStanzaEnd: isStanzaEnd,
-            stanzaType: stanzaData.type,
-            stanzaIdx: stanzaIdx,
-            sIdx: sIdx
+          rawWords.forEach((wordText, wIdx) => {
+            const isSentenceEnd = (wIdx === rawWords.length - 1);
+            const isStanzaEndWord = isSentenceEnd && isStanzaEnd;
+
+            const wordSpan = document.createElement('span');
+            wordSpan.className = 'ink-word';
+            wordSpan.textContent = wordText;
+            sentenceEl.appendChild(wordSpan);
+
+            // Add standard whitespace text node between words for natural text flow and copying
+            if (wIdx < rawWords.length - 1) {
+              sentenceEl.appendChild(document.createTextNode(' '));
+            }
+
+            allRenderedWords.push({
+              element: wordSpan,
+              text: wordText,
+              sentenceText: sentenceText,
+              isSentenceEnd: isSentenceEnd,
+              isStanzaEnd: isStanzaEndWord,
+              stanzaType: stanzaData.type,
+              stanzaIdx: stanzaIdx,
+              sIdx: sIdx,
+              wIdx: wIdx
+            });
           });
         });
       });
@@ -2785,152 +2787,117 @@
     prepareLetterDOM();
 
     /* ==========================================================================
-       G. ULTRA-SLOW, DELIBERATE EMOTIONAL PACING ENGINE
+       G. EMOTIONAL WORD-BY-WORD PACING & REFLECTIVE PAUSES
        ========================================================================== */
     function startInkWritingEngine() {
-      if (allRenderedLines.length === 0) {
+      clearTimeout(writingTimer);
+      if (allRenderedWords.length === 0) {
         prepareLetterDOM();
       }
-      currentLineIndex = 0;
-      writeNextLine();
+      currentWordIndex = 0;
+      if (inkSparkNib) inkSparkNib.classList.add('active');
+      writeNextWord();
     }
 
-    function writeNextLine() {
-      if (currentLineIndex >= allRenderedLines.length) {
+    function writeNextWord() {
+      if (currentWordIndex >= allRenderedWords.length) {
         finishLetterWriting();
         return;
       }
 
-      const lineData = allRenderedLines[currentLineIndex];
-      activeLineElement = lineData.element;
+      const wordData = allRenderedWords[currentWordIndex];
+      activeWordElement = wordData.element;
 
-      // Smart auto-scroll anchor comfortably centered in reading zone (~58%)
+      // Reveal current word with smooth blur and rise transition
+      wordData.element.classList.add('revealed');
+
+      // Smart auto-scroll anchor comfortably centered in reading zone
       if (autoScrollEnabled) {
-        smoothScrollToActiveLine();
+        smoothScrollToActiveWord();
       }
 
-      // Ultra-slow, meditative fountain-pen reveal pace: ~75ms per character equivalent
-      const charCount = Math.max(12, lineData.text.length);
-      const duration = Math.max(1200, Math.min(6500, charCount * 75));
+      // Move glowing golden fountain-pen nib spark (✦) dynamically right after the exact word currently being written
+      if (inkSparkNib) {
+        const rect = wordData.element.getBoundingClientRect();
+        const nibX = rect.right + 2;
+        const nibY = rect.top + rect.height * 0.55;
+        inkSparkNib.style.transform = `translate(${nibX}px, ${nibY}px)`;
 
-      const textSpan = lineData.textSpan;
-      if (inkSparkNib) inkSparkNib.classList.add('active');
-
-      const startTime = performance.now();
-      let lastParticleTime = 0;
-
-      function renderFrame(now) {
-        const elapsed = now - startTime;
-        let progress = Math.min(1, elapsed / duration);
-
-        // Smooth cubic ease-out
-        const easedProgress = 1 - Math.pow(1 - progress, 1.8);
-
-        // Clip-path wipe: left-to-right
-        const clipPercent = Math.max(0, (1 - easedProgress) * 100);
-        if (textSpan) {
-          textSpan.style.clipPath = `inset(0 ${clipPercent}% 0 0)`;
-          textSpan.style.opacity = Math.min(1, easedProgress * 3.5);
-          textSpan.style.transform = `translateY(${(1 - easedProgress) * 4}px)`;
-        }
-
-        // Update glowing fountain pen nib position safely
-        if (inkSparkNib && lineData.element) {
-          const lineRect = lineData.element.getBoundingClientRect();
-          const nibX = lineRect.left + (lineRect.width * easedProgress);
-          const nibY = lineRect.top + lineRect.height * 0.55;
-          inkSparkNib.style.transform = `translate(${nibX}px, ${nibY}px)`;
-
-          // Spawn tiny micro-sparkles along writing path
-          if (now - lastParticleTime > 160 && Math.random() > 0.45) {
-            lastParticleTime = now;
-            spawnParticleBurst(nibX, nibY, 1, 'gold');
-          }
-        }
-
-        if (progress < 1) {
-          requestAnimationFrame(renderFrame);
-        } else {
-          // Complete line
-          if (lineData.element) lineData.element.classList.add('completed');
-          if (textSpan) {
-            textSpan.style.clipPath = 'inset(0 0 0 0)';
-            textSpan.style.opacity = '1';
-            textSpan.style.transform = 'translateY(0)';
-          }
-
-          if (inkSparkNib) inkSparkNib.classList.remove('active');
-
-          currentLineIndex++;
-
-          // Natural human handwriting rhythm & deep emotional pauses:
-          // - 600ms micro-breath on commas and mid-sentence pauses
-          // - 1400ms reading pause after every single line finishes inking
-          // - 2400ms reflective silence between original paragraph stanzas
-          // - 3200ms lingering stillness after deeply poignant lines
-          // - 3800ms stillness pause before final signature with music dip
-          const lineTrimmed = lineData.text.trim();
-          let pauseDuration = 1400;
-
-          if (/[,;]$/.test(lineTrimmed) && !lineData.isSentenceEnd) {
-            pauseDuration = 600;
-          }
-
-          if (lineData.isStanzaEnd) {
-            pauseDuration = 2400;
-          }
-
-          const sentenceFull = lineData.sentenceText.trim();
-          const isPoignant = 
-            sentenceFull.includes("You were my first love, Ridhu") ||
-            sentenceFull.includes("And if I had seven lives") ||
-            sentenceFull.includes("HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!!") ||
-            sentenceFull.includes("I love you, Ridhu. More than these words could ever explain") ||
-            sentenceFull.includes("I love you, Ridhu") ||
-            sentenceFull.includes("More than these words could ever explain");
-
-          if (isPoignant && lineData.isSentenceEnd) {
-            pauseDuration = 3200;
-          }
-
-          const isBeforeSignature = lineData.stanzaIdx === 27 && lineData.isStanzaEnd;
-          if (isBeforeSignature) {
-            pauseDuration = 3800;
-            fadeAudio(0.22, 2200);
-            setTimeout(() => {
-              fadeAudio(0.65, 2500);
-            }, pauseDuration - 400);
-          }
-
-          setTimeout(writeNextLine, pauseDuration);
+        // Spawn subtle golden micro-sparks as each word appears
+        if (Math.random() > 0.35) {
+          spawnParticleBurst(nibX, nibY, 1, 'gold');
         }
       }
 
-      requestAnimationFrame(renderFrame);
+      // 1. Slow, deliberate, emotional fountain-pen pace: ~180ms–240ms per word
+      let delay = Math.round(180 + Math.min(60, wordData.text.length * 8));
+
+      // 2. 550ms breath pause after any word ending with a comma or semicolon
+      if (/[,;]$/.test(wordData.text)) {
+        delay = 550;
+      }
+
+      // 3. 1300ms reflective pause after any word ending a sentence
+      if (wordData.isSentenceEnd || /[.!?…]+$/.test(wordData.text)) {
+        delay = 1300;
+      }
+
+      // 4. 2300ms deep pause between original paragraph stanzas
+      if (wordData.isStanzaEnd) {
+        delay = 2300;
+      }
+
+      // 5. 3000ms lingering stillness after deeply emotional sentences
+      const sentenceFull = wordData.sentenceText.trim();
+      const isPoignant = 
+        sentenceFull.includes("You were my first love, Ridhu") ||
+        sentenceFull.includes("And if I had seven lives") ||
+        sentenceFull.includes("HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!!") ||
+        sentenceFull.includes("I love you, Ridhu") ||
+        sentenceFull.includes("More than these words could ever explain");
+
+      if (isPoignant && wordData.isSentenceEnd) {
+        delay = 3000;
+      }
+
+      // 6. 3600ms stillness pause before the closing signature with music dip
+      const isBeforeSignature = (wordData.stanzaIdx === 27 && wordData.isStanzaEnd);
+      if (isBeforeSignature) {
+        delay = 3600;
+        fadeAudio(0.22, 1800);
+        setTimeout(() => {
+          fadeAudio(0.65, 2400);
+        }, delay - 400);
+      }
+
+      currentWordIndex++;
+      writingTimer = setTimeout(writeNextWord, delay);
     }
 
-    function smoothScrollToActiveLine() {
-      if (!activeLineElement) return;
-      const rect = activeLineElement.getBoundingClientRect();
+    function smoothScrollToActiveWord() {
+      if (!activeWordElement) return;
+      const rect = activeWordElement.getBoundingClientRect();
       const currentScrollY = window.scrollY || window.pageYOffset;
       const targetY = currentScrollY + rect.top - (window.innerHeight * 0.60);
-      window.scrollTo({
-        top: Math.max(0, targetY),
-        behavior: 'smooth'
-      });
+      if (Math.abs(targetY - currentScrollY) > 28) {
+        window.scrollTo({
+          top: Math.max(0, targetY),
+          behavior: 'smooth'
+        });
+      }
     }
 
     /* ==========================================================================
        H. SMART SCROLL LISTENER & "FOLLOW INK" DETECTION
        ========================================================================== */
     function handleUserScrollIntent() {
-      if (!activeLineElement) return;
+      if (!activeWordElement) return;
 
-      const rect = activeLineElement.getBoundingClientRect();
+      const rect = activeWordElement.getBoundingClientRect();
       const currentScrollY = window.scrollY || window.pageYOffset;
       const expectedScrollY = currentScrollY + rect.top - (window.innerHeight * 0.60);
 
-      if (Math.abs(currentScrollY - expectedScrollY) > 80) {
+      if (Math.abs(currentScrollY - expectedScrollY) > 90) {
         autoScrollEnabled = false;
         if (followInkPill) followInkPill.classList.add('visible');
       } else {
@@ -2946,7 +2913,7 @@
       followInkPill.addEventListener('click', () => {
         autoScrollEnabled = true;
         followInkPill.classList.remove('visible');
-        smoothScrollToActiveLine();
+        smoothScrollToActiveWord();
       });
     }
 
@@ -3153,7 +3120,8 @@
 
           isEnvelopeOpened = false;
           autoScrollEnabled = true;
-          currentLineIndex = 0;
+          clearTimeout(writingTimer);
+          currentWordIndex = 0;
           prepareLetterDOM();
 
           if (keepsakeCard) keepsakeCard.classList.remove('visible');
