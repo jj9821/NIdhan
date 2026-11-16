@@ -27,8 +27,9 @@
     }
 
     :root {
-      --bg-espresso: #14100e;
-      --bg-espresso-card: #1c1511;
+      --bg-mahogany: #120d0a;
+      --bg-mahogany-rich: #1b130e;
+      --bg-mahogany-light: #241a14;
       --parchment: #fbf7f0;
       --parchment-shade: #f4ecdf;
       --ink-charcoal: #2b221e;
@@ -51,7 +52,11 @@
     html, body {
       width: 100%;
       min-height: 100%;
-      background-color: var(--bg-espresso);
+      background-color: var(--bg-mahogany);
+      /* Subtle dark polished mahogany wood grain */
+      background-image: 
+        radial-gradient(circle at 45% 35%, rgba(55, 30, 18, 0.4) 0%, rgba(18, 13, 10, 0.95) 75%),
+        repeating-linear-gradient(90deg, #120d0a 0px, #16100c 4px, #100b08 8px, #140e0b 16px, #17110d 24px);
       color: var(--ink-charcoal);
       font-family: var(--font-body);
       overflow-x: hidden;
@@ -71,6 +76,58 @@
       background-size: 24px 24px, 24px 24px, 96px 96px, 96px 96px;
       pointer-events: none;
       z-index: 1;
+    }
+
+    /* Fixed SVG Fractal Noise Film-Grain Overlay */
+    .film-grain-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 280;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Ambient Breathing Candlelight Vignette */
+    .candlelight-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      background: radial-gradient(
+        circle 580px at 50% 38%,
+        rgba(255, 188, 77, 0.15) 0%,
+        rgba(224, 130, 42, 0.08) 45%,
+        rgba(20, 14, 10, 0.6) 80%,
+        rgba(10, 7, 5, 0.94) 100%
+      );
+      animation: candleFlicker 3.8s ease-in-out infinite alternate;
+      transition: opacity 1.4s ease;
+    }
+    .candlelight-layer.dimmed {
+      opacity: 0.52;
+    }
+    @keyframes candleFlicker {
+      0% {
+        transform: scale(1) translate(0, 0);
+        opacity: 0.92;
+      }
+      25% {
+        transform: scale(1.025) translate(-3px, 2px);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(0.985) translate(2px, -2px);
+        opacity: 0.88;
+      }
+      75% {
+        transform: scale(1.015) translate(1px, 3px);
+        opacity: 0.96;
+      }
+      100% {
+        transform: scale(0.99) translate(-2px, -1px);
+        opacity: 0.9;
+      }
     }
 
     /* Full-screen Ambient HTML5 Canvas (Floating Golden Dust Motes) */
@@ -127,7 +184,6 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: radial-gradient(circle at center, rgba(30, 24, 21, 0.97) 0%, rgba(14, 11, 10, 0.99) 100%);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
     .envelope-screen.opened {
@@ -161,6 +217,35 @@
       background: linear-gradient(90deg, var(--gold-antique), transparent);
     }
 
+    /* 3D Envelope Scene Container */
+    .envelope-scene {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Vintage Fountain Pen Prop Resting on Mahogany Desk */
+    .desk-fountain-pen {
+      position: absolute;
+      right: -52px;
+      bottom: -35px;
+      width: 22px;
+      height: 230px;
+      transform: rotate(32deg);
+      pointer-events: none;
+      z-index: 12;
+      filter: drop-shadow(4px 10px 14px rgba(0, 0, 0, 0.75));
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+    @media (max-width: 480px) {
+      .desk-fountain-pen {
+        right: -32px;
+        bottom: -40px;
+        transform: rotate(34deg) scale(0.82);
+      }
+    }
+
     /* 3D Envelope Wrapper */
     .envelope-wrapper {
       position: relative;
@@ -168,6 +253,7 @@
       height: 230px;
       perspective: 1200px;
       cursor: pointer;
+      z-index: 5;
     }
 
     .envelope {
@@ -210,6 +296,51 @@
     .drafting-cross.tr { top: 8px; right: 8px; }
     .drafting-cross.bl { bottom: 8px; left: 8px; }
     .drafting-cross.br { bottom: 8px; right: 8px; }
+
+    /* Vintage Perforated Postage Stamp & Postmark */
+    .envelope-stamp-container {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 4;
+      pointer-events: none;
+    }
+    .postage-stamp {
+      width: 52px;
+      height: 64px;
+      background: #fbf7f0;
+      border: 1.5px dashed rgba(160, 115, 75, 0.7);
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+      position: relative;
+    }
+    .postage-stamp-icon {
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+    .postage-stamp-label {
+      font-family: monospace, sans-serif;
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #7b1622;
+      text-align: center;
+      line-height: 1.1;
+    }
+    .postmark-lines {
+      position: absolute;
+      top: 16px;
+      left: -22px;
+      width: 48px;
+      height: 32px;
+      pointer-events: none;
+      opacity: 0.75;
+    }
 
     /* Inside Parchment Sheet that slides upward on open */
     .envelope-letter-slide {
@@ -429,12 +560,58 @@
         0 0 0 1px rgba(212, 175, 55, 0.35),
         0 10px 24px rgba(0, 0, 0, 0.4);
       border: 1px solid rgba(212, 175, 55, 0.28);
+      transform-origin: top center;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
     }
 
     @media (min-width: 600px) {
       .parchment-sheet {
         padding: 56px 50px 72px;
       }
+    }
+
+    /* Horizontal Physical Paper Crease Lines */
+    .paper-crease {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      height: 2px;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.055) 0%,
+        rgba(0, 0, 0, 0.02) 50%,
+        rgba(255, 255, 255, 0.4) 100%
+      );
+      pointer-events: none;
+      z-index: 3;
+    }
+    .crease-1 { top: 28%; }
+    .crease-2 { top: 58%; }
+    .crease-3 { top: 82%; }
+
+    /* Organic Water / Tea Droplet Ring Stains */
+    .water-stain {
+      position: absolute;
+      border-radius: 50%;
+      border: 1.5px solid rgba(175, 130, 90, 0.09);
+      box-shadow: inset 0 0 14px rgba(160, 115, 75, 0.04), 0 0 8px rgba(160, 115, 75, 0.03);
+      pointer-events: none;
+      z-index: 2;
+    }
+    .stain-1 {
+      top: 12%;
+      right: 6%;
+      width: 58px;
+      height: 54px;
+      transform: rotate(20deg);
+    }
+    .stain-2 {
+      bottom: 24%;
+      left: 5%;
+      width: 72px;
+      height: 68px;
+      border-width: 2px;
+      transform: rotate(-10deg);
     }
 
     /* Architectural inner drafting frame & corner ticks */
@@ -572,7 +749,6 @@
       display: inline-block;
       white-space: pre-wrap;
       width: 100%;
-      /* Default state: invisible & unclipped */
       opacity: 0;
       clip-path: inset(0 100% 0 0);
       transform: translateY(4px);
@@ -638,7 +814,438 @@
     }
 
     /* ==========================================================================
-       5. READER CONTROLS & "FOLLOW INK" BUTTON
+       5. PRESSED CORNER FLOWER & SECRET POSTSCRIPT
+       ========================================================================== */
+    .pressed-flower-container {
+      position: absolute;
+      bottom: 28px;
+      right: 24px;
+      z-index: 25;
+      cursor: pointer;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .pressed-flower-container.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .pressed-flower-svg {
+      width: 58px;
+      height: 72px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+      animation: pressedFlowerSway 4.5s ease-in-out infinite alternate;
+      transform-origin: top center;
+    }
+    @keyframes pressedFlowerSway {
+      0% { transform: rotate(-2deg); }
+      100% { transform: rotate(3deg); }
+    }
+    .pressed-flower-hint {
+      position: absolute;
+      bottom: -18px;
+      right: -10px;
+      white-space: nowrap;
+      font-family: var(--font-hand);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--rose-deep);
+      background: rgba(251, 247, 240, 0.95);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 1px 8px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      pointer-events: none;
+      animation: floatBreath 2.5s ease-in-out infinite;
+    }
+
+    /* Secret Postscript Modal Card */
+    .secret-postscript-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(14, 10, 8, 0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .secret-postscript-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .secret-postscript-card {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      background: #fdfaf3;
+      border: 1.5px solid rgba(212, 175, 55, 0.55);
+      border-radius: 8px;
+      padding: 34px 26px;
+      box-shadow: 
+        0 20px 45px rgba(0, 0, 0, 0.65),
+        0 0 20px rgba(212, 175, 55, 0.2);
+      transform: scale(0.92) translateY(12px);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .secret-postscript-overlay.active .secret-postscript-card {
+      transform: scale(1) translateY(0);
+    }
+
+    .secret-close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: #7b1622;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .secret-close-btn:hover {
+      background: rgba(212, 175, 55, 0.25);
+      transform: scale(1.08);
+    }
+
+    .secret-badge {
+      font-family: monospace, sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold-antique);
+      margin-bottom: 12px;
+    }
+    .secret-text {
+      font-family: var(--font-hand);
+      font-size: 1.6rem;
+      line-height: 1.6;
+      color: #6d151e;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .secret-sub {
+      font-family: var(--font-title);
+      font-style: italic;
+      font-size: 0.98rem;
+      color: var(--ink-muted);
+      border-top: 1px dashed rgba(212, 175, 55, 0.3);
+      padding-top: 10px;
+    }
+
+    /* ==========================================================================
+       6. TUCKED POLAROID PHOTO PEEK & CANDLELIT LIGHTBOX
+       ========================================================================== */
+    .polaroid-peek {
+      position: absolute;
+      bottom: -18px;
+      left: 32px;
+      width: 82px;
+      height: 102px;
+      background: #fffefb;
+      border-radius: 3px;
+      padding: 6px 6px 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      transform: rotate(-10deg);
+      cursor: pointer;
+      z-index: 18;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .polaroid-peek:hover {
+      transform: rotate(-6deg) translateY(-6px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+    .polaroid-peek-tape {
+      position: absolute;
+      top: -9px;
+      left: 18px;
+      width: 44px;
+      height: 16px;
+      background: rgba(245, 230, 210, 0.7);
+      border: 1px dashed rgba(212, 175, 55, 0.45);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      transform: rotate(4deg);
+      pointer-events: none;
+    }
+    .polaroid-peek-thumb {
+      width: 100%;
+      height: 62px;
+      background: linear-gradient(135deg, #2a201b 0%, #16100d 100%);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--gold-light);
+    }
+    .polaroid-peek-label {
+      display: block;
+      font-family: var(--font-hand);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #681820;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* Candlelit Lightbox Modal */
+    .polaroid-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 350;
+      background: radial-gradient(circle at center, rgba(30, 22, 18, 0.95) 0%, rgba(12, 8, 6, 0.98) 100%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .polaroid-lightbox.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .lightbox-close-btn {
+      position: absolute;
+      top: calc(env(safe-area-inset-top, 20px) + 16px);
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(20, 16, 14, 0.85);
+      border: 1px solid var(--gold-antique);
+      color: var(--gold-light);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: all 0.25s ease;
+    }
+    .lightbox-close-btn:hover {
+      background: rgba(40, 30, 24, 0.95);
+      transform: scale(1.08);
+    }
+
+    .lightbox-slider {
+      position: relative;
+      width: min(88vw, 360px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .polaroid-frame {
+      width: 100%;
+      background: #fffdf9;
+      border-radius: 4px;
+      padding: 14px 14px 24px;
+      box-shadow: 
+        0 25px 60px rgba(0, 0, 0, 0.85),
+        0 0 25px rgba(212, 175, 55, 0.2);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      display: none;
+      flex-direction: column;
+      animation: polaroidFade 0.4s ease forwards;
+    }
+    .polaroid-frame.active {
+      display: flex;
+    }
+    @keyframes polaroidFade {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .polaroid-frame-tape {
+      align-self: center;
+      width: 70px;
+      height: 22px;
+      background: rgba(245, 230, 210, 0.75);
+      border: 1px dashed rgba(212, 175, 55, 0.5);
+      margin-top: -24px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      transform: rotate(-2deg);
+    }
+
+    .polaroid-img-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #1c1511;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .polaroid-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Fallback Illustration when local photo is not found */
+    .polaroid-fallback-card {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, #2e2119 0%, #17110d 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-light);
+      padding: 20px;
+      text-align: center;
+    }
+    .fallback-icon {
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+    }
+    .fallback-title {
+      font-family: var(--font-title);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #ffd700;
+      margin-bottom: 4px;
+    }
+    .fallback-sub {
+      font-family: monospace, sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      color: rgba(212, 175, 55, 0.65);
+    }
+
+    .polaroid-caption {
+      font-family: var(--font-hand);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #6b141d;
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.35;
+    }
+
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(20, 16, 14, 0.85);
+      border: 1px solid var(--gold-antique);
+      color: var(--gold-light);
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      transition: all 0.2s ease;
+    }
+    .lightbox-nav-btn:hover {
+      background: rgba(40, 30, 24, 0.95);
+      transform: translateY(-50%) scale(1.1);
+    }
+    .lightbox-nav-btn.prev { left: -52px; }
+    .lightbox-nav-btn.next { right: -52px; }
+
+    @media (max-width: 520px) {
+      .lightbox-nav-btn.prev { left: -14px; }
+      .lightbox-nav-btn.next { right: -14px; }
+    }
+
+    .lightbox-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .lightbox-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.35);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .lightbox-dot.active {
+      background: var(--gold-bright);
+      transform: scale(1.3);
+      box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+    }
+
+    /* ==========================================================================
+       7. PHYSICAL RE-FOLDING RESET BUTTON
+       ========================================================================== */
+    .refold-action-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+      padding-top: 14px;
+    }
+    .refold-btn {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: #6e1c25;
+      font-family: var(--font-title);
+      font-size: 0.94rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 8px 22px;
+      border-radius: 25px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: all 0.25s ease;
+    }
+    .refold-btn:hover {
+      background: rgba(212, 175, 55, 0.18);
+      border-color: var(--gold-antique);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    }
+
+    /* Re-folding animation */
+    .parchment-sheet.refolding {
+      animation: refoldLetter 0.85s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes refoldLetter {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        opacity: 0.8;
+        transform: translateY(-20px) scale(0.7) rotateX(45deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-60px) scale(0.3) rotateX(90deg);
+      }
+    }
+
+    /* ==========================================================================
+       8. READER CONTROLS & "FOLLOW INK" BUTTON
        ========================================================================== */
     .follow-ink-pill {
       position: fixed;
@@ -726,7 +1333,7 @@
     }
 
     /* ==========================================================================
-       6. GRAND FINALE MOMENT: KEEPSAKE CARD & WISH BURST
+       9. GRAND FINALE MOMENT: KEEPSAKE CARD & WISH BURST
        ========================================================================== */
     .keepsake-card {
       position: relative;
@@ -871,6 +1478,12 @@
        ========================================================================== -->
   <audio id="bgMusic" src="./bg-music.mp3" loop preload="auto"></audio>
 
+  <!-- Ambient Breathing Candlelight Vignette Layer -->
+  <div id="candlelightLayer" class="candlelight-layer"></div>
+
+  <!-- Fixed Film Grain Overlay -->
+  <div class="film-grain-overlay"></div>
+
   <!-- Full-screen Background HTML5 Canvas for Golden Dust Motes & Sparks -->
   <canvas id="ambientCanvas"></canvas>
 
@@ -880,42 +1493,92 @@
   </button>
 
   <!-- ==========================================================================
-       OPENING 3D ENVELOPE MODAL
+       OPENING 3D ENVELOPE & CANDLELIT MAHOGANY DESK
        ========================================================================== -->
   <div id="envelopeScreen" class="envelope-screen">
     <div class="envelope-intro-tag">FOR RIDHU • 22ND CHAPTER</div>
 
-    <div class="envelope-wrapper" id="envelopeWrapper">
-      <div class="envelope" id="envelopeBox">
-        <!-- Drafting corner tick marks -->
-        <div class="drafting-cross tl"></div>
-        <div class="drafting-cross tr"></div>
-        <div class="drafting-cross bl"></div>
-        <div class="drafting-cross br"></div>
+    <div class="envelope-scene">
+      <!-- 3D Envelope Wrapper -->
+      <div class="envelope-wrapper" id="envelopeWrapper">
+        <div class="envelope" id="envelopeBox">
+          <!-- Drafting corner tick marks -->
+          <div class="drafting-cross tl"></div>
+          <div class="drafting-cross tr"></div>
+          <div class="drafting-cross bl"></div>
+          <div class="drafting-cross br"></div>
 
-        <!-- Inside Parchment Sheet -->
-        <div class="envelope-letter-slide"></div>
+          <!-- Vintage Postage Stamp & Postmark -->
+          <div class="envelope-stamp-container">
+            <div class="postage-stamp">
+              <span class="postage-stamp-icon">📐</span>
+              <span class="postage-stamp-label">22 • ARCHITECT<br>FIRST CLASS</span>
+            </div>
+            <!-- Wavy cancellation postmark -->
+            <svg class="postmark-lines" viewBox="0 0 60 30" fill="none">
+              <path d="M0 6C15 2 25 10 40 6C50 3 55 8 60 6" stroke="#7b1622" stroke-width="1.2" opacity="0.7"/>
+              <path d="M0 14C15 10 25 18 40 14C50 11 55 16 60 14" stroke="#7b1622" stroke-width="1.2" opacity="0.7"/>
+              <path d="M0 22C15 18 25 26 40 22C50 19 55 24 60 22" stroke="#7b1622" stroke-width="1.2" opacity="0.7"/>
+              <circle cx="48" cy="14" r="11" stroke="#7b1622" stroke-width="1" opacity="0.65"/>
+            </svg>
+          </div>
 
-        <!-- Pocket folds (Left, Right, Bottom triangles) -->
-        <div class="pocket-fold-left"></div>
-        <div class="pocket-fold-right"></div>
-        <div class="pocket-fold-bottom"></div>
+          <!-- Inside Parchment Sheet -->
+          <div class="envelope-letter-slide"></div>
 
-        <!-- Top Flap (folds down over center) -->
-        <div class="envelope-flap" id="envelopeFlap"></div>
+          <!-- Pocket folds (Left, Right, Bottom triangles) -->
+          <div class="pocket-fold-left"></div>
+          <div class="pocket-fold-right"></div>
+          <div class="pocket-fold-bottom"></div>
 
-        <!-- Front Script Addressing -->
-        <div class="envelope-address-text">
-          <div class="envelope-name">For Ridhu</div>
-          <div class="envelope-sub">Happy 22nd Birthday</div>
-        </div>
+          <!-- Top Flap (folds down over center) -->
+          <div class="envelope-flap" id="envelopeFlap"></div>
 
-        <!-- Crimson & Gold Wax Stamp Seal -->
-        <div class="wax-seal" id="waxSeal" title="Click to break seal & open letter">
-          <div class="seal-pulse-ring"></div>
-          <span class="wax-seal-num">22</span>
+          <!-- Front Script Addressing -->
+          <div class="envelope-address-text">
+            <div class="envelope-name">For Ridhu</div>
+            <div class="envelope-sub">Happy 22nd Birthday</div>
+          </div>
+
+          <!-- Crimson & Gold Wax Stamp Seal -->
+          <div class="wax-seal" id="waxSeal" title="Click to break seal & open letter">
+            <div class="seal-pulse-ring"></div>
+            <span class="wax-seal-num">22</span>
+          </div>
         </div>
       </div>
+
+      <!-- Vintage Gold-Nib Fountain Pen Prop Resting on Desk -->
+      <svg class="desk-fountain-pen" viewBox="0 0 24 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Nib (Gold & Silver two-tone) -->
+        <path d="M12 0L17 38L12 48L7 38L12 0Z" fill="url(#penGoldGrad)" stroke="#aa7c11" stroke-width="0.8"/>
+        <path d="M12 0V32" stroke="#4a370e" stroke-width="1"/>
+        <circle cx="12" cy="32" r="2.2" fill="#2a1f0a"/>
+        <!-- Nib collar / gold band -->
+        <rect x="6" y="48" width="12" height="12" rx="1.5" fill="url(#penGoldGrad)" stroke="#aa7c11" stroke-width="0.8"/>
+        <!-- Pen Grip Section -->
+        <rect x="7" y="60" width="10" height="34" rx="2" fill="#1b120c" stroke="#3d2a1d" stroke-width="0.8"/>
+        <!-- Gold Trim Ring -->
+        <rect x="5.5" y="94" width="13" height="6" rx="1" fill="url(#penGoldGrad)"/>
+        <!-- Main Polished Dark Tortoiseshell Barrel -->
+        <rect x="6" y="100" width="12" height="120" rx="3" fill="url(#penBarrelGrad)" stroke="#2b1a10" stroke-width="0.8"/>
+        <!-- Gold End Finial -->
+        <path d="M6 220C6 220 7 236 12 238C17 236 18 220 18 220H6Z" fill="url(#penGoldGrad)"/>
+        <!-- Gradients -->
+        <defs>
+          <linearGradient id="penGoldGrad" x1="6" y1="0" x2="18" y2="48" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#fff8db"/>
+            <stop offset="0.45" stop-color="#d4af37"/>
+            <stop offset="1" stop-color="#8f660d"/>
+          </linearGradient>
+          <linearGradient id="penBarrelGrad" x1="6" y1="100" x2="18" y2="220" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#3d2618"/>
+            <stop offset="0.4" stop-color="#1e130c"/>
+            <stop offset="0.75" stop-color="#4d2f1d"/>
+            <stop offset="1" stop-color="#140c07"/>
+          </linearGradient>
+        </defs>
+      </svg>
     </div>
 
     <div class="seal-hint-text">
@@ -928,6 +1591,15 @@
        ========================================================================== -->
   <main id="letterViewport" class="letter-viewport">
     <article class="parchment-sheet" id="parchmentSheet">
+      <!-- Horizontal Paper Creases -->
+      <div class="paper-crease crease-1"></div>
+      <div class="paper-crease crease-2"></div>
+      <div class="paper-crease crease-3"></div>
+
+      <!-- Organic Water / Tea Droplet Stains -->
+      <div class="water-stain stain-1"></div>
+      <div class="water-stain stain-2"></div>
+
       <!-- Architectural Inner Frame & Corner Drafting Ticks -->
       <div class="parchment-inner-frame"></div>
       <div class="corner-tick tl"></div>
@@ -983,6 +1655,49 @@
         <div class="scale-bar">|——|——|——|——| SCALE 1:1 (HEART TO PAPER)</div>
         <div>ARCHITECT: RIDHU • DESIGNED WITH ENDLESS LOVE</div>
       </footer>
+
+      <!-- Physical Re-Folding Button -->
+      <div class="refold-action-container">
+        <button id="refoldBtn" class="refold-btn" title="Fold this letter back up into the envelope">
+          <span>⤾</span> Fold this letter
+        </button>
+      </div>
+
+      <!-- Pressed Corner Flower (Appears with signature) -->
+      <div id="pressedFlower" class="pressed-flower-container" title="A little pressed keepsake flower">
+        <svg class="pressed-flower-svg" viewBox="0 0 60 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Antique Brass Pin / Tack -->
+          <circle cx="30" cy="10" r="5" fill="url(#brassPinGrad)" stroke="#7a5813" stroke-width="1"/>
+          <circle cx="30" cy="10" r="1.5" fill="#fff5cc"/>
+          <!-- Stem -->
+          <path d="M30 14C31 28 28 44 26 68" stroke="#5a6845" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Subtle leaves -->
+          <path d="M28 32C22 28 16 31 14 36C18 38 24 37 28 34" fill="#6d7d53" opacity="0.85"/>
+          <path d="M27 46C34 42 40 45 42 50C38 52 32 50 27 48" fill="#6d7d53" opacity="0.85"/>
+          <!-- Pressed Rose Petals -->
+          <path d="M30 18C23 11 17 20 22 27C27 32 30 24 30 18Z" fill="#c97b84" opacity="0.88"/>
+          <path d="M30 18C37 11 43 20 38 27C33 32 30 24 30 18Z" fill="#c97b84" opacity="0.88"/>
+          <path d="M30 18C28 7 32 7 30 18Z" fill="#a82024" opacity="0.75"/>
+          <circle cx="30" cy="20" r="3" fill="#d4af37" opacity="0.9"/>
+          <defs>
+            <radialGradient id="brassPinGrad" cx="35%" cy="35%" r="65%">
+              <stop stop-color="#fff8db"/>
+              <stop offset="0.6" stop-color="#d4af37"/>
+              <stop offset="1" stop-color="#7a5813"/>
+            </radialGradient>
+          </defs>
+        </svg>
+        <span class="pressed-flower-hint">Tap pressed flower</span>
+      </div>
+
+      <!-- Tucked Vintage Polaroid Snapshot Peek -->
+      <div id="polaroidPeek" class="polaroid-peek" title="Tap to view Polaroid memories">
+        <div class="polaroid-peek-tape"></div>
+        <div class="polaroid-peek-thumb">
+          <span>📷</span>
+        </div>
+        <span class="polaroid-peek-label">memories ✧</span>
+      </div>
     </article>
   </main>
 
@@ -1020,6 +1735,80 @@
       ⚡ Instant Read
     </button>
     <span id="progressIndicator" class="ctrl-progress-ring">0%</span>
+  </div>
+
+  <!-- Secret Postscript Modal Card -->
+  <div id="secretPostscriptModal" class="secret-postscript-overlay">
+    <div class="secret-postscript-card">
+      <button id="secretCloseBtn" class="secret-close-btn" aria-label="Close secret postscript">✕</button>
+      <div class="secret-badge">A SECRET POSTSCRIPT • FOR YOU ALONE</div>
+      <p class="secret-text">
+        "P.S. For you alone — No matter how many buildings you design or cities you conquer, never forget how rare your heart is. Happy 22nd, Ridhu."
+      </p>
+      <div class="secret-sub">
+        Always in your corner, proud of every blueprint you draw. 📐❤️
+      </div>
+    </div>
+  </div>
+
+  <!-- Candlelit Polaroid Lightbox Gallery -->
+  <div id="polaroidLightbox" class="polaroid-lightbox">
+    <button id="lightboxCloseBtn" class="lightbox-close-btn" aria-label="Close lightbox">✕</button>
+    
+    <div class="lightbox-slider">
+      <button id="lightboxPrevBtn" class="lightbox-nav-btn prev" aria-label="Previous photo">‹</button>
+
+      <!-- Polaroid 1 -->
+      <div class="polaroid-frame active" data-slide="0">
+        <div class="polaroid-frame-tape"></div>
+        <div class="polaroid-img-box">
+          <img src="./photo1.jpg" alt="The Best Architect" class="polaroid-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="polaroid-fallback-card" style="display: none;">
+            <span class="fallback-icon">📐</span>
+            <div class="fallback-title">The Best Architect</div>
+            <div class="fallback-sub">DROP PHOTO: ./photo1.jpg</div>
+          </div>
+        </div>
+        <p class="polaroid-caption">"The girl who builds dreams with her bare hands. 📐"</p>
+      </div>
+
+      <!-- Polaroid 2 -->
+      <div class="polaroid-frame" data-slide="1">
+        <div class="polaroid-frame-tape"></div>
+        <div class="polaroid-img-box">
+          <img src="./photo2.jpg" alt="Quiet Moments" class="polaroid-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="polaroid-fallback-card" style="display: none;">
+            <span class="fallback-icon">✨</span>
+            <div class="fallback-title">Quiet Moments</div>
+            <div class="fallback-sub">DROP PHOTO: ./photo2.jpg</div>
+          </div>
+        </div>
+        <p class="polaroid-caption">"When the world faded and it was just us talking about everything. ✨"</p>
+      </div>
+
+      <!-- Polaroid 3 -->
+      <div class="polaroid-frame" data-slide="2">
+        <div class="polaroid-frame-tape"></div>
+        <div class="polaroid-img-box">
+          <img src="./photo3.jpg" alt="Chapter 22 Milestone" class="polaroid-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="polaroid-fallback-card" style="display: none;">
+            <span class="fallback-icon">💗</span>
+            <div class="fallback-title">Chapter 22 Milestone</div>
+            <div class="fallback-sub">DROP PHOTO: ./photo3.jpg</div>
+          </div>
+        </div>
+        <p class="polaroid-caption">"Always rooting for you, in this life and all seven. 💗"</p>
+      </div>
+
+      <button id="lightboxNextBtn" class="lightbox-nav-btn next" aria-label="Next photo">›</button>
+    </div>
+
+    <!-- Gallery dot indicators -->
+    <div class="lightbox-dots" id="lightboxDots">
+      <span class="lightbox-dot active" data-index="0"></span>
+      <span class="lightbox-dot" data-index="1"></span>
+      <span class="lightbox-dot" data-index="2"></span>
+    </div>
   </div>
 
   <!-- ==========================================================================
@@ -1062,7 +1851,81 @@
     ];
 
     /* ==========================================================================
-       B. CANVAS AMBIENT GOLDEN DUST & BURST PARTICLE SYSTEM
+       B. PROCEDURAL WEB AUDIO API PAPER RUSTLE SYNTHESIZER
+       ========================================================================== */
+    let audioCtx = null;
+
+    function initAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          audioCtx = new AudioContextClass();
+        }
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playPaperRustle(intensity = 1.0) {
+      try {
+        initAudioContext();
+        if (!audioCtx) return;
+
+        const sampleRate = audioCtx.sampleRate;
+        const duration = 0.45;
+        const bufferSize = Math.floor(sampleRate * duration);
+        const buffer = audioCtx.createBuffer(1, bufferSize, sampleRate);
+        const output = buffer.getChannelData(0);
+
+        // Generate pinkish noise simulating tactile paper texture
+        let b0 = 0, b1 = 0, b2 = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99886 * b0 + white * 0.0555179;
+          b1 = 0.99332 * b1 + white * 0.0750759;
+          b2 = 0.96900 * b2 + white * 0.1538520;
+          const pink = b0 + b1 + b2 + white * 0.5362;
+          output[i] = pink * 0.18;
+        }
+
+        const noiseSource = audioCtx.createBufferSource();
+        noiseSource.buffer = buffer;
+
+        // Sweeping bandpass filter: 1400Hz to 800Hz
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        const now = audioCtx.currentTime;
+        filter.frequency.setValueAtTime(1400, now);
+        filter.frequency.exponentialRampToValueAtTime(800, now + duration);
+        filter.Q.setValueAtTime(2.2, now);
+
+        // Highpass to eliminate sub-bass rumbles
+        const hpFilter = audioCtx.createBiquadFilter();
+        hpFilter.type = 'highpass';
+        hpFilter.frequency.setValueAtTime(420, now);
+
+        // Gain envelope with quick attack and natural exponential decay
+        const gainNode = audioCtx.createGain();
+        const peakVolume = Math.min(0.42, 0.3 * intensity);
+        gainNode.gain.setValueAtTime(0.001, now);
+        gainNode.gain.linearRampToValueAtTime(peakVolume, now + 0.025);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + duration);
+
+        noiseSource.connect(filter);
+        filter.connect(hpFilter);
+        hpFilter.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        noiseSource.start(now);
+        noiseSource.stop(now + duration);
+      } catch (err) {
+        console.warn('Paper rustle audio error:', err);
+      }
+    }
+
+    /* ==========================================================================
+       C. CANVAS AMBIENT GOLDEN DUST & BURST PARTICLE SYSTEM
        ========================================================================== */
     const canvas = document.getElementById('ambientCanvas');
     const ctx = canvas.getContext('2d');
@@ -1153,7 +2016,7 @@
           ctx.moveTo(0, -r);
           ctx.lineTo(r * 0.25, -r * 0.25);
           ctx.lineTo(r, 0);
-          ctx.lineTo(-r * 0.25, r * 0.25);
+          ctx.lineTo(r * 0.25, r * 0.25);
           ctx.lineTo(0, r);
           ctx.lineTo(-r * 0.25, r * 0.25);
           ctx.lineTo(-r, 0);
@@ -1205,11 +2068,12 @@
     requestAnimationFrame(animateParticles);
 
     /* ==========================================================================
-       C. AUDIO AUTOPLAY & SMOOTH VOLUME RAMPING (0 to 0.65 over 2.5s)
+       D. AUDIO AUTOPLAY & SMOOTH VOLUME RAMPING (0 to 0.65 over 2.5s)
        ========================================================================== */
     const bgMusic = document.getElementById('bgMusic');
     const audioToggleBtn = document.getElementById('audioToggleBtn');
     const audioIcon = document.getElementById('audioIcon');
+    const candlelightLayer = document.getElementById('candlelightLayer');
     let isAudioPlaying = false;
     let fadeInterval = null;
 
@@ -1217,7 +2081,7 @@
       if (!bgMusic) return;
       if (fadeInterval) clearInterval(fadeInterval);
       const stepTime = 50;
-      const steps = duration / stepTime;
+      const steps = Math.max(1, duration / stepTime);
       const volumeStep = (targetVolume - bgMusic.volume) / steps;
 
       fadeInterval = setInterval(() => {
@@ -1262,6 +2126,7 @@
     }
 
     audioToggleBtn.addEventListener('click', () => {
+      initAudioContext();
       if (isAudioPlaying) {
         fadeAudio(0, 800);
         isAudioPlaying = false;
@@ -1276,24 +2141,29 @@
     });
 
     /* ==========================================================================
-       D. ENVELOPE OPENING INTERACTION
+       E. ENVELOPE OPENING & MAHOGANY DESK INTERACTION
        ========================================================================== */
     const waxSeal = document.getElementById('waxSeal');
     const envelopeBox = document.getElementById('envelopeBox');
     const envelopeScreen = document.getElementById('envelopeScreen');
     const letterViewport = document.getElementById('letterViewport');
     const readerControls = document.getElementById('readerControls');
+    const parchmentSheet = document.getElementById('parchmentSheet');
     let isEnvelopeOpened = false;
 
     function openEnvelope(e) {
       if (isEnvelopeOpened) return;
       isEnvelopeOpened = true;
 
+      // Initialize Web Audio API & play paper rustle
+      initAudioContext();
+      playPaperRustle(1.1);
+
       const rect = waxSeal.getBoundingClientRect();
       const burstX = rect.left + rect.width / 2;
       const burstY = rect.top + rect.height / 2;
 
-      // 1. Golden particle burst
+      // 1. Golden particle burst from wax seal
       spawnParticleBurst(burstX, burstY, 50, 'seal');
 
       // 2. Crack seal & 3D open flap
@@ -1303,15 +2173,19 @@
       // 3. Start local background music fade-in directly inside click handler
       playMusicSmoothly();
 
-      // 4. Transition from Envelope to Parchment Letter
+      // 4. Softly dim candlelight for reading focus
+      candlelightLayer.classList.add('dimmed');
+
+      // 5. Transition from Envelope to Parchment Letter
       setTimeout(() => {
+        playPaperRustle(0.8);
         envelopeScreen.classList.add('opened');
         letterViewport.classList.add('visible');
         readerControls.classList.add('visible');
 
         setTimeout(() => {
           envelopeScreen.classList.add('hidden');
-          // 5. Begin ink calligraphy writing
+          // 6. Begin ink calligraphy writing
           startInkWritingEngine();
         }, 700);
       }, 650);
@@ -1323,7 +2197,7 @@
     });
 
     /* ==========================================================================
-       E. DYNAMIC VISUAL LINE SEGMENTATION & INK-WRITING ENGINE
+       F. DYNAMIC VISUAL LINE SEGMENTATION & INK-WRITING ENGINE
        ========================================================================== */
     const letterContent = document.getElementById('letterContent');
     const inkSparkNib = document.getElementById('inkSparkNib');
@@ -1336,6 +2210,7 @@
     const progressIndicator = document.getElementById('progressIndicator');
     const keepsakeCard = document.getElementById('keepsakeCard');
     const signatureFlourish = document.getElementById('signatureFlourish');
+    const pressedFlower = document.getElementById('pressedFlower');
 
     // Engine State
     let currentSpeed = 1.0;
@@ -1369,7 +2244,8 @@
             text: pData.text,
             isSentenceEnd: true,
             isParaEnd: true,
-            paraType: pData.type
+            paraType: pData.type,
+            paraIdx: pIdx
           });
         } else {
           // Detect visual line breaks dynamically by measuring word positions
@@ -1410,7 +2286,8 @@
               text: lText,
               isSentenceEnd: isSentenceEnd,
               isParaEnd: isParaEnd,
-              paraType: pData.type
+              paraType: pData.type,
+              paraIdx: pIdx
             });
           });
         }
@@ -1432,7 +2309,7 @@
       return lineDiv;
     }
 
-    // Initialize layout immediately and on font ready
+    // Initialize layout immediately and update when fonts settle
     prepareLetterDOM();
     if (document.fonts && document.fonts.ready) {
       document.fonts.ready.then(() => {
@@ -1443,7 +2320,7 @@
     }
 
     /* ==========================================================================
-       F. INK ANIMATION SCHEDULER & REALISTIC EMOTIONAL PACING
+       G. ENHANCED HANDWRITING PACING & EMOTIONAL TRIGGERS
        ========================================================================== */
     function startInkWritingEngine() {
       if (isInstantRead) return;
@@ -1532,15 +2409,48 @@
 
           currentLineIndex++;
 
-          // Natural emotional pacing:
-          // 400ms natural breath after sentence
-          // 950ms deeper reflective pause after paragraph
-          // 80ms tiny hand repositioning between wrapped lines
+          // Natural human handwriting rhythm & emotional pauses:
+          // - Normal line wrap within sentence: 80ms
+          // - Comma / semicolon pause: 240ms
+          // - Sentence endings (. ! ? …): 580ms
+          // - Paragraph breaks: 950ms
+          // - Reflective emotional pauses: 1550ms on anchor lines
+          // - Stillness pause before final signature: 2400ms + music dip
+          const lineTrimmed = lineData.text.trim();
           let pauseDuration = 80;
+
+          if (/[,;]$/.test(lineTrimmed)) {
+            pauseDuration = 240;
+          }
+
+          if (lineData.isSentenceEnd) {
+            pauseDuration = 580;
+          }
+
           if (lineData.isParaEnd) {
             pauseDuration = 950;
-          } else if (lineData.isSentenceEnd) {
-            pauseDuration = 400;
+          }
+
+          // Deep emotional pauses on key reflective lines
+          const isEmotionalAnchor = 
+            lineTrimmed.includes("You were my first love, Ridhu") ||
+            lineTrimmed.includes("And if I had seven lives") ||
+            lineTrimmed.includes("HAPPY 22ND BIRTHDAY, MY LIL ONEEEE!!");
+
+          if (isEmotionalAnchor) {
+            pauseDuration = 1550;
+          }
+
+          // Stillness Pause before final signature (between P28 and P29)
+          const isBeforeSignature = lineData.paraIdx === 27 && lineData.isParaEnd;
+          if (isBeforeSignature) {
+            pauseDuration = 2400;
+            // Softly lower music volume for intimate stillness
+            fadeAudio(0.32, 1800);
+            setTimeout(() => {
+              // Swell back up as signature begins
+              fadeAudio(0.65, 2000);
+            }, pauseDuration / currentSpeed - 400);
           }
 
           setTimeout(writeNextLine, pauseDuration / currentSpeed);
@@ -1563,7 +2473,7 @@
     }
 
     /* ==========================================================================
-       G. SMART SCROLL LISTENER & "FOLLOW INK" DETECTION
+       H. SMART SCROLL LISTENER & "FOLLOW INK" DETECTION
        ========================================================================== */
     function handleUserScrollIntent() {
       if (!activeLineElement || isInstantRead) return;
@@ -1592,7 +2502,7 @@
     });
 
     /* ==========================================================================
-       H. READER CONTROLS (SPEED, PAUSE, INSTANT READ)
+       I. READER CONTROLS (SPEED, PAUSE, INSTANT READ)
        ========================================================================== */
     speedBtn.addEventListener('click', () => {
       const idx = SPEED_OPTIONS.indexOf(currentSpeed);
@@ -1645,6 +2555,7 @@
       inkSparkNib.classList.remove('active');
       progressIndicator.textContent = '100%';
       signatureFlourish.classList.add('visible');
+      pressedFlower.classList.add('visible');
 
       setTimeout(() => {
         keepsakeCard.classList.add('visible');
@@ -1655,7 +2566,7 @@
     }
 
     /* ==========================================================================
-       I. GRAND FINALE MOMENT: MAKE A WISH FOR 22 & STARLIGHT BURST
+       J. GRAND FINALE MOMENT: MAKE A WISH FOR 22 & STARLIGHT BURST
        ========================================================================== */
     const wishBtn = document.getElementById('wishBtn');
     const wishBtnText = document.getElementById('wishBtnText');
@@ -1676,6 +2587,157 @@
         wishBtnText.textContent = "Your wish is released into the universe ✨";
         wishToast.classList.add('revealed');
       }
+    });
+
+    /* ==========================================================================
+       K. PRESSED FLOWER & SECRET POSTSCRIPT NOTE INTERACTION
+       ========================================================================== */
+    const secretPostscriptModal = document.getElementById('secretPostscriptModal');
+    const secretCloseBtn = document.getElementById('secretCloseBtn');
+
+    pressedFlower.addEventListener('click', () => {
+      playPaperRustle(0.9);
+      const rect = pressedFlower.getBoundingClientRect();
+      spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25, 'gold');
+      secretPostscriptModal.classList.add('active');
+    });
+
+    secretCloseBtn.addEventListener('click', () => {
+      playPaperRustle(0.6);
+      secretPostscriptModal.classList.remove('active');
+    });
+
+    secretPostscriptModal.addEventListener('click', (e) => {
+      if (e.target === secretPostscriptModal) {
+        playPaperRustle(0.6);
+        secretPostscriptModal.classList.remove('active');
+      }
+    });
+
+    /* ==========================================================================
+       L. POLAROID PEEK & CANDLELIT LIGHTBOX GALLERY
+       ========================================================================== */
+    const polaroidPeek = document.getElementById('polaroidPeek');
+    const polaroidLightbox = document.getElementById('polaroidLightbox');
+    const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
+    const lightboxPrevBtn = document.getElementById('lightboxPrevBtn');
+    const lightboxNextBtn = document.getElementById('lightboxNextBtn');
+    const polaroidFrames = document.querySelectorAll('.polaroid-frame');
+    const lightboxDots = document.querySelectorAll('.lightbox-dot');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      polaroidFrames.forEach((frame, i) => {
+        frame.classList.toggle('active', i === index);
+      });
+      lightboxDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+    }
+
+    polaroidPeek.addEventListener('click', () => {
+      playPaperRustle(1.0);
+      polaroidLightbox.classList.add('active');
+      showSlide(0);
+    });
+
+    lightboxCloseBtn.addEventListener('click', () => {
+      playPaperRustle(0.7);
+      polaroidLightbox.classList.remove('active');
+    });
+
+    lightboxPrevBtn.addEventListener('click', () => {
+      playPaperRustle(0.5);
+      showSlide((currentSlide - 1 + polaroidFrames.length) % polaroidFrames.length);
+    });
+
+    lightboxNextBtn.addEventListener('click', () => {
+      playPaperRustle(0.5);
+      showSlide((currentSlide + 1) % polaroidFrames.length);
+    });
+
+    lightboxDots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        playPaperRustle(0.5);
+        showSlide(parseInt(dot.dataset.index, 10));
+      });
+    });
+
+    polaroidLightbox.addEventListener('click', (e) => {
+      if (e.target === polaroidLightbox) {
+        playPaperRustle(0.7);
+        polaroidLightbox.classList.remove('active');
+      }
+    });
+
+    // Keyboard navigation for lightbox
+    window.addEventListener('keydown', (e) => {
+      if (!polaroidLightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') {
+        playPaperRustle(0.7);
+        polaroidLightbox.classList.remove('active');
+      } else if (e.key === 'ArrowLeft') {
+        playPaperRustle(0.5);
+        showSlide((currentSlide - 1 + polaroidFrames.length) % polaroidFrames.length);
+      } else if (e.key === 'ArrowRight') {
+        playPaperRustle(0.5);
+        showSlide((currentSlide + 1) % polaroidFrames.length);
+      }
+    });
+
+    /* ==========================================================================
+       M. PHYSICAL RE-FOLDING RESET
+       ========================================================================== */
+    const refoldBtn = document.getElementById('refoldBtn');
+
+    refoldBtn.addEventListener('click', () => {
+      // 1. Play paper rustling sound
+      playPaperRustle(1.2);
+
+      // 2. Hide reader controls & follow ink
+      readerControls.classList.remove('visible');
+      followInkPill.classList.remove('visible');
+      inkSparkNib.classList.remove('active');
+
+      // 3. Smoothly fold the parchment along crease lines
+      parchmentSheet.classList.add('refolding');
+
+      // 4. Reset stationery view back to envelope
+      setTimeout(() => {
+        letterViewport.classList.remove('visible');
+        parchmentSheet.classList.remove('refolding');
+
+        // Reset envelope states
+        envelopeScreen.classList.remove('hidden');
+        envelopeScreen.classList.remove('opened');
+        envelopeBox.classList.remove('open');
+        waxSeal.classList.remove('cracked');
+
+        // Brighten candlelight back to mahogany desk glow
+        candlelightLayer.classList.remove('dimmed');
+
+        // Reset reading state
+        isEnvelopeOpened = false;
+        isInstantRead = false;
+        isPaused = false;
+        currentLineIndex = 0;
+        prepareLetterDOM();
+
+        pauseBtn.style.display = 'inline-flex';
+        speedBtn.style.display = 'inline-flex';
+        instantBtn.style.display = 'inline-flex';
+        pauseBtn.innerHTML = '<span id="pauseIcon">⏸</span> Pause';
+        progressIndicator.textContent = '0%';
+        keepsakeCard.classList.remove('visible');
+        pressedFlower.classList.remove('visible');
+        signatureFlourish.classList.remove('visible');
+        wishToast.classList.remove('revealed');
+        hasWished = false;
+        wishBtnText.textContent = "Make a wish for 22 ✨";
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 800);
     });
   </script>
 </body>
