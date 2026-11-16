@@ -564,9 +564,12 @@
       overflow-x: hidden;
       z-index: 20;
       opacity: 1;
+      visibility: visible;
     }
     .letter-viewport.visible {
-      display: flex;
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
       animation: letterUnfold 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     }
     @keyframes letterUnfold {
@@ -817,9 +820,9 @@
     }
 
     .ink-line.completed .ink-line-text {
-      opacity: 1;
-      clip-path: inset(0 0% 0 0);
-      transform: translateY(0);
+      opacity: 1 !important;
+      clip-path: inset(0 0 0 0) !important;
+      transform: translateY(0) !important;
     }
 
     /* Glowing Fountain Pen Nib / Ink-Spark Indicator */
@@ -1016,260 +1019,7 @@
     }
 
     /* ==========================================================================
-       6. TUCKED POLAROID PHOTO PEEK & CANDLELIT LIGHTBOX
-       ========================================================================== */
-    .polaroid-peek {
-      position: absolute;
-      bottom: -18px;
-      left: clamp(16px, 4vw, 32px);
-      touch-action: manipulation;
-      min-width: 44px;
-      min-height: 44px;
-      width: 82px;
-      height: 102px;
-      background: #fffefb;
-      border-radius: 3px;
-      padding: 6px 6px 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      transform: rotate(-10deg);
-      cursor: pointer;
-      z-index: 18;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .polaroid-peek:hover {
-      transform: rotate(-6deg) translateY(-6px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.3);
-    }
-    .polaroid-peek-tape {
-      position: absolute;
-      top: -9px;
-      left: 18px;
-      width: 44px;
-      height: 16px;
-      background: rgba(245, 230, 210, 0.7);
-      border: 1px dashed rgba(212, 175, 55, 0.45);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-      transform: rotate(4deg);
-      pointer-events: none;
-    }
-    .polaroid-peek-thumb {
-      width: 100%;
-      height: 62px;
-      background: linear-gradient(135deg, #2a201b 0%, #16100d 100%);
-      border-radius: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-      color: var(--gold-light);
-    }
-    .polaroid-peek-label {
-      display: block;
-      font-family: var(--font-hand);
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: #681820;
-      text-align: center;
-      margin-top: 4px;
-    }
-
-    /* Candlelit Lightbox Modal */
-    .polaroid-lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 350;
-      background: radial-gradient(circle at center, rgba(30, 22, 18, 0.95) 0%, rgba(12, 8, 6, 0.98) 100%);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 16px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-    }
-    .polaroid-lightbox.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .lightbox-close-btn {
-      position: absolute;
-      top: calc(env(safe-area-inset-top, 20px) + 16px);
-      right: 20px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(20, 16, 14, 0.85);
-      border: 1px solid var(--gold-antique);
-      color: var(--gold-light);
-      font-size: 1.3rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      transition: all 0.25s ease;
-    }
-    .lightbox-close-btn:hover {
-      background: rgba(40, 30, 24, 0.95);
-      transform: scale(1.08);
-    }
-
-    .lightbox-slider {
-      position: relative;
-      width: min(88vw, 360px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .polaroid-frame {
-      width: 100%;
-      background: #fffdf9;
-      border-radius: 4px;
-      padding: 14px 14px 24px;
-      box-shadow: 
-        0 25px 60px rgba(0, 0, 0, 0.85),
-        0 0 25px rgba(212, 175, 55, 0.2);
-      border: 1px solid rgba(212, 175, 55, 0.35);
-      display: none;
-      flex-direction: column;
-      animation: polaroidFade 0.4s ease forwards;
-    }
-    .polaroid-frame.active {
-      display: flex;
-    }
-    @keyframes polaroidFade {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .polaroid-frame-tape {
-      align-self: center;
-      width: 70px;
-      height: 22px;
-      background: rgba(245, 230, 210, 0.75);
-      border: 1px dashed rgba(212, 175, 55, 0.5);
-      margin-top: -24px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      transform: rotate(-2deg);
-    }
-
-    .polaroid-img-box {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      background: #1c1511;
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .polaroid-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* Fallback Illustration when local photo is not found */
-    .polaroid-fallback-card {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, #2e2119 0%, #17110d 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold-light);
-      padding: 20px;
-      text-align: center;
-    }
-    .fallback-icon {
-      font-size: 2.4rem;
-      margin-bottom: 8px;
-    }
-    .fallback-title {
-      font-family: var(--font-drafting);
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #ffd700;
-      margin-bottom: 4px;
-    }
-    .fallback-sub {
-      font-family: monospace, sans-serif;
-      font-size: 0.65rem;
-      letter-spacing: 1px;
-      color: rgba(212, 175, 55, 0.65);
-    }
-
-    .polaroid-caption {
-      font-family: var(--font-hand);
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #6b141d;
-      text-align: center;
-      margin-top: 14px;
-      line-height: 1.35;
-    }
-
-    .lightbox-nav-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 46px;
-      height: 46px;
-      min-width: 44px;
-      min-height: 44px;
-      touch-action: manipulation;
-      border-radius: 50%;
-      background: rgba(20, 16, 14, 0.85);
-      border: 1px solid var(--gold-antique);
-      color: var(--gold-light);
-      font-size: 1.4rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 5;
-      transition: all 0.2s ease;
-    }
-    .lightbox-nav-btn:hover {
-      background: rgba(40, 30, 24, 0.95);
-      transform: translateY(-50%) scale(1.1);
-    }
-    .lightbox-nav-btn.prev { left: -52px; }
-    .lightbox-nav-btn.next { right: -52px; }
-
-    @media (max-width: 520px) {
-      .lightbox-nav-btn.prev { left: -14px; }
-      .lightbox-nav-btn.next { right: -14px; }
-    }
-
-    .lightbox-dots {
-      display: flex;
-      gap: 8px;
-      margin-top: 18px;
-    }
-    .lightbox-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(212, 175, 55, 0.35);
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .lightbox-dot.active {
-      background: var(--gold-bright);
-      transform: scale(1.3);
-      box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
-    }
-
-    /* ==========================================================================
-       7. PHYSICAL RE-FOLDING RESET BUTTON
+       6. PHYSICAL RE-FOLDING RESET BUTTON
        ========================================================================== */
     .refold-action-container {
       display: flex;
@@ -1708,7 +1458,7 @@
           <span id="wishBtnText">Make a wish for 22 ✨</span>
         </button>
 
-                <div id="wishToast" class="wish-toast">
+        <div id="wishToast" class="wish-toast">
           <div class="wish-toast-stars">✦ ✧ ✦ ✧ ✦</div>
           <p class="wish-toast-msg">
             "Wish sent to the stars • May 22 be your happiest chapter yet, Ridhu ✨"
@@ -1717,14 +1467,47 @@
             May all 22 of your quietest architectural dreams fall beautifully into place 📐💗
           </div>
         </div>
+      </section>
+
+      <!-- Physical Re-Folding Reset Button -->
+      <div class="refold-action-container">
+        <button id="refoldBtn" class="refold-btn" aria-label="Fold this letter">
+          <span>⤾</span> Fold this letter
+        </button>
       </div>
 
-  <!-- Subtle "Follow Ink" Floating Pill Button -->
+      <!-- Pressed Corner Flower (revealed upon finishing letter) -->
+      <div id="pressedFlower" class="pressed-flower-container" title="Click to view secret postscript note">
+        <svg class="pressed-flower-svg" viewBox="0 0 60 76" fill="none">
+          <path d="M30 20 Q32 45 28 72" stroke="#4a6136" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M29 42 Q18 36 14 44 Q22 48 29 45" fill="#587440" stroke="#3b502a" stroke-width="0.8"/>
+          <path d="M30 52 Q42 46 46 54 Q38 58 30 55" fill="#587440" stroke="#3b502a" stroke-width="0.8"/>
+          <circle cx="30" cy="18" r="8" fill="#c97b84" opacity="0.95"/>
+          <circle cx="23" cy="14" r="7" fill="#b86973" opacity="0.9"/>
+          <circle cx="37" cy="14" r="7" fill="#b86973" opacity="0.9"/>
+          <circle cx="25" cy="24" r="7" fill="#a45560" opacity="0.9"/>
+          <circle cx="35" cy="24" r="7" fill="#a45560" opacity="0.9"/>
+          <circle cx="30" cy="18" r="4.2" fill="#d4af37"/>
+          <circle cx="30" cy="18" r="2" fill="#fff8db"/>
+        </svg>
+        <div class="pressed-flower-hint">P.S. click me 🌸</div>
+      </div>
+    </article>
+  </main>
+
+  <!-- Glowing Fountain Pen Nib / Ink-Spark Indicator -->
+  <div class="ink-spark-nib" id="inkSparkNib">
+    <svg class="nib-icon" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L16 14L12 18L8 14L12 2Z" fill="#ffd700" stroke="#aa7c11" stroke-width="0.8"/>
+      <circle cx="12" cy="14" r="1.5" fill="#4a370e"/>
+    </svg>
+    <div class="nib-glow-dot"></div>
+  </div>
+
+  <!-- Subtle 'Follow Ink' Floating Pill Button -->
   <button id="followInkPill" class="follow-ink-pill" aria-label="Follow ink writing">
     <span>↓</span> Follow ink
   </button>
-
-
 
   <!-- Secret Postscript Modal Card -->
   <div id="secretPostscriptModal" class="secret-postscript-overlay">
@@ -1737,66 +1520,6 @@
       <div class="secret-sub">
         Always in your corner, proud of every blueprint you draw. 📐❤️
       </div>
-    </div>
-  </div>
-
-  <!-- Candlelit Polaroid Lightbox Gallery -->
-  <div id="polaroidLightbox" class="polaroid-lightbox">
-    <button id="lightboxCloseBtn" class="lightbox-close-btn" aria-label="Close lightbox">✕</button>
-    
-    <div class="lightbox-slider">
-      <button id="lightboxPrevBtn" class="lightbox-nav-btn prev" aria-label="Previous photo">‹</button>
-
-      <!-- Polaroid 1 -->
-      <div class="polaroid-frame active" data-slide="0">
-        <div class="polaroid-frame-tape"></div>
-        <div class="polaroid-img-box">
-          <img src="./photo1.jpg" alt="The Best Architect" class="polaroid-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="polaroid-fallback-card" style="display: none;">
-            <span class="fallback-icon">📐</span>
-            <div class="fallback-title">The Best Architect</div>
-            <div class="fallback-sub">DROP PHOTO: ./photo1.jpg</div>
-          </div>
-        </div>
-        <p class="polaroid-caption">"The girl who builds dreams with her bare hands. 📐"</p>
-      </div>
-
-      <!-- Polaroid 2 -->
-      <div class="polaroid-frame" data-slide="1">
-        <div class="polaroid-frame-tape"></div>
-        <div class="polaroid-img-box">
-          <img src="./photo2.jpg" alt="Quiet Moments" class="polaroid-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="polaroid-fallback-card" style="display: none;">
-            <span class="fallback-icon">✨</span>
-            <div class="fallback-title">Quiet Moments</div>
-            <div class="fallback-sub">DROP PHOTO: ./photo2.jpg</div>
-          </div>
-        </div>
-        <p class="polaroid-caption">"When the world faded and it was just us talking about everything. ✨"</p>
-      </div>
-
-      <!-- Polaroid 3 -->
-      <div class="polaroid-frame" data-slide="2">
-        <div class="polaroid-frame-tape"></div>
-        <div class="polaroid-img-box">
-          <img src="./photo3.jpg" alt="Chapter 22 Milestone" class="polaroid-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="polaroid-fallback-card" style="display: none;">
-            <span class="fallback-icon">💗</span>
-            <div class="fallback-title">Chapter 22 Milestone</div>
-            <div class="fallback-sub">DROP PHOTO: ./photo3.jpg</div>
-          </div>
-        </div>
-        <p class="polaroid-caption">"Always rooting for you, in this life and all seven. 💗"</p>
-      </div>
-
-      <button id="lightboxNextBtn" class="lightbox-nav-btn next" aria-label="Next photo">›</button>
-    </div>
-
-    <!-- Gallery dot indicators -->
-    <div class="lightbox-dots" id="lightboxDots">
-      <span class="lightbox-dot active" data-index="0"></span>
-      <span class="lightbox-dot" data-index="1"></span>
-      <span class="lightbox-dot" data-index="2"></span>
     </div>
   </div>
 
@@ -2809,68 +2532,98 @@
     let isAudioPlaying = false;
     let fadeInterval = null;
 
-    function fadeAudio(targetVolume, duration = 2500) {
-      if (!bgMusic) return;
-      if (fadeInterval) clearInterval(fadeInterval);
-      const stepTime = 50;
-      const steps = Math.max(1, duration / stepTime);
-      const volumeStep = (targetVolume - bgMusic.volume) / steps;
+    function fadeAudio(targetVolume, duration = 2000) {
+      try {
+        if (!bgMusic) return;
+        clearInterval(audioFadeInterval);
+        const steps = 30;
+        const stepTime = duration / steps;
+        const currentVol = bgMusic.volume || 0;
+        const volumeStep = (targetVolume - currentVol) / steps;
 
-      fadeInterval = setInterval(() => {
-        let newVol = bgMusic.volume + volumeStep;
-        if ((volumeStep > 0 && newVol >= targetVolume) || (volumeStep < 0 && newVol <= targetVolume)) {
-          bgMusic.volume = Math.max(0, Math.min(1, targetVolume));
-          clearInterval(fadeInterval);
-          if (targetVolume === 0) {
-            bgMusic.pause();
+        audioFadeInterval = setInterval(() => {
+          try {
+            let newVol = bgMusic.volume + volumeStep;
+            if ((volumeStep > 0 && newVol >= targetVolume) || (volumeStep < 0 && newVol <= targetVolume)) {
+              bgMusic.volume = Math.max(0, Math.min(1, targetVolume));
+              clearInterval(audioFadeInterval);
+              if (targetVolume === 0 && !isAudioPlaying) {
+                bgMusic.pause();
+              }
+            } else {
+              bgMusic.volume = Math.max(0, Math.min(1, newVol));
+            }
+          } catch (e) {
+            clearInterval(audioFadeInterval);
           }
-        } else {
-          bgMusic.volume = Math.max(0, Math.min(1, newVol));
-        }
-      }, stepTime);
+        }, stepTime);
+      } catch (err) {
+        console.warn("fadeAudio error:", err);
+      }
     }
 
     function playMusicSmoothly() {
-      if (!bgMusic) return;
-      bgMusic.volume = 0;
-      const playPromise = bgMusic.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          isAudioPlaying = true;
-          updateAudioUI(true);
-          fadeAudio(0.65, 2500);
-        }).catch(err => {
-          console.warn('Autoplay restricted by browser policy:', err);
-          isAudioPlaying = false;
-          updateAudioUI(false);
-        });
+      try {
+        if (!bgMusic) return;
+        bgMusic.volume = 0;
+        const playPromise = bgMusic.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            fadeAudio(0.65, 2500);
+            isAudioPlaying = true;
+            updateAudioUI(true);
+          }).catch(err => {
+            console.warn("Autoplay restricted or audio file missing:", err);
+            isAudioPlaying = false;
+            updateAudioUI(false);
+          });
+        }
+      } catch (err) {
+        console.warn("playMusicSmoothly exception:", err);
+        isAudioPlaying = false;
+        updateAudioUI(false);
       }
     }
 
     function updateAudioUI(playing) {
+      if (!audioIcon || !audioToggleBtn) return;
       if (playing) {
-        audioToggleBtn.classList.add('playing');
         audioIcon.textContent = '🔊';
+        audioToggleBtn.classList.add('playing');
+        audioToggleBtn.setAttribute('title', 'Mute background music');
       } else {
-        audioToggleBtn.classList.remove('playing');
         audioIcon.textContent = '🔇';
+        audioToggleBtn.classList.remove('playing');
+        audioToggleBtn.setAttribute('title', 'Play background music');
       }
     }
 
-    audioToggleBtn.addEventListener('click', () => {
-      initAudioContext();
-      if (isAudioPlaying) {
-        fadeAudio(0, 800);
-        isAudioPlaying = false;
-        updateAudioUI(false);
-      } else {
-        bgMusic.play().then(() => {
-          fadeAudio(0.65, 1200);
-          isAudioPlaying = true;
-          updateAudioUI(true);
-        }).catch(err => console.warn(err));
-      }
-    });
+    if (audioToggleBtn) {
+      audioToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        try {
+          initAudioContext();
+        } catch (err) {}
+
+        if (isAudioPlaying) {
+          fadeAudio(0, 800);
+          isAudioPlaying = false;
+          updateAudioUI(false);
+        } else {
+          try {
+            if (bgMusic) {
+              bgMusic.play().then(() => {
+                fadeAudio(0.65, 1200);
+                isAudioPlaying = true;
+                updateAudioUI(true);
+              }).catch(err => console.warn(err));
+            }
+          } catch (err) {
+            console.warn(err);
+          }
+        }
+      });
+    }
 
     /* ==========================================================================
        E. ENVELOPE OPENING & MAHOGANY DESK INTERACTION
@@ -2886,47 +2639,86 @@
       if (isEnvelopeOpened) return;
       isEnvelopeOpened = true;
 
-      // Initialize Web Audio API & play paper rustle
-      initAudioContext();
-      playPaperRustle(1.1);
+      // 1. Initialize Web Audio API & play paper rustle safely
+      try {
+        initAudioContext();
+        playPaperRustle(1.1);
+      } catch (err) {
+        console.warn("Audio error on seal open:", err);
+      }
 
-      const rect = waxSeal.getBoundingClientRect();
-      const burstX = rect.left + rect.width / 2;
-      const burstY = rect.top + rect.height / 2;
+      // 2. Golden particle burst from wax seal
+      try {
+        if (waxSeal) {
+          const rect = waxSeal.getBoundingClientRect();
+          const burstX = rect.left + rect.width / 2;
+          const burstY = rect.top + rect.height / 2;
+          spawnParticleBurst(burstX, burstY, 50, 'seal');
+          waxSeal.classList.add('cracked');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
 
-      // 1. Golden particle burst from wax seal
-      spawnParticleBurst(burstX, burstY, 50, 'seal');
+      // 3. Crack seal & 3D open flap
+      if (envelopeBox) envelopeBox.classList.add('open');
 
-      // 2. Crack seal & 3D open flap
-      waxSeal.classList.add('cracked');
-      envelopeBox.classList.add('open');
+      // 4. Start local background music fade-in directly inside click handler
+      try {
+        playMusicSmoothly();
+      } catch (err) {
+        console.warn(err);
+      }
 
-      // 3. Start local background music fade-in directly inside click handler
-      playMusicSmoothly();
+      // 5. Softly dim candlelight for reading focus
+      if (candlelightLayer) candlelightLayer.classList.add('dimmed');
 
-      // 4. Softly dim candlelight for reading focus
-      candlelightLayer.classList.add('dimmed');
+      // 6. Ensure letter DOM is populated
+      if (allRenderedLines.length === 0) {
+        prepareLetterDOM();
+      }
 
-      // 5. Transition from Envelope to Parchment Letter
+      // 7. Transition from Envelope to Parchment Letter
       setTimeout(() => {
-        playPaperRustle(0.8);
-        envelopeScreen.classList.add('opened');
-        letterViewport.classList.add('visible');
+        try { playPaperRustle(0.8); } catch (e) {}
+
+        if (envelopeScreen) {
+          envelopeScreen.classList.add('opened');
+        }
+
+        if (letterViewport) {
+          letterViewport.style.display = 'flex';
+          letterViewport.style.opacity = '1';
+          letterViewport.style.visibility = 'visible';
+          letterViewport.classList.add('visible');
+        }
+
+        if (parchmentSheet) {
+          parchmentSheet.style.display = 'block';
+          parchmentSheet.style.opacity = '1';
+          parchmentSheet.style.visibility = 'visible';
+        }
 
         setTimeout(() => {
-          envelopeScreen.classList.add('hidden');
-          // 6. Begin ink calligraphy writing
+          if (envelopeScreen) {
+            envelopeScreen.classList.add('hidden');
+            envelopeScreen.style.display = 'none';
+          }
+          // 8. Begin ink calligraphy writing
           startInkWritingEngine();
         }, 700);
       }, 650);
     }
 
-    waxSeal.addEventListener('click', openEnvelope);
-    document.getElementById('envelopeWrapper').addEventListener('click', (e) => {
-      if (!isEnvelopeOpened) openEnvelope(e);
-    });
+    if (waxSeal) waxSeal.addEventListener('click', openEnvelope);
+    const envelopeWrapper = document.getElementById('envelopeWrapper');
+    if (envelopeWrapper) {
+      envelopeWrapper.addEventListener('click', (e) => {
+        if (!isEnvelopeOpened) openEnvelope(e);
+      });
+    }
 
-        /* ==========================================================================
+    /* ==========================================================================
        F. STRICT SENTENCE-BY-SENTENCE INK-WRITING ENGINE
        ========================================================================== */
     const letterContent = document.getElementById('letterContent');
@@ -2943,7 +2735,18 @@
     let allRenderedLines = [];
     let currentLineIndex = 0;
 
+    function createInkLineElement(text) {
+      const lineDiv = document.createElement('div');
+      lineDiv.className = 'ink-line';
+      const textSpan = document.createElement('span');
+      textSpan.className = 'ink-line-text';
+      textSpan.textContent = text;
+      lineDiv.appendChild(textSpan);
+      return lineDiv;
+    }
+
     function prepareLetterDOM() {
+      if (!letterContent) return;
       letterContent.innerHTML = '';
       allRenderedLines = [];
 
@@ -2960,90 +2763,26 @@
           stanzaEl.appendChild(sentenceEl);
 
           const isStanzaEnd = (sIdx === stanzaData.sentences.length - 1);
-          const isSpecialSingle = ['salutation', 'heading-greeting', 'pull-quote', 'celebration', 'signature'].includes(stanzaData.type);
+          const lineEl = createInkLineElement(sentenceText);
+          sentenceEl.appendChild(lineEl);
 
-          if (isSpecialSingle || sentenceText.length < 52) {
-            const lineEl = createInkLineElement(sentenceText);
-            sentenceEl.appendChild(lineEl);
-            allRenderedLines.push({
-              element: lineEl,
-              textSpan: lineEl.querySelector('.ink-line-text'),
-              text: sentenceText,
-              sentenceText: sentenceText,
-              isSentenceEnd: true,
-              isStanzaEnd: isStanzaEnd,
-              stanzaType: stanzaData.type,
-              stanzaIdx: stanzaIdx,
-              sIdx: sIdx
-            });
-          } else {
-            // Measure visual word rows to ensure smooth clip-path wipe on narrow screens
-            const words = sentenceText.split(' ').filter(w => w.length > 0);
-            sentenceEl.innerHTML = words.map((w, i) => `<span class="tmp-w" id="tw_${stanzaIdx}_${sIdx}_${i}">${w} </span>`).join('');
-
-            const spans = sentenceEl.querySelectorAll('.tmp-w');
-            const rowWordGroups = [];
-            let currentGroup = [];
-            let lastTop = null;
-
-            spans.forEach((span) => {
-              const top = Math.round(span.offsetTop);
-              if (lastTop === null || Math.abs(top - lastTop) < 6) {
-                currentGroup.push(span.textContent);
-                lastTop = top;
-              } else {
-                rowWordGroups.push(currentGroup.join(''));
-                currentGroup = [span.textContent];
-                lastTop = top;
-              }
-            });
-            if (currentGroup.length > 0) {
-              rowWordGroups.push(currentGroup.join(''));
-            }
-
-            sentenceEl.innerHTML = '';
-            rowWordGroups.forEach((rowText, rIdx) => {
-              const isRowSentenceEnd = (rIdx === rowWordGroups.length - 1);
-              const isRowStanzaEnd = isRowSentenceEnd && isStanzaEnd;
-              const lineEl = createInkLineElement(rowText);
-              sentenceEl.appendChild(lineEl);
-
-              allRenderedLines.push({
-                element: lineEl,
-                textSpan: lineEl.querySelector('.ink-line-text'),
-                text: rowText,
-                sentenceText: sentenceText,
-                isSentenceEnd: isRowSentenceEnd,
-                isStanzaEnd: isRowStanzaEnd,
-                stanzaType: stanzaData.type,
-                stanzaIdx: stanzaIdx,
-                sIdx: sIdx
-              });
-            });
-          }
+          allRenderedLines.push({
+            element: lineEl,
+            textSpan: lineEl.querySelector('.ink-line-text'),
+            text: sentenceText,
+            sentenceText: sentenceText,
+            isSentenceEnd: true,
+            isStanzaEnd: isStanzaEnd,
+            stanzaType: stanzaData.type,
+            stanzaIdx: stanzaIdx,
+            sIdx: sIdx
+          });
         });
       });
     }
 
-    function createInkLineElement(text) {
-      const lineDiv = document.createElement('div');
-      lineDiv.className = 'ink-line';
-      const textSpan = document.createElement('span');
-      textSpan.className = 'ink-line-text';
-      textSpan.textContent = text;
-      lineDiv.appendChild(textSpan);
-      return lineDiv;
-    }
-
-    // Initialize layout immediately and update when fonts settle or resize
+    // Initialize layout immediately on script load
     prepareLetterDOM();
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => {
-        if (!isEnvelopeOpened) {
-          prepareLetterDOM();
-        }
-      });
-    }
 
     /* ==========================================================================
        G. ULTRA-SLOW, DELIBERATE EMOTIONAL PACING ENGINE
@@ -3075,7 +2814,7 @@
       const duration = Math.max(1200, Math.min(6500, charCount * 75));
 
       const textSpan = lineData.textSpan;
-      inkSparkNib.classList.add('active');
+      if (inkSparkNib) inkSparkNib.classList.add('active');
 
       const startTime = performance.now();
       let lastParticleTime = 0;
@@ -3088,33 +2827,39 @@
         const easedProgress = 1 - Math.pow(1 - progress, 1.8);
 
         // Clip-path wipe: left-to-right
-        const clipPercent = (1 - easedProgress) * 100;
-        textSpan.style.clipPath = `inset(0 ${clipPercent}% 0 0)`;
-        textSpan.style.opacity = Math.min(1, easedProgress * 3.5);
-        textSpan.style.transform = `translateY(${(1 - easedProgress) * 4}px)`;
+        const clipPercent = Math.max(0, (1 - easedProgress) * 100);
+        if (textSpan) {
+          textSpan.style.clipPath = `inset(0 ${clipPercent}% 0 0)`;
+          textSpan.style.opacity = Math.min(1, easedProgress * 3.5);
+          textSpan.style.transform = `translateY(${(1 - easedProgress) * 4}px)`;
+        }
 
-        // Update glowing fountain pen nib position
-        const lineRect = lineData.element.getBoundingClientRect();
-        const nibX = lineRect.left + (lineRect.width * easedProgress);
-        const nibY = lineRect.top + lineRect.height * 0.55;
-        inkSparkNib.style.transform = `translate(${nibX}px, ${nibY}px)`;
+        // Update glowing fountain pen nib position safely
+        if (inkSparkNib && lineData.element) {
+          const lineRect = lineData.element.getBoundingClientRect();
+          const nibX = lineRect.left + (lineRect.width * easedProgress);
+          const nibY = lineRect.top + lineRect.height * 0.55;
+          inkSparkNib.style.transform = `translate(${nibX}px, ${nibY}px)`;
 
-        // Spawn tiny micro-sparkles along writing path
-        if (now - lastParticleTime > 160 && Math.random() > 0.45) {
-          lastParticleTime = now;
-          spawnParticleBurst(nibX, nibY, 1, 'gold');
+          // Spawn tiny micro-sparkles along writing path
+          if (now - lastParticleTime > 160 && Math.random() > 0.45) {
+            lastParticleTime = now;
+            spawnParticleBurst(nibX, nibY, 1, 'gold');
+          }
         }
 
         if (progress < 1) {
           requestAnimationFrame(renderFrame);
         } else {
           // Complete line
-          lineData.element.classList.add('completed');
-          textSpan.style.clipPath = 'inset(0 0% 0 0)';
-          textSpan.style.opacity = '1';
-          textSpan.style.transform = 'translateY(0)';
+          if (lineData.element) lineData.element.classList.add('completed');
+          if (textSpan) {
+            textSpan.style.clipPath = 'inset(0 0 0 0)';
+            textSpan.style.opacity = '1';
+            textSpan.style.transform = 'translateY(0)';
+          }
 
-          inkSparkNib.classList.remove('active');
+          if (inkSparkNib) inkSparkNib.classList.remove('active');
 
           currentLineIndex++;
 
@@ -3125,19 +2870,16 @@
           // - 3200ms lingering stillness after deeply poignant lines
           // - 3800ms stillness pause before final signature with music dip
           const lineTrimmed = lineData.text.trim();
-          let pauseDuration = 1400; // 1400ms reading pause after every line finishes inking
+          let pauseDuration = 1400;
 
-          // Micro-breath on commas/semicolons if line wraps midway
           if (/[,;]$/.test(lineTrimmed) && !lineData.isSentenceEnd) {
             pauseDuration = 600;
           }
 
-          // Reflective silence between original paragraph stanzas (2400ms)
           if (lineData.isStanzaEnd) {
             pauseDuration = 2400;
           }
 
-          // Deep emotional pauses on key reflective lines (3200ms)
           const sentenceFull = lineData.sentenceText.trim();
           const isPoignant = 
             sentenceFull.includes("You were my first love, Ridhu") ||
@@ -3151,14 +2893,11 @@
             pauseDuration = 3200;
           }
 
-          // Stillness Pause before final signature (between P28 and P29): 3800ms + music dip
           const isBeforeSignature = lineData.stanzaIdx === 27 && lineData.isStanzaEnd;
           if (isBeforeSignature) {
             pauseDuration = 3800;
-            // Softly lower background music volume down to 0.22 for deep reverent stillness
             fadeAudio(0.22, 2200);
             setTimeout(() => {
-              // Swell back up as final signature begins writing
               fadeAudio(0.65, 2500);
             }, pauseDuration - 400);
           }
@@ -3170,12 +2909,10 @@
       requestAnimationFrame(renderFrame);
     }
 
-
     function smoothScrollToActiveLine() {
       if (!activeLineElement) return;
       const rect = activeLineElement.getBoundingClientRect();
       const currentScrollY = window.scrollY || window.pageYOffset;
-      // Keep active line at ~60% down the screen (lower-middle third)
       const targetY = currentScrollY + rect.top - (window.innerHeight * 0.60);
       window.scrollTo({
         top: Math.max(0, targetY),
@@ -3193,33 +2930,34 @@
       const currentScrollY = window.scrollY || window.pageYOffset;
       const expectedScrollY = currentScrollY + rect.top - (window.innerHeight * 0.60);
 
-      // If user scrolled away to re-read earlier text (> 80px difference)
       if (Math.abs(currentScrollY - expectedScrollY) > 80) {
         autoScrollEnabled = false;
-        followInkPill.classList.add('visible');
+        if (followInkPill) followInkPill.classList.add('visible');
       } else {
         autoScrollEnabled = true;
-        followInkPill.classList.remove('visible');
+        if (followInkPill) followInkPill.classList.remove('visible');
       }
     }
 
     window.addEventListener('wheel', handleUserScrollIntent, { passive: true });
     window.addEventListener('touchmove', handleUserScrollIntent, { passive: true });
 
-    followInkPill.addEventListener('click', () => {
-      autoScrollEnabled = true;
-      followInkPill.classList.remove('visible');
-      smoothScrollToActiveLine();
-    });
+    if (followInkPill) {
+      followInkPill.addEventListener('click', () => {
+        autoScrollEnabled = true;
+        followInkPill.classList.remove('visible');
+        smoothScrollToActiveLine();
+      });
+    }
 
     function finishLetterWriting() {
-      inkSparkNib.classList.remove('active');
-      signatureFlourish.classList.add('visible');
-      pressedFlower.classList.add('visible');
+      if (inkSparkNib) inkSparkNib.classList.remove('active');
+      if (signatureFlourish) signatureFlourish.classList.add('visible');
+      if (pressedFlower) pressedFlower.classList.add('visible');
 
       setTimeout(() => {
-        keepsakeCard.classList.add('visible');
-        if (autoScrollEnabled) {
+        if (keepsakeCard) keepsakeCard.classList.add('visible');
+        if (autoScrollEnabled && keepsakeCard) {
           keepsakeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       }, 700);
@@ -3244,50 +2982,33 @@
         const cy = targetY;
         const digitNodes = [];
 
-        // Top arc: angles from -Math.PI to 0.2 * Math.PI
         const r = 26 * scale;
         const topCy = cy - 24 * scale;
         for (let a = -Math.PI; a <= 0.2 * Math.PI; a += 0.28) {
-          const isKey = a === -Math.PI || Math.abs(a - 0.2 * Math.PI) < 0.2;
-          const node = new ConstellationNode(cx + Math.cos(a) * r, topCy + Math.sin(a) * r, Math.random() * 0.15, isKey);
-          digitNodes.push(node);
-          points.push(node);
+          digitNodes.push({
+            x: cx + r * Math.cos(a),
+            y: topCy + r * Math.sin(a)
+          });
         }
 
-        // Diagonal stroke: from arc end down to bottom-left
-        const startDiag = { x: cx + Math.cos(0.2 * Math.PI) * r, y: topCy + Math.sin(0.2 * Math.PI) * r };
-        const endDiag = { x: cx - 26 * scale, y: cy + 38 * scale };
-        const diagSteps = 9;
-        for (let i = 1; i <= diagSteps; i++) {
-          const p = i / diagSteps;
-          const isKey = i === diagSteps;
-          const node = new ConstellationNode(
-            startDiag.x + (endDiag.x - startDiag.x) * p,
-            startDiag.y + (endDiag.y - startDiag.y) * p,
-            Math.random() * 0.15,
-            isKey
-          );
-          digitNodes.push(node);
-          points.push(node);
+        const neckStart = digitNodes[digitNodes.length - 1];
+        const baseLeft = { x: cx - 28 * scale, y: cy + 32 * scale };
+        for (let t = 0.25; t <= 1; t += 0.25) {
+          digitNodes.push({
+            x: neckStart.x + (baseLeft.x - neckStart.x) * t,
+            y: neckStart.y + (baseLeft.y - neckStart.y) * t
+          });
         }
 
-        // Base stroke: horizontal line along bottom
-        const baseEnd = { x: cx + 28 * scale, y: cy + 38 * scale };
-        const baseSteps = 8;
-        for (let i = 1; i <= baseSteps; i++) {
-          const p = i / baseSteps;
-          const isKey = i === baseSteps;
-          const node = new ConstellationNode(
-            endDiag.x + (baseEnd.x - endDiag.x) * p,
-            cy + 38 * scale,
-            Math.random() * 0.15,
-            isKey
-          );
-          digitNodes.push(node);
-          points.push(node);
+        const baseRight = { x: cx + 30 * scale, y: cy + 32 * scale };
+        for (let t = 0.33; t <= 1; t += 0.33) {
+          digitNodes.push({
+            x: baseLeft.x + (baseRight.x - baseLeft.x) * t,
+            y: baseLeft.y + (baseRight.y - baseLeft.y) * t
+          });
         }
 
-        // Connecting blueprint lines along digit path
+        digitNodes.forEach(pt => points.push(pt));
         for (let i = 0; i < digitNodes.length - 1; i++) {
           lines.push({ p1: digitNodes[i], p2: digitNodes[i + 1] });
         }
@@ -3296,109 +3017,77 @@
       return { points, lines };
     }
 
-    function spawnChrysanthemumShell(cx, cy, particleCount = 70, colors = ['#ffd700', '#c97b84', '#fff7d6']) {
-      for (let i = 0; i < particleCount; i++) {
-        const angle = (i / particleCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
-        const layer = Math.random() > 0.65 ? 'core' : (Math.random() > 0.4 ? 'mid' : 'outer');
-        const speed = layer === 'core' 
-          ? Math.random() * 3.5 + 2 
-          : (layer === 'mid' ? Math.random() * 6.5 + 4 : Math.random() * 9.5 + 6.5);
-        const col = colors[Math.floor(Math.random() * colors.length)];
-        fireworksParticles.push(new ChrysanthemumParticle(cx, cy, speed, angle, col, layer));
-      }
-    }
-
     function triggerGrandWishSpectacle() {
-      // Clear previous spectacle elements
-      spectacleShockwaves.length = 0;
-      constellationNodes.length = 0;
-      constellationBlueprintLines.length = 0;
-      fireworksParticles.length = 0;
-      willowTrails.length = 0;
-      bokehDiscs.length = 0;
-
-      const rect = wishBtn.getBoundingClientRect();
-      spectacleOrigin = {
-        x: rect.left + rect.width / 2,
-        y: rect.top + rect.height / 2
-      };
-      spectacleTarget = {
-        x: width / 2,
-        y: Math.max(120, height * 0.35)
-      };
-
+      if (isSpectacleRunning) return;
       isSpectacleRunning = true;
       spectacleStartTime = performance.now();
-      wishBtn.classList.add('wishing');
-      wishBtnText.textContent = "Releasing your wish to the stars... ✨";
 
-      // Phase 1 (0.0s): Synthesize celestial chime arpeggio & spawn shockwave + rising orb
-      playWishChimeHarp();
-      spectacleShockwaves.push(new SpectacleShockwave(spectacleOrigin.x, spectacleOrigin.y, Math.min(width, height) * 0.42));
-      spectacleRisingOrb = new RisingOrb(spectacleOrigin.x, spectacleOrigin.y, spectacleTarget.x, spectacleTarget.y);
+      if (wishBtn) wishBtn.classList.add('wishing');
+      if (wishBtnText) wishBtnText.textContent = "Releasing your wish to the stars... ✨";
 
-      // Phase 2 (0.6s–2.2s): Generate architectural "22" constellation nodes and blueprint geometry
-      const constellationData = generateArchitectural22Points(spectacleTarget.x, spectacleTarget.y);
-      constellationData.points.forEach(p => constellationNodes.push(p));
-      constellationData.lines.forEach(l => constellationBlueprintLines.push(l));
+      const btnRect = wishBtn ? wishBtn.getBoundingClientRect() : { left: width / 2, top: height / 2, width: 0, height: 0 };
+      spectacleTarget.x = width / 2;
+      spectacleTarget.y = Math.max(120, btnRect.top - 120);
 
-      // Phase 3 (2.2s–5.5s): Chrysanthemum & Willow Fireworks Detonation
+      try {
+        playChimeChord();
+      } catch (err) {}
+
+      spectacleShockwaves.push({
+        x: btnRect.left + btnRect.width / 2,
+        y: btnRect.top + btnRect.height / 2,
+        radius: 10,
+        maxRadius: Math.min(width, height) * 0.55,
+        alpha: 0.9,
+        lineWidth: 3
+      });
+
+      const { points, lines } = generateArchitectural22Points(spectacleTarget.x, spectacleTarget.y);
+      constellationNodes = points.map(pt => ({
+        x: pt.x,
+        y: pt.y,
+        alpha: 0,
+        size: Math.random() * 2 + 3,
+        pulseOffset: Math.random() * Math.PI
+      }));
+      constellationLines = lines;
+
       setTimeout(() => {
         if (!isSpectacleRunning) return;
+        spawnChrysanthemumShell(spectacleTarget.x, spectacleTarget.y, 75, ['#ffd700', '#fff8db', '#c97b84', '#ffffff']);
+        try { playFireworksBoom(); } catch (e) {}
+      }, 1600);
 
-        // Explode rising orb & constellation
-        if (spectacleRisingOrb) spectacleRisingOrb.isExploded = true;
-        constellationNodes.length = 0;
-        screenFlashIntensity = 0.52;
-        playFireworksBoom();
-
-        // Center primary chrysanthemum burst (75 particles)
-        spawnChrysanthemumShell(spectacleTarget.x, spectacleTarget.y, 75, ['#ffd700', '#f5e8b7', '#fffdf0', '#c97b84']);
-
-        // Cascading golden willow particles (42 trails)
-        for (let i = 0; i < 42; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const speed = Math.random() * 8.5 + 3.5;
-          willowTrails.push(new WillowParticle(spectacleTarget.x, spectacleTarget.y, speed, angle));
-        }
-
-        // Dreamy rose-gold bokeh light discs
-        for (let i = 0; i < 20; i++) {
-          bokehDiscs.push(new BokehDisc(spectacleTarget.x, spectacleTarget.y, Math.random() * 18 + 10));
-        }
-      }, 2200);
-
-      // Staggered aerial flank bursts (2.5s and 2.75s)
       setTimeout(() => {
         if (!isSpectacleRunning) return;
-        spawnChrysanthemumShell(spectacleTarget.x - Math.min(130, width * 0.28), spectacleTarget.y - 50, 45, ['#c97b84', '#ffd700', '#fff5cc']);
-        playFireworksBoom();
-      }, 2500);
+        spawnChrysanthemumShell(spectacleTarget.x - Math.min(130, width * 0.28), spectacleTarget.y - 40, 45, ['#ffd700', '#f5e8b7', '#c97b84']);
+        try { playFireworksBoom(); } catch (e) {}
+      }, 2300);
 
       setTimeout(() => {
         if (!isSpectacleRunning) return;
         spawnChrysanthemumShell(spectacleTarget.x + Math.min(130, width * 0.28), spectacleTarget.y - 50, 45, ['#ffd700', '#f5e8b7', '#e8a598']);
-        playFireworksBoom();
+        try { playFireworksBoom(); } catch (e) {}
       }, 2750);
 
-      // High starlight crown shell (3.0s)
       setTimeout(() => {
         if (!isSpectacleRunning) return;
         spawnChrysanthemumShell(spectacleTarget.x, spectacleTarget.y - 120, 50, ['#ffffff', '#fff5cc', '#ffd700']);
       }, 3000);
 
-      // Phase 4 (5.5s+): Embers drift like fireflies; warm keepsake blessing settles
       setTimeout(() => {
         hasWished = true;
-        wishBtn.classList.remove('wishing');
-        wishBtnText.textContent = "Wish Sent to the Stars ✨ • Tap to wish again";
-        wishToast.classList.add('revealed');
+        if (wishBtn) wishBtn.classList.remove('wishing');
+        if (wishBtnText) wishBtnText.textContent = "Wish Sent to the Stars ✨ • Tap to wish again";
+        if (wishToast) wishToast.classList.add('revealed');
       }, 5500);
     }
 
-    wishBtn.addEventListener('click', () => {
-      triggerGrandWishSpectacle();
-    });
+    if (wishBtn) {
+      wishBtn.addEventListener('click', () => {
+        triggerGrandWishSpectacle();
+      });
+    }
 
     /* ==========================================================================
        K. PRESSED FLOWER & SECRET POSTSCRIPT NOTE INTERACTION
@@ -3406,150 +3095,85 @@
     const secretPostscriptModal = document.getElementById('secretPostscriptModal');
     const secretCloseBtn = document.getElementById('secretCloseBtn');
 
-    pressedFlower.addEventListener('click', () => {
-      playPaperRustle(0.9);
-      const rect = pressedFlower.getBoundingClientRect();
-      spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25, 'gold');
-      secretPostscriptModal.classList.add('active');
-    });
-
-    secretCloseBtn.addEventListener('click', () => {
-      playPaperRustle(0.6);
-      secretPostscriptModal.classList.remove('active');
-    });
-
-    secretPostscriptModal.addEventListener('click', (e) => {
-      if (e.target === secretPostscriptModal) {
-        playPaperRustle(0.6);
-        secretPostscriptModal.classList.remove('active');
-      }
-    });
-
-    /* ==========================================================================
-       L. POLAROID PEEK & CANDLELIT LIGHTBOX GALLERY
-       ========================================================================== */
-    const polaroidPeek = document.getElementById('polaroidPeek');
-    const polaroidLightbox = document.getElementById('polaroidLightbox');
-    const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
-    const lightboxPrevBtn = document.getElementById('lightboxPrevBtn');
-    const lightboxNextBtn = document.getElementById('lightboxNextBtn');
-    const polaroidFrames = document.querySelectorAll('.polaroid-frame');
-    const lightboxDots = document.querySelectorAll('.lightbox-dot');
-    let currentSlide = 0;
-
-    function showSlide(index) {
-      polaroidFrames.forEach((frame, i) => {
-        frame.classList.toggle('active', i === index);
+    if (pressedFlower) {
+      pressedFlower.addEventListener('click', () => {
+        try { playPaperRustle(0.9); } catch (e) {}
+        const rect = pressedFlower.getBoundingClientRect();
+        spawnParticleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, 25, 'gold');
+        if (secretPostscriptModal) secretPostscriptModal.classList.add('active');
       });
-      lightboxDots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
-      currentSlide = index;
     }
 
-    polaroidPeek.addEventListener('click', () => {
-      playPaperRustle(1.0);
-      polaroidLightbox.classList.add('active');
-      showSlide(0);
-    });
-
-    lightboxCloseBtn.addEventListener('click', () => {
-      playPaperRustle(0.7);
-      polaroidLightbox.classList.remove('active');
-    });
-
-    lightboxPrevBtn.addEventListener('click', () => {
-      playPaperRustle(0.5);
-      showSlide((currentSlide - 1 + polaroidFrames.length) % polaroidFrames.length);
-    });
-
-    lightboxNextBtn.addEventListener('click', () => {
-      playPaperRustle(0.5);
-      showSlide((currentSlide + 1) % polaroidFrames.length);
-    });
-
-    lightboxDots.forEach((dot) => {
-      dot.addEventListener('click', () => {
-        playPaperRustle(0.5);
-        showSlide(parseInt(dot.dataset.index, 10));
+    if (secretCloseBtn) {
+      secretCloseBtn.addEventListener('click', () => {
+        try { playPaperRustle(0.6); } catch (e) {}
+        if (secretPostscriptModal) secretPostscriptModal.classList.remove('active');
       });
-    });
+    }
 
-    polaroidLightbox.addEventListener('click', (e) => {
-      if (e.target === polaroidLightbox) {
-        playPaperRustle(0.7);
-        polaroidLightbox.classList.remove('active');
-      }
-    });
-
-    // Keyboard navigation for lightbox
-    window.addEventListener('keydown', (e) => {
-      if (!polaroidLightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') {
-        playPaperRustle(0.7);
-        polaroidLightbox.classList.remove('active');
-      } else if (e.key === 'ArrowLeft') {
-        playPaperRustle(0.5);
-        showSlide((currentSlide - 1 + polaroidFrames.length) % polaroidFrames.length);
-      } else if (e.key === 'ArrowRight') {
-        playPaperRustle(0.5);
-        showSlide((currentSlide + 1) % polaroidFrames.length);
-      }
-    });
+    if (secretPostscriptModal) {
+      secretPostscriptModal.addEventListener('click', (e) => {
+        if (e.target === secretPostscriptModal) {
+          try { playPaperRustle(0.6); } catch (e) {}
+          secretPostscriptModal.classList.remove('active');
+        }
+      });
+    }
 
     /* ==========================================================================
-       M. PHYSICAL RE-FOLDING RESET
+       L. PHYSICAL RE-FOLDING RESET
        ========================================================================== */
     const refoldBtn = document.getElementById('refoldBtn');
 
-    refoldBtn.addEventListener('click', () => {
-      // 1. Play paper rustling sound
-      playPaperRustle(1.2);
+    if (refoldBtn) {
+      refoldBtn.addEventListener('click', () => {
+        try { playPaperRustle(1.2); } catch (e) {}
 
-      // 2. Hide follow ink & nib
-      followInkPill.classList.remove('visible');
-      inkSparkNib.classList.remove('active');
+        if (followInkPill) followInkPill.classList.remove('visible');
+        if (inkSparkNib) inkSparkNib.classList.remove('active');
 
-      // 3. Smoothly fold the parchment along crease lines
-      parchmentSheet.classList.add('refolding');
+        if (parchmentSheet) parchmentSheet.classList.add('refolding');
 
-      // 4. Reset stationery view back to envelope
-      setTimeout(() => {
-        letterViewport.classList.remove('visible');
-        parchmentSheet.classList.remove('refolding');
+        setTimeout(() => {
+          if (letterViewport) {
+            letterViewport.classList.remove('visible');
+            letterViewport.style.display = 'none';
+          }
+          if (parchmentSheet) parchmentSheet.classList.remove('refolding');
 
-        // Reset envelope states
-        envelopeScreen.classList.remove('hidden');
-        envelopeScreen.classList.remove('opened');
-        envelopeBox.classList.remove('open');
-        waxSeal.classList.remove('cracked');
+          if (envelopeScreen) {
+            envelopeScreen.style.display = 'flex';
+            envelopeScreen.classList.remove('hidden');
+            envelopeScreen.classList.remove('opened');
+          }
+          if (envelopeBox) envelopeBox.classList.remove('open');
+          if (waxSeal) waxSeal.classList.remove('cracked');
 
-        // Brighten candlelight back to mahogany desk glow
-        candlelightLayer.classList.remove('dimmed');
+          if (candlelightLayer) candlelightLayer.classList.remove('dimmed');
 
-        // Reset reading state
-        isEnvelopeOpened = false;
-        autoScrollEnabled = true;
-        currentLineIndex = 0;
-        prepareLetterDOM();
+          isEnvelopeOpened = false;
+          autoScrollEnabled = true;
+          currentLineIndex = 0;
+          prepareLetterDOM();
 
-        keepsakeCard.classList.remove('visible');
-        pressedFlower.classList.remove('visible');
-        signatureFlourish.classList.remove('visible');
-        wishToast.classList.remove('revealed');
-        hasWished = false;
-        isSpectacleRunning = false;
-        wishBtn.classList.remove('wishing');
-        wishBtnText.textContent = "Make a wish for 22 ✨";
-        spectacleShockwaves.length = 0;
-        constellationNodes.length = 0;
-        fireworksParticles.length = 0;
-        willowTrails.length = 0;
-        bokehDiscs.length = 0;
+          if (keepsakeCard) keepsakeCard.classList.remove('visible');
+          if (pressedFlower) pressedFlower.classList.remove('visible');
+          if (signatureFlourish) signatureFlourish.classList.remove('visible');
+          if (wishToast) wishToast.classList.remove('revealed');
+          hasWished = false;
+          isSpectacleRunning = false;
+          if (wishBtn) wishBtn.classList.remove('wishing');
+          if (wishBtnText) wishBtnText.textContent = "Make a wish for 22 ✨";
+          spectacleShockwaves.length = 0;
+          constellationNodes.length = 0;
+          fireworksParticles.length = 0;
+          willowTrails.length = 0;
+          bokehDiscs.length = 0;
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 800);
-    });
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 800);
+      });
+    }
   </script>
 </body>
 </html>
