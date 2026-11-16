@@ -140,7 +140,7 @@
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 2;
+      z-index: 180;
     }
 
     /* Top-Right Floating Sound Toggle Button */
@@ -1361,28 +1361,68 @@
       justify-content: center;
       background: linear-gradient(135deg, #8a1721 0%, #ba2930 50%, #d4af37 100%);
       color: #fffdf7;
-      font-family: var(--font-title);
-      font-size: 1.18rem;
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
       font-weight: 600;
       letter-spacing: 0.5px;
-      padding: 14px 34px;
-      border-radius: 30px;
-      border: none;
+      padding: 15px 38px;
+      border-radius: 40px;
+      border: 1.5px solid rgba(255, 230, 140, 0.65);
       cursor: pointer;
       box-shadow: 
         0 8px 24px rgba(138, 23, 33, 0.45),
-        0 0 16px rgba(212, 175, 55, 0.35);
-      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        0 0 18px rgba(212, 175, 55, 0.4);
+      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
       overflow: hidden;
+      animation: wishHaloPulse 2.8s infinite ease-in-out;
+    }
+    .wish-button::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -100%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        115deg,
+        transparent 20%,
+        rgba(255, 245, 190, 0.12) 40%,
+        rgba(255, 235, 140, 0.85) 50%,
+        rgba(255, 245, 190, 0.12) 60%,
+        transparent 80%
+      );
+      transform: rotate(25deg);
+      animation: goldFoilSweep 3.2s infinite ease-in-out;
+      pointer-events: none;
+    }
+    @keyframes goldFoilSweep {
+      0% {
+        transform: translateX(-120%) rotate(25deg);
+      }
+      45%, 100% {
+        transform: translateX(120%) rotate(25deg);
+      }
+    }
+    @keyframes wishHaloPulse {
+      0%, 100% {
+        box-shadow: 0 8px 24px rgba(138, 23, 33, 0.45), 0 0 16px rgba(212, 175, 55, 0.35);
+      }
+      50% {
+        box-shadow: 0 12px 34px rgba(138, 23, 33, 0.65), 0 0 28px rgba(255, 215, 0, 0.7);
+      }
     }
     .wish-button:hover {
       transform: translateY(-2px) scale(1.03);
       box-shadow: 
-        0 12px 30px rgba(138, 23, 33, 0.55),
-        0 0 22px rgba(212, 175, 55, 0.5);
+        0 14px 34px rgba(138, 23, 33, 0.6),
+        0 0 26px rgba(255, 215, 0, 0.6);
     }
     .wish-button:active {
       transform: translateY(1px) scale(0.98);
+    }
+    .wish-button.wishing {
+      pointer-events: none;
+      filter: brightness(1.15);
     }
 
     .wish-toast {
@@ -1607,82 +1647,16 @@
           <span id="wishBtnText">Make a wish for 22 ✨</span>
         </button>
 
-        <div id="wishToast" class="wish-toast">
-          <div class="wish-toast-stars">✦ ✦ ✦</div>
+                <div id="wishToast" class="wish-toast">
+          <div class="wish-toast-stars">✦ ✧ ✦ ✧ ✦</div>
           <p class="wish-toast-msg">
-            May every single wish you made today find its way home to you.<br>
-            <strong>Happy 22nd Birthday, Ridhu. ❤️</strong>
+            "Wish sent to the stars • May 22 be your happiest chapter yet, Ridhu ✨"
           </p>
+          <div class="wish-toast-sub" style="font-family: var(--font-drafting); font-size: 0.85rem; letter-spacing: 1.5px; color: rgba(140, 30, 40, 0.65); text-transform: uppercase; margin-top: 8px;">
+            May all 22 of your quietest architectural dreams fall beautifully into place 📐💗
+          </div>
         </div>
-      </section>
-
-      <!-- Architectural Footer Metadata -->
-      <footer class="architectural-footer">
-        <div class="scale-bar">|——|——|——|——| SCALE 1:1 (HEART TO PAPER)</div>
-        <div>ARCHITECT: RIDHU • DESIGNED WITH ENDLESS LOVE</div>
-      </footer>
-
-      <!-- Physical Re-Folding Button -->
-      <div class="refold-action-container">
-        <button id="refoldBtn" class="refold-btn" title="Fold this letter back up into the envelope">
-          <span>⤾</span> Fold this letter
-        </button>
       </div>
-
-      <!-- Pressed Corner Flower (Appears with signature) -->
-      <div id="pressedFlower" class="pressed-flower-container" title="A little pressed keepsake flower">
-        <svg class="pressed-flower-svg" viewBox="0 0 60 76" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Antique Brass Pin / Tack -->
-          <circle cx="30" cy="10" r="5" fill="url(#brassPinGrad)" stroke="#7a5813" stroke-width="1"/>
-          <circle cx="30" cy="10" r="1.5" fill="#fff5cc"/>
-          <!-- Stem -->
-          <path d="M30 14C31 28 28 44 26 68" stroke="#5a6845" stroke-width="1.8" stroke-linecap="round"/>
-          <!-- Subtle leaves -->
-          <path d="M28 32C22 28 16 31 14 36C18 38 24 37 28 34" fill="#6d7d53" opacity="0.85"/>
-          <path d="M27 46C34 42 40 45 42 50C38 52 32 50 27 48" fill="#6d7d53" opacity="0.85"/>
-          <!-- Pressed Rose Petals -->
-          <path d="M30 18C23 11 17 20 22 27C27 32 30 24 30 18Z" fill="#c97b84" opacity="0.88"/>
-          <path d="M30 18C37 11 43 20 38 27C33 32 30 24 30 18Z" fill="#c97b84" opacity="0.88"/>
-          <path d="M30 18C28 7 32 7 30 18Z" fill="#a82024" opacity="0.75"/>
-          <circle cx="30" cy="20" r="3" fill="#d4af37" opacity="0.9"/>
-          <defs>
-            <radialGradient id="brassPinGrad" cx="35%" cy="35%" r="65%">
-              <stop stop-color="#fff8db"/>
-              <stop offset="0.6" stop-color="#d4af37"/>
-              <stop offset="1" stop-color="#7a5813"/>
-            </radialGradient>
-          </defs>
-        </svg>
-        <span class="pressed-flower-hint">Tap pressed flower</span>
-      </div>
-
-      <!-- Tucked Vintage Polaroid Snapshot Peek -->
-      <div id="polaroidPeek" class="polaroid-peek" title="Tap to view Polaroid memories">
-        <div class="polaroid-peek-tape"></div>
-        <div class="polaroid-peek-thumb">
-          <span>📷</span>
-        </div>
-        <span class="polaroid-peek-label">memories ✧</span>
-      </div>
-    </article>
-  </main>
-
-  <!-- Glowing Fountain Pen Nib / Ink-Spark Indicator -->
-  <div id="inkSparkNib" class="ink-spark-nib">
-    <svg class="nib-icon" viewBox="0 0 24 24" fill="none">
-      <path d="M12 2L16 9L12 13L8 9L12 2Z" fill="url(#goldNibGrad)" stroke="#aa7c11" stroke-width="0.8"/>
-      <path d="M12 13V20" stroke="#ffd700" stroke-width="1.2"/>
-      <circle cx="12" cy="20" r="1.5" fill="#fff5cc"/>
-      <defs>
-        <linearGradient id="goldNibGrad" x1="8" y1="2" x2="16" y2="13" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#fff5cc"/>
-          <stop offset="0.5" stop-color="#d4af37"/>
-          <stop offset="1" stop-color="#8f660d"/>
-        </linearGradient>
-      </defs>
-    </svg>
-    <div class="nib-glow-dot"></div>
-  </div>
 
   <!-- Subtle "Follow Ink" Floating Pill Button -->
   <button id="followInkPill" class="follow-ink-pill" aria-label="Follow ink writing">
@@ -1878,8 +1852,110 @@
       }
     }
 
+    
+    /* Web Audio API Celestial Harp/Chime Shimmer Synthesizer */
+    function playWishChimeHarp() {
+      try {
+        initAudioContext();
+        if (!audioCtx) return;
+
+        const now = audioCtx.currentTime;
+        // Pentatonic celestial arpeggio frequencies: C5, E5, G5, B5, D6, E6, G6
+        const notes = [523.25, 659.25, 783.99, 987.77, 1174.66, 1318.51, 1567.98];
+
+        // 1. Warm sub-bass harmonic resonance
+        const subOsc = audioCtx.createOscillator();
+        const subGain = audioCtx.createGain();
+        subOsc.type = 'sine';
+        subOsc.frequency.setValueAtTime(130.81, now); // C3
+        subGain.gain.setValueAtTime(0.0001, now);
+        subGain.gain.exponentialRampToValueAtTime(0.24, now + 0.12);
+        subGain.gain.exponentialRampToValueAtTime(0.0001, now + 2.4);
+        subOsc.connect(subGain);
+        subGain.connect(audioCtx.destination);
+        subOsc.start(now);
+        subOsc.stop(now + 2.5);
+
+        // 2. Cascading crystalline chime arpeggio
+        notes.forEach((freq, idx) => {
+          const noteTime = now + (idx * 0.085);
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+          osc.frequency.setValueAtTime(freq, noteTime);
+
+          // Subtle vibrato shimmer
+          const vibrato = audioCtx.createOscillator();
+          const vibratoGain = audioCtx.createGain();
+          vibrato.frequency.value = 6.2;
+          vibratoGain.gain.value = 5.0;
+          vibrato.connect(osc.frequency);
+          vibrato.start(noteTime);
+          vibrato.stop(noteTime + 1.8);
+
+          gain.gain.setValueAtTime(0.0001, noteTime);
+          gain.gain.exponentialRampToValueAtTime(0.18, noteTime + 0.025);
+          gain.gain.exponentialRampToValueAtTime(0.0001, noteTime + 1.6);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(noteTime);
+          osc.stop(noteTime + 1.7);
+        });
+      } catch (e) {
+        console.log('Chime audio error:', e);
+      }
+    }
+
+    /* Web Audio API Resonant Aerial Firework Boom Synthesizer */
+    function playFireworksBoom() {
+      try {
+        initAudioContext();
+        if (!audioCtx) return;
+        const now = audioCtx.currentTime;
+
+        // Low resonant boom
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(145, now);
+        osc.frequency.exponentialRampToValueAtTime(42, now + 0.75);
+
+        gain.gain.setValueAtTime(0.38, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 1.3);
+
+        // Sparkling crackle noise
+        const bufferSize = Math.floor(audioCtx.sampleRate * 0.55);
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.28));
+        }
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'highpass';
+        filter.frequency.value = 2600;
+        const nGain = audioCtx.createGain();
+        nGain.gain.setValueAtTime(0.16, now);
+        nGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.7);
+        noise.connect(filter);
+        filter.connect(nGain);
+        nGain.connect(audioCtx.destination);
+        noise.start(now + 0.04);
+      } catch (e) {
+        console.log('Firework audio error:', e);
+      }
+    }
+
     /* ==========================================================================
-       C. CANVAS AMBIENT GOLDEN DUST & BURST PARTICLE SYSTEM
+       C. CANVAS AMBIENT GOLDEN DUST & MULTI-PHASE WISH SPECTACLE ENGINE
        ========================================================================== */
     const canvas = document.getElementById('ambientCanvas');
     const ctx = canvas.getContext('2d');
@@ -1894,6 +1970,20 @@
     const ambientParticles = [];
     const burstParticles = [];
     const PARTICLE_COUNT = Math.min(85, Math.floor(window.innerWidth / 7));
+
+    // Multi-Phase Spectacle Engine State
+    let isSpectacleRunning = false;
+    let spectacleStartTime = 0;
+    let spectacleOrigin = { x: 0, y: 0 };
+    let spectacleTarget = { x: 0, y: 0 };
+    const spectacleShockwaves = [];
+    let spectacleRisingOrb = null;
+    const constellationNodes = [];
+    const constellationBlueprintLines = [];
+    const fireworksParticles = [];
+    const willowTrails = [];
+    const bokehDiscs = [];
+    let screenFlashIntensity = 0;
 
     class AmbientDust {
       constructor() {
@@ -1990,6 +2080,301 @@
       }
     }
 
+    // Phase 1: Expanding Golden Shockwave Ring
+    class SpectacleShockwave {
+      constructor(x, y, maxR, color = '#ffd700') {
+        this.x = x;
+        this.y = y;
+        this.radius = 8;
+        this.maxRadius = maxR;
+        this.speed = Math.max(12, maxR / 22);
+        this.color = color;
+        this.alpha = 0.95;
+      }
+      update() {
+        this.radius += this.speed;
+        this.alpha = Math.max(0, 1 - (this.radius / this.maxRadius));
+      }
+      draw() {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.strokeStyle = this.color;
+        ctx.lineWidth = Math.max(1, 3.5 * this.alpha);
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = this.color;
+        ctx.globalAlpha = this.alpha;
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    // Phase 1: Rising Luminous Light Orb
+    class RisingOrb {
+      constructor(x0, y0, x1, y1) {
+        this.x0 = x0;
+        this.y0 = y0;
+        this.x1 = x1;
+        this.y1 = y1;
+        this.x = x0;
+        this.y = y0;
+        this.radius = 7;
+        this.alpha = 1;
+        this.isExploded = false;
+      }
+      update(tSec) {
+        const p = Math.min(1, tSec / 0.6);
+        const eased = 1 - Math.pow(1 - p, 3);
+        this.x = this.x0 + (this.x1 - this.x0) * eased;
+        this.y = this.y0 + (this.y1 - this.y0) * eased;
+
+        if (p < 1 && Math.random() > 0.25) {
+          burstParticles.push(new BurstParticle(this.x + (Math.random()-0.5)*10, this.y + (Math.random()-0.5)*10, 'gold'));
+        }
+      }
+      draw() {
+        if (this.isExploded) return;
+        ctx.save();
+        ctx.beginPath();
+        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 3.5);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(0.3, '#fff4b8');
+        grad.addColorStop(0.7, 'rgba(212, 175, 55, 0.65)');
+        grad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+        ctx.fillStyle = grad;
+        ctx.arc(this.x, this.y, this.radius * 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius * 0.8, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#ffd700';
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Phase 2: Architectural Constellation Node
+    class ConstellationNode {
+      constructor(targetX, targetY, delay = 0, isKeyVertex = false) {
+        this.targetX = targetX;
+        this.targetY = targetY;
+        this.delay = delay;
+        this.isKeyVertex = isKeyVertex;
+
+        const angle = Math.random() * Math.PI * 2;
+        const dist = Math.random() * 260 + 140;
+        this.startX = targetX + Math.cos(angle) * dist;
+        this.startY = targetY + Math.sin(angle) * dist;
+
+        this.x = this.startX;
+        this.y = this.startY;
+        this.alpha = 0;
+        this.pulseOffset = Math.random() * Math.PI * 2;
+        this.color = Math.random() > 0.35 ? '#ffd700' : '#c97b84';
+      }
+      update(tSec) {
+        const activeTime = tSec - 0.6 - this.delay;
+        if (activeTime <= 0) {
+          this.alpha = 0;
+          return;
+        }
+        const p = Math.min(1, activeTime / 0.7);
+        const eased = 1 - Math.pow(1 - p, 3);
+
+        const remainingAngle = (1 - eased) * Math.PI * 1.5;
+        const curDist = (1 - eased) * 160;
+        this.x = this.targetX + Math.cos(remainingAngle) * curDist;
+        this.y = this.targetY + Math.sin(remainingAngle) * curDist;
+
+        if (p >= 1) {
+          this.alpha = 0.85 + Math.sin((tSec * 4) + this.pulseOffset) * 0.15;
+        } else {
+          this.alpha = p * 0.85;
+        }
+      }
+      draw() {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, this.alpha);
+        ctx.beginPath();
+        const r = this.isKeyVertex ? 3.5 : 2.2;
+        ctx.arc(this.x, this.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = this.isKeyVertex ? 12 : 6;
+        ctx.shadowColor = '#ffd700';
+        ctx.fill();
+
+        // Architectural drafting cross (+)
+        if (this.isKeyVertex) {
+          ctx.strokeStyle = 'rgba(212, 175, 55, 0.7)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(this.x - 5, this.y);
+          ctx.lineTo(this.x + 5, this.y);
+          ctx.moveTo(this.x, this.y - 5);
+          ctx.lineTo(this.x, this.y + 5);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+    }
+
+    // Phase 3: Chrysanthemum Aerial Firework Particle
+    class ChrysanthemumParticle {
+      constructor(x, y, speed, angle, color = '#ffd700', layer = 'outer') {
+        this.x = x;
+        this.y = y;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.drag = 0.962;
+        this.gravity = 0.055;
+        this.color = color;
+        this.size = layer === 'core' ? Math.random() * 2.5 + 1.2 : Math.random() * 3.5 + 1.8;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.008 + 0.007;
+        this.sparkle = Math.random() > 0.35;
+        this.layer = layer;
+      }
+      update() {
+        this.vx *= this.drag;
+        this.vy = this.vy * this.drag + this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+      draw() {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.beginPath();
+        if (this.sparkle && this.layer !== 'core') {
+          ctx.translate(this.x, this.y);
+          ctx.fillStyle = '#fffdf0';
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = this.color;
+          const r = this.size * 1.4;
+          ctx.moveTo(0, -r);
+          ctx.lineTo(r * 0.25, -r * 0.25);
+          ctx.lineTo(r, 0);
+          ctx.lineTo(r * 0.25, r * 0.25);
+          ctx.lineTo(0, r);
+          ctx.lineTo(-r * 0.25, r * 0.25);
+          ctx.lineTo(-r, 0);
+          ctx.lineTo(-r * 0.25, -r * 0.25);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = this.color;
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    // Phase 3: Cascading Golden Willow Spark with smooth line trails
+    class WillowParticle {
+      constructor(x, y, speed, angle) {
+        this.x = x;
+        this.y = y;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed - 1.2;
+        this.drag = 0.978;
+        this.gravity = 0.075;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.006 + 0.004;
+        this.trail = [];
+        this.maxTrail = 20;
+        this.color = Math.random() > 0.3 ? '#f7e7a9' : '#d4af37';
+      }
+      update() {
+        this.trail.push({ x: this.x, y: this.y, alpha: this.alpha });
+        if (this.trail.length > this.maxTrail) {
+          this.trail.shift();
+        }
+        this.vx *= this.drag;
+        this.vy = this.vy * this.drag + this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+      draw() {
+        if (this.alpha <= 0 && this.trail.length === 0) return;
+        ctx.save();
+        if (this.trail.length > 1) {
+          ctx.beginPath();
+          ctx.moveTo(this.trail[0].x, this.trail[0].y);
+          for (let i = 1; i < this.trail.length; i++) {
+            ctx.lineTo(this.trail[i].x, this.trail[i].y);
+          }
+          ctx.strokeStyle = this.color;
+          ctx.lineWidth = Math.max(0.8, 2.2 * this.alpha);
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#ffd700';
+          ctx.globalAlpha = Math.max(0, this.alpha * 0.85);
+          ctx.stroke();
+        }
+
+        if (this.alpha > 0) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 2.0, 0, Math.PI * 2);
+          ctx.fillStyle = '#ffffff';
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = '#ffd700';
+          ctx.globalAlpha = Math.max(0, this.alpha);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    // Phase 3: Floating Rose-Gold Light Bokeh Disc
+    class BokehDisc {
+      constructor(x, y, radius, color = '#c97b84') {
+        this.x = x + (Math.random() - 0.5) * 80;
+        this.y = y + (Math.random() - 0.5) * 60;
+        this.radius = radius;
+        this.vx = (Math.random() - 0.5) * 0.8;
+        this.vy = -(Math.random() * 0.6 + 0.2);
+        this.color = color;
+        this.maxAlpha = Math.random() * 0.25 + 0.12;
+        this.alpha = 0;
+        this.life = 0;
+        this.maxLife = Math.random() * 180 + 120;
+      }
+      update() {
+        this.life++;
+        this.x += this.vx;
+        this.y += this.vy;
+        const progress = this.life / this.maxLife;
+        if (progress < 0.3) {
+          this.alpha = (progress / 0.3) * this.maxAlpha;
+        } else {
+          this.alpha = (1 - (progress - 0.3) / 0.7) * this.maxAlpha;
+        }
+      }
+      draw() {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.beginPath();
+        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        grad.addColorStop(0, this.color);
+        grad.addColorStop(0.7, this.color);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       ambientParticles.push(new AmbientDust());
     }
@@ -2003,17 +2388,131 @@
     function animateParticles() {
       ctx.clearRect(0, 0, width, height);
 
+      // 1. Draw Ambient Dust Motes
       for (let p of ambientParticles) {
         p.update();
         p.draw();
       }
 
+      // 2. Draw Basic Bursts (seal crack, nib micro-sparks)
       for (let i = burstParticles.length - 1; i >= 0; i--) {
         const bp = burstParticles[i];
         bp.update();
         bp.draw();
         if (bp.alpha <= 0) {
           burstParticles.splice(i, 1);
+        }
+      }
+
+      // 3. Draw Grand Multi-Phase Wish Spectacle
+      if (isSpectacleRunning) {
+        const now = performance.now();
+        const tSec = (now - spectacleStartTime) / 1000;
+
+        // Screen-space light bloom / flash
+        if (screenFlashIntensity > 0.005) {
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          const flashGrad = ctx.createRadialGradient(
+            spectacleTarget.x, spectacleTarget.y, 10,
+            spectacleTarget.x, spectacleTarget.y, Math.max(width, height) * 0.7
+          );
+          flashGrad.addColorStop(0, `rgba(255, 240, 180, ${screenFlashIntensity})`);
+          flashGrad.addColorStop(0.5, `rgba(201, 123, 132, ${screenFlashIntensity * 0.4})`);
+          flashGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+          ctx.fillStyle = flashGrad;
+          ctx.fillRect(0, 0, width, height);
+          ctx.restore();
+          screenFlashIntensity *= 0.92;
+        }
+
+        // Draw Shockwaves
+        for (let i = spectacleShockwaves.length - 1; i >= 0; i--) {
+          const sw = spectacleShockwaves[i];
+          sw.update();
+          sw.draw();
+          if (sw.alpha <= 0) spectacleShockwaves.splice(i, 1);
+        }
+
+        // Draw Rising Orb (Phase 1)
+        if (spectacleRisingOrb && !spectacleRisingOrb.isExploded) {
+          spectacleRisingOrb.update(tSec);
+          spectacleRisingOrb.draw();
+        }
+
+        // Draw Constellation Blueprint Lines (Phase 2: 0.8s to 2.2s)
+        if (tSec >= 0.8 && tSec < 2.2 && constellationBlueprintLines.length > 0) {
+          ctx.save();
+          ctx.globalCompositeOperation = 'lighter';
+          const lineAlpha = Math.min(0.65, (tSec - 0.8) * 0.75);
+          ctx.strokeStyle = `rgba(212, 175, 55, ${lineAlpha})`;
+          ctx.lineWidth = 1.2;
+          ctx.shadowBlur = 8;
+          ctx.shadowColor = '#ffd700';
+
+          for (let seg of constellationBlueprintLines) {
+            if (seg.p1.alpha > 0.2 && seg.p2.alpha > 0.2) {
+              ctx.beginPath();
+              ctx.moveTo(seg.p1.x, seg.p1.y);
+              ctx.lineTo(seg.p2.x, seg.p2.y);
+              ctx.stroke();
+            }
+          }
+
+          // Faint architectural compass geometry circles behind "22"
+          const compassAlpha = Math.min(0.35, (tSec - 1.0) * 0.4);
+          if (compassAlpha > 0) {
+            ctx.strokeStyle = `rgba(180, 230, 255, ${compassAlpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.setLineDash([4, 4]);
+            const spacing = Math.min(65, width * 0.12);
+            [-spacing, spacing].forEach(dx => {
+              ctx.beginPath();
+              ctx.arc(spectacleTarget.x + dx, spectacleTarget.y - 24, 32, 0, Math.PI * 2);
+              ctx.stroke();
+            });
+            ctx.setLineDash([]);
+          }
+          ctx.restore();
+        }
+
+        // Draw Constellation Nodes (Phase 2)
+        if (tSec < 2.2) {
+          for (let node of constellationNodes) {
+            node.update(tSec);
+            node.draw();
+          }
+        }
+
+        // Draw Bokeh Discs (Phase 3)
+        for (let i = bokehDiscs.length - 1; i >= 0; i--) {
+          const bd = bokehDiscs[i];
+          bd.update();
+          bd.draw();
+          if (bd.life >= bd.maxLife) bokehDiscs.splice(i, 1);
+        }
+
+        // Draw Golden Willow Trails (Phase 3)
+        for (let i = willowTrails.length - 1; i >= 0; i--) {
+          const wp = willowTrails[i];
+          wp.update();
+          wp.draw();
+          if (wp.alpha <= 0 && wp.trail.length === 0) willowTrails.splice(i, 1);
+        }
+
+        // Draw Chrysanthemum Fireworks (Phase 3)
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        for (let i = fireworksParticles.length - 1; i >= 0; i--) {
+          const fp = fireworksParticles[i];
+          fp.update();
+          fp.draw();
+          if (fp.alpha <= 0) fireworksParticles.splice(i, 1);
+        }
+        ctx.restore();
+
+        if (tSec > 8.0 && fireworksParticles.length === 0 && willowTrails.length === 0) {
+          isSpectacleRunning = false;
         }
       }
 
@@ -2435,27 +2934,178 @@
     }
 
     /* ==========================================================================
-       J. GRAND FINALE MOMENT: MAKE A WISH FOR 22 & STARLIGHT BURST
+       J. CINEMATIC "MAKE A WISH FOR 22" MULTI-PHASE SPECTACLE ENGINE
        ========================================================================== */
     const wishBtn = document.getElementById('wishBtn');
     const wishBtnText = document.getElementById('wishBtnText');
     const wishToast = document.getElementById('wishToast');
     let hasWished = false;
 
-    wishBtn.addEventListener('click', () => {
-      const rect = wishBtn.getBoundingClientRect();
-      const burstX = rect.left + rect.width / 2;
-      const burstY = rect.top + rect.height / 2;
+    function generateArchitectural22Points(targetX, targetY) {
+      const points = [];
+      const lines = [];
+      const spacing = Math.min(65, width * 0.12);
+      const scale = Math.min(1.0, width / 450);
 
-      spawnParticleBurst(burstX, burstY, 80, 'wish');
-      setTimeout(() => spawnParticleBurst(width * 0.25, height * 0.35, 50, 'wish'), 200);
-      setTimeout(() => spawnParticleBurst(width * 0.75, height * 0.35, 50, 'wish'), 400);
+      [-spacing, spacing].forEach((dx) => {
+        const cx = targetX + dx;
+        const cy = targetY;
+        const digitNodes = [];
 
-      if (!hasWished) {
-        hasWished = true;
-        wishBtnText.textContent = "Your wish is released into the universe ✨";
-        wishToast.classList.add('revealed');
+        // Top arc: angles from -Math.PI to 0.2 * Math.PI
+        const r = 26 * scale;
+        const topCy = cy - 24 * scale;
+        for (let a = -Math.PI; a <= 0.2 * Math.PI; a += 0.28) {
+          const isKey = a === -Math.PI || Math.abs(a - 0.2 * Math.PI) < 0.2;
+          const node = new ConstellationNode(cx + Math.cos(a) * r, topCy + Math.sin(a) * r, Math.random() * 0.15, isKey);
+          digitNodes.push(node);
+          points.push(node);
+        }
+
+        // Diagonal stroke: from arc end down to bottom-left
+        const startDiag = { x: cx + Math.cos(0.2 * Math.PI) * r, y: topCy + Math.sin(0.2 * Math.PI) * r };
+        const endDiag = { x: cx - 26 * scale, y: cy + 38 * scale };
+        const diagSteps = 9;
+        for (let i = 1; i <= diagSteps; i++) {
+          const p = i / diagSteps;
+          const isKey = i === diagSteps;
+          const node = new ConstellationNode(
+            startDiag.x + (endDiag.x - startDiag.x) * p,
+            startDiag.y + (endDiag.y - startDiag.y) * p,
+            Math.random() * 0.15,
+            isKey
+          );
+          digitNodes.push(node);
+          points.push(node);
+        }
+
+        // Base stroke: horizontal line along bottom
+        const baseEnd = { x: cx + 28 * scale, y: cy + 38 * scale };
+        const baseSteps = 8;
+        for (let i = 1; i <= baseSteps; i++) {
+          const p = i / baseSteps;
+          const isKey = i === baseSteps;
+          const node = new ConstellationNode(
+            endDiag.x + (baseEnd.x - endDiag.x) * p,
+            cy + 38 * scale,
+            Math.random() * 0.15,
+            isKey
+          );
+          digitNodes.push(node);
+          points.push(node);
+        }
+
+        // Connecting blueprint lines along digit path
+        for (let i = 0; i < digitNodes.length - 1; i++) {
+          lines.push({ p1: digitNodes[i], p2: digitNodes[i + 1] });
+        }
+      });
+
+      return { points, lines };
+    }
+
+    function spawnChrysanthemumShell(cx, cy, particleCount = 70, colors = ['#ffd700', '#c97b84', '#fff7d6']) {
+      for (let i = 0; i < particleCount; i++) {
+        const angle = (i / particleCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
+        const layer = Math.random() > 0.65 ? 'core' : (Math.random() > 0.4 ? 'mid' : 'outer');
+        const speed = layer === 'core' 
+          ? Math.random() * 3.5 + 2 
+          : (layer === 'mid' ? Math.random() * 6.5 + 4 : Math.random() * 9.5 + 6.5);
+        const col = colors[Math.floor(Math.random() * colors.length)];
+        fireworksParticles.push(new ChrysanthemumParticle(cx, cy, speed, angle, col, layer));
       }
+    }
+
+    function triggerGrandWishSpectacle() {
+      // Clear previous spectacle elements
+      spectacleShockwaves.length = 0;
+      constellationNodes.length = 0;
+      constellationBlueprintLines.length = 0;
+      fireworksParticles.length = 0;
+      willowTrails.length = 0;
+      bokehDiscs.length = 0;
+
+      const rect = wishBtn.getBoundingClientRect();
+      spectacleOrigin = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+      spectacleTarget = {
+        x: width / 2,
+        y: Math.max(120, height * 0.35)
+      };
+
+      isSpectacleRunning = true;
+      spectacleStartTime = performance.now();
+      wishBtn.classList.add('wishing');
+      wishBtnText.textContent = "Releasing your wish to the stars... ✨";
+
+      // Phase 1 (0.0s): Synthesize celestial chime arpeggio & spawn shockwave + rising orb
+      playWishChimeHarp();
+      spectacleShockwaves.push(new SpectacleShockwave(spectacleOrigin.x, spectacleOrigin.y, Math.min(width, height) * 0.42));
+      spectacleRisingOrb = new RisingOrb(spectacleOrigin.x, spectacleOrigin.y, spectacleTarget.x, spectacleTarget.y);
+
+      // Phase 2 (0.6s–2.2s): Generate architectural "22" constellation nodes and blueprint geometry
+      const constellationData = generateArchitectural22Points(spectacleTarget.x, spectacleTarget.y);
+      constellationData.points.forEach(p => constellationNodes.push(p));
+      constellationData.lines.forEach(l => constellationBlueprintLines.push(l));
+
+      // Phase 3 (2.2s–5.5s): Chrysanthemum & Willow Fireworks Detonation
+      setTimeout(() => {
+        if (!isSpectacleRunning) return;
+
+        // Explode rising orb & constellation
+        if (spectacleRisingOrb) spectacleRisingOrb.isExploded = true;
+        constellationNodes.length = 0;
+        screenFlashIntensity = 0.52;
+        playFireworksBoom();
+
+        // Center primary chrysanthemum burst (75 particles)
+        spawnChrysanthemumShell(spectacleTarget.x, spectacleTarget.y, 75, ['#ffd700', '#f5e8b7', '#fffdf0', '#c97b84']);
+
+        // Cascading golden willow particles (42 trails)
+        for (let i = 0; i < 42; i++) {
+          const angle = Math.random() * Math.PI * 2;
+          const speed = Math.random() * 8.5 + 3.5;
+          willowTrails.push(new WillowParticle(spectacleTarget.x, spectacleTarget.y, speed, angle));
+        }
+
+        // Dreamy rose-gold bokeh light discs
+        for (let i = 0; i < 20; i++) {
+          bokehDiscs.push(new BokehDisc(spectacleTarget.x, spectacleTarget.y, Math.random() * 18 + 10));
+        }
+      }, 2200);
+
+      // Staggered aerial flank bursts (2.5s and 2.75s)
+      setTimeout(() => {
+        if (!isSpectacleRunning) return;
+        spawnChrysanthemumShell(spectacleTarget.x - Math.min(130, width * 0.28), spectacleTarget.y - 50, 45, ['#c97b84', '#ffd700', '#fff5cc']);
+        playFireworksBoom();
+      }, 2500);
+
+      setTimeout(() => {
+        if (!isSpectacleRunning) return;
+        spawnChrysanthemumShell(spectacleTarget.x + Math.min(130, width * 0.28), spectacleTarget.y - 50, 45, ['#ffd700', '#f5e8b7', '#e8a598']);
+        playFireworksBoom();
+      }, 2750);
+
+      // High starlight crown shell (3.0s)
+      setTimeout(() => {
+        if (!isSpectacleRunning) return;
+        spawnChrysanthemumShell(spectacleTarget.x, spectacleTarget.y - 120, 50, ['#ffffff', '#fff5cc', '#ffd700']);
+      }, 3000);
+
+      // Phase 4 (5.5s+): Embers drift like fireflies; warm keepsake blessing settles
+      setTimeout(() => {
+        hasWished = true;
+        wishBtn.classList.remove('wishing');
+        wishBtnText.textContent = "Wish Sent to the Stars ✨ • Tap to wish again";
+        wishToast.classList.add('revealed');
+      }, 5500);
+    }
+
+    wishBtn.addEventListener('click', () => {
+      triggerGrandWishSpectacle();
     });
 
     /* ==========================================================================
@@ -2596,7 +3246,14 @@
         signatureFlourish.classList.remove('visible');
         wishToast.classList.remove('revealed');
         hasWished = false;
+        isSpectacleRunning = false;
+        wishBtn.classList.remove('wishing');
         wishBtnText.textContent = "Make a wish for 22 ✨";
+        spectacleShockwaves.length = 0;
+        constellationNodes.length = 0;
+        fireworksParticles.length = 0;
+        willowTrails.length = 0;
+        bokehDiscs.length = 0;
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 800);
